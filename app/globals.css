@@ -2,14 +2,14 @@
 @plugin "@tailwindcss/typography";
 
 @custom-variant dark (&:is(.dark *));
-
+/* update 2 */
 @theme {
     --breakpoint-*: initial;
     --breakpoint-sm: 374px;
     --breakpoint-md: 799px;
     --breakpoint-lg: 1199px;
 
-    --font-sf-pro: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-sf-pro: -applewhen-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     --font-sf-mono: "SF Mono", Monaco, Inconsolata, "Roboto Mono", "Source Code Pro", Menlo, Consolas, "DejaVu Sans Mono", monospace;
 
     --color-dark-50: #dbdbdb;

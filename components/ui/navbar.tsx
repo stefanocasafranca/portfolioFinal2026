@@ -4,7 +4,7 @@ const tabs = [
   { label: 'All', selected: true },
   { label: 'About', selected: false },
   { label: 'Projects', selected: false },
-  { label: 'Media', selected: false },
+  { label: 'Contact', selected: false },
 ];
 
 export default function Navbar() {
