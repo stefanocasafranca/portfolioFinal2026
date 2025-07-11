@@ -60,10 +60,11 @@ export const layouts: { [key in Layouts]: Layout[] } = {
         { i: 'resume', x: 0, y: 5, w: 2, h: 2 },
         { i: 'project2', x: 0, y: 7, w: 2, h: 2 },
         { i: 'design-process', x: 0, y: 9, w: 2, h: 2 },
+        // Custom arrangement for email, project4, and project3
         { i: 'email', x: 0, y: 11, w: 1, h: 1 },
-        // Creating Parks horizontal on 4th row
-        { i: 'project3', x: 1, y: 13, w: 2, h: 1 },
-        { i: 'project4', x: 0, y: 14, w: 1, h: 1 },
+        { i: 'project4', x: 1, y: 11, w: 1, h: 1 },
+        { i: 'project3', x: 0, y: 12, w: 2, h: 2 },
+        // Move any cards that were after project3 down
     ],
 };
 

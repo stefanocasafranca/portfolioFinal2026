@@ -5,7 +5,7 @@ import { siteConfig } from '@/config/site';
 
 export default function Description() {
     return (
-        <Card className='flex flex-col justify-center gap-4 p-8'>
+        <Card className='flex flex-col justify-center gap-2 sm:gap-4 p-4 sm:p-8'>
             <Image
                 src={profile}
                 alt={siteConfig.title}
