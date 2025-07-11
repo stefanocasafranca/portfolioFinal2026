@@ -15,7 +15,7 @@ export default function Resume() {
 
     return (
         <Card className='group relative flex flex-col items-center justify-center h-full active:scale-95 transition-transform'>
-            <div className='flex flex-col items-center justify-center flex-1 gap-3 p-8'>
+            <div className='flex flex-col items-center justify-center flex-1 gap-0 sm:gap-1 p-2 sm:p-8'>
                 <span className='text-3xl text-dark-900 dark:text-white' aria-label='Resume' role='img'>📄</span>
                 <h2 className='font-sf-pro text-2xl font-semibold text-dark-900 dark:text-white'>Resume</h2>
                 <a

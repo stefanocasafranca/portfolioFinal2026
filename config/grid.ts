@@ -57,14 +57,14 @@ export const layouts: { [key in Layouts]: Layout[] } = {
         { i: 'linkedin', x: 0, y: 3, w: 1, h: 1 },
         { i: 'project', x: 1, y: 3, w: 1, h: 2 },
         { i: 'theme', x: 0, y: 4, w: 1, h: 1 },
-        { i: 'resume', x: 0, y: 5, w: 2, h: 2 },
-        { i: 'project2', x: 0, y: 7, w: 2, h: 2 },
-        { i: 'design-process', x: 0, y: 9, w: 2, h: 2 },
-        // Custom arrangement for email, project4, and project3
-        { i: 'email', x: 0, y: 11, w: 1, h: 1 },
-        { i: 'project4', x: 1, y: 11, w: 1, h: 1 },
-        { i: 'project3', x: 0, y: 12, w: 2, h: 2 },
-        // Move any cards that were after project3 down
+        // Custom arrangement: project2 (vertical left), resume (top right), design-process (bottom right)
+        { i: 'project2', x: 0, y: 6, w: 1, h: 2 },
+        { i: 'resume', x: 1, y: 6, w: 1, h: 1 },
+        { i: 'design-process', x: 1, y: 7, w: 1, h: 1 },
+        // Continue with the rest, shifting y positions down by 2
+        { i: 'project3', x: 0, y: 8, w: 2, h: 2 },
+        { i: 'email', x: 0, y: 10, w: 1, h: 1 },
+        { i: 'project4', x: 1, y: 10, w: 1, h: 1 },
     ],
 };
 
