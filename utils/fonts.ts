@@ -1,13 +1,11 @@
-import { Pixelify_Sans, Poppins } from 'next/font/google';
+// San Francisco font configuration
+// Uses system fonts with San Francisco as primary for Apple devices
+export const sfPro = {
+    className: 'font-sf-pro',
+    variable: '--font-sf-pro',
+};
 
-export const poppins = Poppins({
-    weight: ['300', '400', '500', '600', '700'],
-    subsets: ['latin'],
-    variable: '--font-poppins',
-});
-
-export const pixelifySans = Pixelify_Sans({
-    weight: ['600'],
-    subsets: ['latin'],
-    variable: '--font-pixelify-sans',
-});
+export const sfMono = {
+    className: 'font-sf-mono',
+    variable: '--font-sf-mono',
+};

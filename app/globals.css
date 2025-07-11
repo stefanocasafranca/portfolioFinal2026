@@ -9,7 +9,8 @@
     --breakpoint-md: 799px;
     --breakpoint-lg: 1199px;
 
-    --font-pixelify-sans: var(--font-pixelify-sans);
+    --font-sf-pro: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-sf-mono: "SF Mono", Monaco, Inconsolata, "Roboto Mono", "Source Code Pro", Menlo, Consolas, "DejaVu Sans Mono", monospace;
 
     --color-dark-50: #dbdbdb;
     --color-dark-100: #cfcfcf;

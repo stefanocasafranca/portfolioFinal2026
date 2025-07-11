@@ -1,4 +1,4 @@
-import { Description, Location, Project, Spotify, Article, Theme, LinkedIn, Contact } from '@/components/grid/widgets';
+import { Description, Location, Project, Resume, Article, Theme, LinkedIn, Contact } from '@/components/grid/widgets';
 import { Layout } from 'react-grid-layout';
 
 interface GridItem {
@@ -10,7 +10,7 @@ export const gridItems: GridItem[] = [
     { i: 'description', component: Description },
     { i: 'location', component: Location },
     { i: 'project', component: Project },
-    { i: 'spotify', component: Spotify },
+    { i: 'resume', component: Resume },
     { i: 'article', component: Article },
     { i: 'theme', component: Theme },
     { i: 'linkedin', component: LinkedIn },
@@ -24,7 +24,7 @@ export const layouts: { [key in Layouts]: Layout[] } = {
         { i: 'description', x: 0, y: 0, w: 2, h: 1 },
         { i: 'location', x: 2, y: 0, w: 1, h: 1 },
         { i: 'project', x: 3, y: 0, w: 1, h: 2 },
-        { i: 'spotify', x: 0, y: 1, w: 1, h: 1 },
+        { i: 'resume', x: 0, y: 1, w: 1, h: 1 },
         { i: 'article', x: 1, y: 1, w: 2, h: 1 },
         { i: 'theme', x: 0, y: 2, w: 1, h: 1 },
         { i: 'linkedin', x: 1, y: 2, w: 1, h: 1 },
@@ -35,7 +35,7 @@ export const layouts: { [key in Layouts]: Layout[] } = {
         { i: 'location', x: 2, y: 0, w: 2, h: 1 },
         { i: 'linkedin', x: 2, y: 1, w: 1, h: 1 },
         { i: 'project', x: 3, y: 1, w: 1, h: 2 },
-        { i: 'spotify', x: 0, y: 2, w: 2, h: 1 },
+        { i: 'resume', x: 0, y: 2, w: 2, h: 1 },
         { i: 'theme', x: 2, y: 2, w: 1, h: 1 },
         { i: 'article', x: 0, y: 3, w: 2, h: 2 },
         { i: 'contact', x: 2, y: 3, w: 2, h: 2 },
@@ -46,7 +46,7 @@ export const layouts: { [key in Layouts]: Layout[] } = {
         { i: 'linkedin', x: 0, y: 3, w: 1, h: 1 },
         { i: 'project', x: 1, y: 3, w: 1, h: 2 },
         { i: 'theme', x: 0, y: 4, w: 1, h: 1 },
-        { i: 'spotify', x: 0, y: 5, w: 2, h: 2 },
+        { i: 'resume', x: 0, y: 5, w: 2, h: 2 },
         { i: 'article', x: 0, y: 7, w: 2, h: 2 },
         { i: 'contact', x: 0, y: 9, w: 2, h: 2 },
     ],

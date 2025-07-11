@@ -1,5 +1,5 @@
 import { siteConfig } from '@/config/site';
-import { pixelifySans, poppins } from '@/utils/fonts';
+import { sfPro, sfMono } from '@/utils/fonts';
 import { cn } from '@/utils/lib';
 import { Analytics } from '@vercel/analytics/react';
 import type { Metadata } from 'next';
@@ -9,15 +9,24 @@ import './globals.css';
 
 export const metadata: Metadata = {
     title: {
-        default: siteConfig.title,
+        default: 'Stefano Casafranca',
         template: '%s',
     },
     description: siteConfig.description,
+    icons: {
+        icon: [
+            { url: '/favicon.ico' },
+            { url: '/favicon.ico', sizes: '16x16', type: 'image/x-icon' },
+            { url: '/favicon.ico', sizes: '32x32', type: 'image/x-icon' },
+        ],
+        shortcut: '/favicon.ico',
+        apple: '/favicon.ico',
+    },
     openGraph: {
-        title: siteConfig.title,
+        title: 'Stefano Casafranca',
         description: siteConfig.description,
         url: siteConfig.url,
-        siteName: siteConfig.title,
+        siteName: 'Stefano Casafranca',
         locale: 'en-US',
         type: 'website',
         images: [
@@ -27,7 +36,7 @@ export const metadata: Metadata = {
         ],
     },
     twitter: {
-        title: siteConfig.title,
+        title: 'Stefano Casafranca',
         description: siteConfig.description,
         images: siteConfig.ogImage,
         card: 'summary_large_image',
@@ -52,7 +61,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
     return (
         <html lang='en' suppressHydrationWarning>
-            <body className={cn(poppins.className, pixelifySans.variable, 'dark:bg-dark-950 bg-gray-100 antialiased')}>
+            <body className={cn('font-sf-pro', 'dark:bg-dark-950 bg-gray-100 antialiased')}>
                 <ThemeProvider attribute='class' enableSystem={false}>
                     {children}
                 </ThemeProvider>

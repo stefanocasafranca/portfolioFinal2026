@@ -10,8 +10,8 @@ import Card from '../../ui/card';
 const MAX_ZOOM = 8;
 const MIN_ZOOM = 3;
 const INITIAL_VIEW_STATE = {
-    latitude: -7.7962967,
-    longitude: 110.3667211,
+    latitude: 30.2672,
+    longitude: -97.7431,
     zoom: MAX_ZOOM,
 };
 
