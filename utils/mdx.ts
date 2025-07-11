@@ -15,6 +15,11 @@ interface ProjectMetadata extends BaseMetadata {
     images?: string;
 }
 
+interface MethodMetadata extends BaseMetadata {
+    links?: string;
+    images?: string;
+}
+
 type MDXData<T extends BaseMetadata> = {
     metadata: T;
     slug: string;
@@ -71,3 +76,6 @@ export const getLatestPost = (): MDXData<PostMetadata> => getAllPosts()[0];
 
 export const getAllProjects = (): MDXData<ProjectMetadata>[] =>
     getMDXData<ProjectMetadata>(path.join(process.cwd(), 'content/projects'));
+
+export const getAllMethods = (): MDXData<MethodMetadata>[] =>
+    getMDXData<MethodMetadata>(path.join(process.cwd(), 'content/methods'));

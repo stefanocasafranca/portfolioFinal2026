@@ -1,4 +1,4 @@
-import { Description, Location, Project, Resume, Project2, Theme, LinkedIn, Contact, Email } from '@/components/grid/widgets';
+import { Description, Location, Project, Resume, Project2, Theme, LinkedIn, DesignProcess, Email, Project3, Project4 } from '@/components/grid/widgets';
 import { Layout } from 'react-grid-layout';
 
 interface GridItem {
@@ -15,7 +15,9 @@ export const gridItems: GridItem[] = [
     { i: 'theme', component: Theme },
     { i: 'linkedin', component: LinkedIn },
     { i: 'email', component: Email },
-    { i: 'contact', component: Contact },
+    { i: 'project3', component: Project3 },
+    { i: 'project4', component: Project4 },
+    { i: 'design-process', component: DesignProcess },
 ];
 
 type Layouts = 'lg' | 'md' | 'sm';
@@ -29,8 +31,11 @@ export const layouts: { [key in Layouts]: Layout[] } = {
         { i: 'project2', x: 1, y: 1, w: 2, h: 1 },
         { i: 'theme', x: 0, y: 2, w: 1, h: 1 },
         { i: 'linkedin', x: 1, y: 2, w: 1, h: 1 },
-        { i: 'contact', x: 2, y: 2, w: 2, h: 1 },
+        { i: 'design-process', x: 2, y: 2, w: 2, h: 1 },
         { i: 'email', x: 0, y: 3, w: 1, h: 1 },
+        // Creating Parks horizontal on 4th row
+        { i: 'project3', x: 1, y: 4, w: 2, h: 1 },
+        { i: 'project4', x: 3, y: 4, w: 1, h: 1 },
     ],
     md: [
         { i: 'description', x: 0, y: 0, w: 2, h: 2 },
@@ -40,8 +45,11 @@ export const layouts: { [key in Layouts]: Layout[] } = {
         { i: 'resume', x: 0, y: 2, w: 2, h: 1 },
         { i: 'theme', x: 2, y: 2, w: 1, h: 1 },
         { i: 'project2', x: 0, y: 3, w: 2, h: 2 },
-        { i: 'contact', x: 2, y: 3, w: 2, h: 2 },
+        { i: 'design-process', x: 2, y: 3, w: 2, h: 2 },
         { i: 'email', x: 0, y: 5, w: 1, h: 1 },
+        // Creating Parks horizontal on 4th row
+        { i: 'project3', x: 1, y: 6, w: 2, h: 1 },
+        { i: 'project4', x: 3, y: 6, w: 1, h: 1 },
     ],
     sm: [
         { i: 'description', x: 0, y: 0, w: 2, h: 2 },
@@ -51,8 +59,11 @@ export const layouts: { [key in Layouts]: Layout[] } = {
         { i: 'theme', x: 0, y: 4, w: 1, h: 1 },
         { i: 'resume', x: 0, y: 5, w: 2, h: 2 },
         { i: 'project2', x: 0, y: 7, w: 2, h: 2 },
-        { i: 'contact', x: 0, y: 9, w: 2, h: 2 },
+        { i: 'design-process', x: 0, y: 9, w: 2, h: 2 },
         { i: 'email', x: 0, y: 11, w: 1, h: 1 },
+        // Creating Parks horizontal on 4th row
+        { i: 'project3', x: 1, y: 13, w: 2, h: 1 },
+        { i: 'project4', x: 0, y: 14, w: 1, h: 1 },
     ],
 };
 
