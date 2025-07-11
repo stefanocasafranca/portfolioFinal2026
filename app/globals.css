@@ -113,3 +113,4 @@ div[mapboxgl-children] {
 .prose *:hover > .anchor {
     @apply visible;
 }
+/* update */
