@@ -30,7 +30,7 @@ export default function GridLayout({ layouts, className, children }: Readonly<Re
                 measureBeforeMount
                 draggableCancel='.cancel-drag'
                 onBreakpointChange={setBreakpoint}
-                isDraggable={['lg', 'md'].includes(breakpoint)}
+                isDraggable={false}
                 margin={[16, 16]}>
                 {children}
             </ResponsiveGridLayout>
