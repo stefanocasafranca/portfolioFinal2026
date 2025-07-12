@@ -14,7 +14,7 @@ export default function DesignProcess() {
     return (
         <Card 
             variant="process"
-            className='group relative bg-gradient-to-br from-purple-100 to-pink-100 dark:from-purple-900/20 dark:to-pink-900/20'
+            className='group relative bg-white'
         >
             {/* Mobile layout - simplified view */}
             <div className="md:hidden flex flex-col items-center justify-center w-full h-full gap-4 p-6">
