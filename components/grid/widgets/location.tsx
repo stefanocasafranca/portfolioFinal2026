@@ -7,6 +7,7 @@ import { FaMinus, FaPlus } from 'react-icons/fa6';
 import Map, { MapRef } from 'react-map-gl';
 import Card from '../../ui/card';
 
+// Map configuration constants
 const MAX_ZOOM = 8;
 const MIN_ZOOM = 3;
 const INITIAL_VIEW_STATE = {
@@ -17,15 +18,20 @@ const INITIAL_VIEW_STATE = {
 
 const mapboxToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
 
+/**
+ * Map card component for location display
+ * Uses the 'map' variant for consistent map-related styling
+ * Features interactive zoom controls and theme-aware styling
+ */
 export default function Location() {
     const [currentZoom, setCurrentZoom] = useState(MAX_ZOOM);
     const [isButtonDisabled, setIsButtonDisabled] = useState(false);
     const [isMapLoaded, setIsMapLoaded] = useState(false);
 
     const mapRef = useRef<MapRef>(null);
-
     const { theme } = useTheme();
 
+    // Handle zoom controls with debouncing
     const handleZoom = (zoomIn: boolean) => {
         if (isButtonDisabled) return;
 
@@ -44,7 +50,7 @@ export default function Location() {
     const mapStyle = `mapbox://styles/mapbox/${theme === 'dark' ? 'dark-v11' : 'streets-v12'}`;
 
     return (
-        <Card className='relative size-full'>
+        <Card variant="map" className='relative size-full'>
             <Map
                 mapboxAccessToken={mapboxToken}
                 mapStyle={mapStyle}
@@ -85,20 +91,27 @@ export default function Location() {
     );
 }
 
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-    isVisible: boolean;
-}
-
-function Button({ isVisible, ...props }: Readonly<ButtonProps>) {
+// Zoom control button component
+function Button({ 
+    children, 
+    isVisible, 
+    onClick, 
+    ...props 
+}: { 
+    children: React.ReactNode; 
+    isVisible: boolean; 
+    onClick: () => void; 
+    [key: string]: any; 
+}) {
     return (
         <button
             className={cn(
-                'group inline-flex cursor-pointer items-center justify-center gap-3 overflow-hidden rounded-full bg-white p-3 whitespace-nowrap transition-all duration-300',
-                'ring-2 ring-gray-200/45 outline-hidden focus-within:ring-4 focus-within:outline-hidden hover:ring-4 dark:text-black dark:ring-gray-200/30',
-                isVisible ? 'cancel-drag' : 'invisible'
+                'cancel-drag flex size-8 items-center justify-center rounded-full bg-white/80 backdrop-blur-sm transition-all duration-300 hover:bg-white hover:scale-110 dark:bg-dark-800/80 dark:hover:bg-dark-800',
+                isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'
             )}
-            type='button'
-            {...props}
-        />
+            onClick={onClick}
+            {...props}>
+            {children}
+        </button>
     );
 }

@@ -3,6 +3,12 @@
 import { useEffect, useLayoutEffect, useState } from 'react';
 import { breakpoints } from './consts';
 
+/**
+ * Custom hook for managing responsive breakpoints
+ * Tracks the current screen size and provides breakpoint information
+ * Used by the grid layout to determine appropriate column and row configurations
+ * @returns Object containing current breakpoint and setter function
+ */
 function useBreakpoint() {
     const [breakpoint, setBreakpoint] = useState<string>('');
 
@@ -21,16 +27,20 @@ function useBreakpoint() {
     return { breakpoint, setBreakpoint };
 }
 
-function useMounted(delay: number = 0) {
-    const [isMounted, setIsMounted] = useState(false);
+/**
+ * Custom hook for handling hydration mismatch issues
+ * Ensures components only render on the client side to prevent SSR/CSR mismatches
+ * Useful for components that depend on browser APIs or theme detection
+ * @returns Boolean indicating if the component has mounted on the client
+ */
+function useMounted() {
+    const [mounted, setMounted] = useState(false);
 
     useLayoutEffect(() => {
-        setTimeout(() => {
-            setIsMounted(true);
-        }, delay);
-    }, [delay]);
+        setMounted(true);
+    }, []);
 
-    return isMounted;
+    return mounted;
 }
 
 export { useBreakpoint, useMounted };

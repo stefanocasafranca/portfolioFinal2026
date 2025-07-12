@@ -1,23 +1,28 @@
 import { Description, Location, Project, Resume, Project2, Theme, LinkedIn, DesignProcess, Email, Project3, Project4 } from '@/components/grid/widgets';
 import { Layout } from 'react-grid-layout';
 
+// Define card categories for filtering
+export type CardCategory = 'hero' | 'about' | 'projects' | 'contact' | 'process';
+
 interface GridItem {
     i: string;
     component: React.ComponentType;
+    category: CardCategory; // Add category for filtering
+    isHero?: boolean; // Hero card is always visible
 }
 
 export const gridItems: GridItem[] = [
-    { i: 'description', component: Description },
-    { i: 'location', component: Location },
-    { i: 'project', component: Project },
-    { i: 'resume', component: Resume },
-    { i: 'project2', component: Project2 },
-    { i: 'theme', component: Theme },
-    { i: 'linkedin', component: LinkedIn },
-    { i: 'email', component: Email },
-    { i: 'project3', component: Project3 },
-    { i: 'project4', component: Project4 },
-    { i: 'design-process', component: DesignProcess },
+    { i: 'description', component: Description, category: 'hero', isHero: true }, // Hero card - always visible
+    { i: 'location', component: Location, category: 'about' },
+    { i: 'project', component: Project, category: 'projects' },
+    { i: 'resume', component: Resume, category: 'about' },
+    { i: 'project2', component: Project2, category: 'projects' },
+    { i: 'theme', component: Theme, category: 'contact' },
+    { i: 'linkedin', component: LinkedIn, category: 'contact' },
+    { i: 'email', component: Email, category: 'contact' },
+    { i: 'project3', component: Project3, category: 'projects' },
+    { i: 'project4', component: Project4, category: 'projects' },
+    { i: 'design-process', component: DesignProcess, category: 'process' },
 ];
 
 type Layouts = 'lg' | 'md' | 'sm';
