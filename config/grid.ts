@@ -87,6 +87,8 @@ const originalLayouts: { [key in Layouts]: Layout[] } = {
     ],
 };
 
+export const layouts = originalLayouts;
+
 const projectLargeLayout: Layout[] = [
     { i: 'images-1', x: 0, y: 0, w: 2, h: 1 },
     { i: 'images-2', x: 2, y: 0, w: 1, h: 1 },
