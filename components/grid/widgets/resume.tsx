@@ -1,33 +1,31 @@
 'use client';
 
 import Card from '../../ui/card';
+import { FiDownload } from 'react-icons/fi';
 
+/**
+ * Resume card component
+ * Shows a document icon, title, and download icon in the bottom left
+ */
 export default function Resume() {
-    const handleDownload = (e: React.MouseEvent) => {
-        e.stopPropagation();
-        const link = document.createElement('a');
-        link.href = '/resume.pdf';
-        link.download = 'Stefano_Casafranca_Resume.pdf';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-    };
-
     return (
-        <Card className='group relative flex flex-col items-center justify-center h-full active:scale-95 transition-transform'>
-            <div className='flex flex-col items-center justify-center flex-1 gap-0 sm:gap-1 p-2 sm:p-8'>
-                <span className='text-3xl text-dark-900 dark:text-white' aria-label='Resume' role='img'>📄</span>
-                <h2 className='font-sf-pro text-2xl font-semibold text-dark-900 dark:text-white'>Resume</h2>
-                <a
-                    href='/resume.pdf'
-                    download='Stefano_Casafranca_Resume.pdf'
-                    className='cancel-drag flex items-center justify-center mt-4 text-dark-900 dark:text-white rounded-full p-2 transition-colors hover:bg-gray-100 dark:hover:bg-dark-800'
-                    onClick={handleDownload}
-                    aria-label='Download Resume'
-                >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className='text-dark-900 dark:text-white'><path d="M12 3v12m0 0l-4-4m4 4l4-4"/><rect x="4" y="19" width="16" height="2" rx="1"/></svg>
-                </a>
+        <Card variant="project" className="group relative flex flex-col items-center justify-start bg-white">
+            {/* Text content at the top */}
+            <div className="w-full flex flex-col items-center pt-4 pb-2">
+                <span role="img" aria-label="Document" className="text-4xl mb-2">📄</span>
+                <h2 className="font-sf-pro text-2xl text-center mb-1">Resume</h2>
             </div>
+            {/* Download icon in the bottom left, styled like the email card's button */}
+            <a
+                href="/resume.pdf"
+                download
+                className="absolute bottom-3 left-3"
+                aria-label="Download Resume PDF"
+            >
+                <div className="size-10 flex items-center justify-center rounded-full bg-white shadow transition active:scale-95">
+                    <FiDownload className="text-xl text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors" />
+                </div>
+            </a>
         </Card>
     );
 }
