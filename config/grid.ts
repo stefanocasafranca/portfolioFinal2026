@@ -2,7 +2,7 @@ import { Description, Location, Project, Resume, Project2, Theme, LinkedIn, Desi
 import { Layout } from 'react-grid-layout';
 
 // Define card categories for filtering
-export type CardCategory = 'hero' | 'about' | 'projects' | 'contact' | 'process';
+export type CardCategory = 'hero' | 'about' | 'projects' | 'contact' | 'theme';
 
 interface GridItem {
     i: string;
@@ -17,17 +17,18 @@ export const gridItems: GridItem[] = [
     { i: 'project', component: Project, category: 'projects' },
     { i: 'resume', component: Resume, category: 'about' },
     { i: 'project2', component: Project2, category: 'projects' },
-    { i: 'theme', component: Theme, category: 'contact' },
+    { i: 'theme', component: Theme, category: 'theme' }, // Theme card - no category, never highlighted
     { i: 'linkedin', component: LinkedIn, category: 'contact' },
     { i: 'email', component: Email, category: 'contact' },
     { i: 'project3', component: Project3, category: 'projects' },
     { i: 'project4', component: Project4, category: 'projects' },
-    { i: 'design-process', component: DesignProcess, category: 'process' },
+    { i: 'design-process', component: DesignProcess, category: 'about' }, // Design process belongs to About
 ];
 
 type Layouts = 'lg' | 'md' | 'sm';
 
-export const layouts: { [key in Layouts]: Layout[] } = {
+// Original layouts for reference
+const originalLayouts: { [key in Layouts]: Layout[] } = {
     lg: [
         //Row 1
         { i: 'description', x: 0, y: 0, w: 2, h: 1 },
