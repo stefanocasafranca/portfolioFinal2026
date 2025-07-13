@@ -26,7 +26,7 @@ export default function Email() {
         >
             {/* Centered Apple Mail icon */}
             <div className="w-full h-full flex items-center justify-center relative">
-                <IoMailOutline className='text-6xl text-black dark:text-white' aria-label='Email' />
+                <IoMailOutline className='text-4xl md:text-6xl text-black dark:text-white' aria-label='Email' />
                 
                 {/* Copy button in bottom left */}
                 <button

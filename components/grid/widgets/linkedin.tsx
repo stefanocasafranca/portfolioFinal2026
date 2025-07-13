@@ -14,7 +14,7 @@ export default function LinkedIn() {
         >
             {/* Unified layout for all screens: centered title, icon button bottom left */}
             <div className="w-full h-full flex flex-col items-center justify-center relative p-4">
-                <h2 className='font-sf-pro text-2xl text-center w-full mt-6 mb-0' title='LinkedIn'>
+                <h2 className='font-sf-pro text-2xl text-center w-full mb-0' title='LinkedIn'>
                     <span className='cancel-drag'>
                         LinkedIn
                     </span>

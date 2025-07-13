@@ -24,10 +24,6 @@ export default function Card({
                     'bg-white dark:bg-dark-900',
                     'select-none md:cursor-grab md:active:cursor-grabbing',
                     'dark:ring-1 dark:ring-dark-800',
-                    // Variant-specific styling can be added here
-                    variant === 'hero' && 'ring-2 ring-blue-200/50',
-                    variant === 'contact' && 'ring-2 ring-green-200/50',
-                    variant === 'process' && 'ring-2 ring-purple-200/50',
                     className
                 )}>
                 {children}

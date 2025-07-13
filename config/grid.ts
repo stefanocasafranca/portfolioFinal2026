@@ -41,8 +41,8 @@ export const layouts: { [key in Layouts]: Layout[] } = {
         { i: 'linkedin', x: 1, y: 2, w: 1, h: 1 },
         //Row 4 
         { i: 'design-process', x: 2, y: 2, w: 2, h: 1 },
-        { i: 'email', x: 0, y: 3, w: 1, h: 1 },
-        { i: 'project3', x: 1, y: 4, w: 2, h: 1 },
+        { i: 'project3', x: 0, y: 4, w: 2, h: 1 },
+        { i: 'email', x: 2, y: 4, w: 1, h: 1 },
         { i: 'project4', x: 3, y: 4, w: 1, h: 1 },
     ],
     md: [
