@@ -29,45 +29,58 @@ type Layouts = 'lg' | 'md' | 'sm';
 
 export const layouts: { [key in Layouts]: Layout[] } = {
     lg: [
+        //Row 1
         { i: 'description', x: 0, y: 0, w: 2, h: 1 },
         { i: 'location', x: 2, y: 0, w: 1, h: 1 },
-        { i: 'project', x: 3, y: 0, w: 1, h: 2 },
+        { i: 'project', x: 3, y: 0, w: 1, h: 2 }, // And Row 2 bc height is 2
+        //Row 2
         { i: 'resume', x: 0, y: 1, w: 1, h: 1 },
         { i: 'project2', x: 1, y: 1, w: 2, h: 1 },
+        //Row 3                   
         { i: 'theme', x: 0, y: 2, w: 1, h: 1 },
         { i: 'linkedin', x: 1, y: 2, w: 1, h: 1 },
+        //Row 4 
         { i: 'design-process', x: 2, y: 2, w: 2, h: 1 },
         { i: 'email', x: 0, y: 3, w: 1, h: 1 },
-        // Creating Parks horizontal on 4th row
         { i: 'project3', x: 1, y: 4, w: 2, h: 1 },
         { i: 'project4', x: 3, y: 4, w: 1, h: 1 },
     ],
     md: [
-        { i: 'description', x: 0, y: 0, w: 2, h: 2 },
+        //Row 1
+        { i: 'description', x: 0, y: 0, w: 2, h: 2 }, // And Row 2 bc height is 2
         { i: 'location', x: 2, y: 0, w: 2, h: 1 },
+        //Row 2
         { i: 'linkedin', x: 2, y: 1, w: 1, h: 1 },
-        { i: 'project', x: 3, y: 1, w: 1, h: 2 },
+        { i: 'project', x: 3, y: 1, w: 1, h: 2 }, // And Row 3 bc height is 2
+        //Row 3
         { i: 'resume', x: 0, y: 2, w: 2, h: 1 },
         { i: 'theme', x: 2, y: 2, w: 1, h: 1 },
+        //Row 4 and 5
         { i: 'project2', x: 0, y: 3, w: 2, h: 2 },
         { i: 'design-process', x: 2, y: 3, w: 2, h: 2 },
+        //Row 6
         { i: 'email', x: 0, y: 5, w: 1, h: 1 },
-        // Creating Parks horizontal on 4th row
         { i: 'project3', x: 1, y: 6, w: 2, h: 1 },
         { i: 'project4', x: 3, y: 6, w: 1, h: 1 },
     ],
     sm: [
+        //Row 1 and 2
         { i: 'description', x: 0, y: 0, w: 2, h: 2 },
+        //Row 3
         { i: 'location', x: 0, y: 2, w: 2, h: 1 },
+        //Row 4
         { i: 'linkedin', x: 0, y: 3, w: 1, h: 1 },
-        { i: 'project', x: 1, y: 3, w: 1, h: 2 },
+        { i: 'project', x: 1, y: 3, w: 1, h: 2 }, // And Row 5 bc height is 2
+        //Row 5
         { i: 'theme', x: 0, y: 4, w: 1, h: 1 },
-        // Custom arrangement: project2 (vertical left), resume (top right), design-process (bottom right)
-        { i: 'project2', x: 0, y: 6, w: 1, h: 2 },
+        //Row 6
+        { i: 'project2', x: 0, y: 6, w: 1, h: 2 }, // and Row 7 bc height is 2
         { i: 'resume', x: 1, y: 6, w: 1, h: 1 },
+        //Row 7
         { i: 'design-process', x: 1, y: 7, w: 1, h: 1 },
-        // Continue with the rest, shifting y positions down by 2
+        //Row 8 and 9
         { i: 'project3', x: 0, y: 8, w: 2, h: 2 },
+        //Row 10
         { i: 'email', x: 0, y: 10, w: 1, h: 1 },
         { i: 'project4', x: 1, y: 10, w: 1, h: 1 },
     ],

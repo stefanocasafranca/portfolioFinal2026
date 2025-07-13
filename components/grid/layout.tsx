@@ -19,6 +19,7 @@ export default function GridLayout({ layouts, className, children }: Readonly<Re
     return (
         <section
             className={cn(
+                // Line 22: This sets the max container width (1200px)
                 'mx-auto max-w-[1200px] max-lg:max-w-[800px] max-md:max-w-[375px] max-sm:max-w-[320px]',
                 isMounted ? 'translate-y-0 opacity-100' : '-translate-y-6 opacity-0',
                 'transition-[opacity,_transform] duration-700',
@@ -27,9 +28,11 @@ export default function GridLayout({ layouts, className, children }: Readonly<Re
             <ResponsiveGridLayout
                 layouts={layouts}
                 breakpoints={breakpoints}
+                //This passes the column count (4 for large screens) to react-grid-layout
                 cols={cols}
                 isBounded
                 isResizable={false}
+                //This passes the row height (280px for large screens) to react-grid-layout  
                 rowHeight={rowHeights[breakpoint]}
                 useCSSTransforms={false}
                 measureBeforeMount
