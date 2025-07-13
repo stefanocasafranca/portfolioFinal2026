@@ -23,33 +23,31 @@ interface NavbarProps {
 }
 
 export default function Navbar({ selectedCategory, onCategoryChange }: NavbarProps) {
-    return (
-        <div className="w-full flex justify-center my-8">
-            <div className="bg-[#f6f2f2] rounded-full px-6 py-2">
-                <nav>
-                    <div className="inline-flex items-center rounded-full bg-white shadow-sm px-6 py-1 gap-2">
-                        {tabs.map((tab) => (
-                            <button
-                                key={tab.label}
-                                className={cn(
-                                    'font-sf-pro font-semibold text-sm transition-all flex items-center justify-center px-5 py-2 rounded-full',
-                                    selectedCategory === tab.value
-                                        ? 'bg-white text-black shadow-sm scale-105' // selected: white pill, slightly larger
-                                        : 'bg-transparent text-black/90 hover:bg-gray-100', // unselected: no bg, bold, black
-                                    'focus:outline-none',
-                                    'mx-1'
-                                )}
-                                type="button"
-                                tabIndex={0}
-                                aria-current={selectedCategory === tab.value ? 'page' : undefined}
-                                onClick={() => onCategoryChange(tab.value)}
-                            >
-                                {tab.label}
-                            </button>
-                        ))}
-                    </div>
-                </nav>
-            </div>
+  return (
+    <div className="w-full flex justify-center my-8">
+      <nav>
+        <div className="inline-flex items-center rounded-full bg-white dark:bg-gray-900 shadow-sm px-6 py-2 gap-2">
+          {tabs.map((tab) => (
+            <button
+              key={tab.label}
+              className={cn(
+                'font-sf-pro font-semibold text-sm transition-all flex items-center justify-center px-5 py-2 rounded-full',
+                selectedCategory === tab.value
+                  ? 'bg-white dark:bg-gray-800 text-black dark:text-white shadow-sm scale-105'
+                  : 'bg-transparent text-black/90 dark:text-white/90 hover:bg-gray-100 dark:hover:bg-gray-700',
+                'focus:outline-none',
+                'mx-1'
+              )}
+              type="button"
+              tabIndex={0}
+              aria-current={selectedCategory === tab.value ? 'page' : undefined}
+              onClick={() => onCategoryChange(tab.value)}
+            >
+              {tab.label}
+            </button>
+          ))}
         </div>
-    );
+      </nav>
+    </div>
+  );
 } 

@@ -99,7 +99,7 @@ function Button({
     ...props 
 }: { 
     children: React.ReactNode; 
-    isVisible: boolean; 
+    isVisible: boolean;
     onClick: () => void; 
     [key: string]: any; 
 }) {

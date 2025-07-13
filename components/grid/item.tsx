@@ -20,7 +20,12 @@ export default function GridItem({
     ...props
 }: Readonly<GridItemProps> & React.HTMLAttributes<HTMLDivElement>) {
     // Determine if this card should be visible based on filtering
-    const isVisible = selectedCategory === 'all' || category === selectedCategory || isHero;
+    // When "about" is selected, also include "process" category cards
+    // When "contact" is selected, exclude the theme card
+    const isVisible = selectedCategory === 'all' || 
+                     (category === selectedCategory && !(selectedCategory === 'contact' && id === 'theme')) || 
+                     (selectedCategory === 'about' && category === 'process') ||
+                     isHero;
     
     return (
         <div 
