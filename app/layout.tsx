@@ -1,5 +1,5 @@
 import { siteConfig } from '@/config/site';
-import { sfPro, sfMono } from '@/utils/fonts';
+import { sfPro } from '@/utils/fonts';
 import { cn } from '@/utils/lib';
 import { Analytics } from '@vercel/analytics/react';
 import type { Metadata } from 'next';

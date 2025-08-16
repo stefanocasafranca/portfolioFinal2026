@@ -9,7 +9,7 @@ import Image from 'next/image';
 import GridLayout from '@/components/grid/layout';
 import { projectLayouts } from '@/config/grid';
 
-type Params = { slug: string };
+type Params = Promise<{ slug: string }>;
 
 function safeParse(jsonString: string | undefined) {
   if (!jsonString || !jsonString.trim()) return [];
@@ -20,8 +20,9 @@ function safeParse(jsonString: string | undefined) {
   }
 }
 
-export default function MethodPage({ params }: { params: Params }) {
-  const method = getAllMethods().find((m) => m.slug === params.slug);
+export default async function MethodPage({ params }: { params: Params }) {
+  const { slug } = await params;
+  const method = getAllMethods().find((m) => m.slug === slug);
   if (!method) notFound();
 
   const { title, description, links, images } = method.metadata;

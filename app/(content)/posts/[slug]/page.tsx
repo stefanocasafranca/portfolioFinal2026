@@ -28,7 +28,7 @@ export const generateMetadata = async ({ params }: { params: Params }) => {
             type: 'article',
             publishedTime: date,
             url: `${siteConfig.url}/posts/${post.slug}`,
-            authors: 'Maulana',
+            authors: 'Stefano Casafranca',
             images: siteConfig.ogImage,
         },
         twitter: {

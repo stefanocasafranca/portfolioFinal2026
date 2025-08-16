@@ -20,7 +20,7 @@ const socials: Social[] = [
     },
     {
         name: 'LinkedIn',
-        url: 'https://linkedin.com/in/maulana-ahmad',
+        url: 'https://linkedin.com/in/stefano-casafranca',
         icon: FaLinkedin,
     },
     {
