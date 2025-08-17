@@ -10,7 +10,6 @@ import { siteConfig } from '@/config/site';
 export default function Description() {
     return (
         <Card 
-            variant="hero" 
             className='flex flex-col justify-center gap-2 sm:gap-4 p-4 sm:p-8'
         >
             <Image

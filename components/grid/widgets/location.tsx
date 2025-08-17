@@ -50,7 +50,7 @@ export default function Location() {
     const mapStyle = `mapbox://styles/mapbox/${theme === 'dark' ? 'dark-v11' : 'streets-v12'}`;
 
     return (
-        <Card variant="map" className='relative size-full'>
+        <Card className='relative size-full'>
             <Map
                 mapboxAccessToken={mapboxToken}
                 mapStyle={mapStyle}
@@ -84,7 +84,7 @@ export default function Location() {
                         </Button>
                     </div>
                 ) : (
-                    <div className='bg-dark-300 dark:bg-dark-700 absolute inset-0 size-full animate-pulse'></div>
+                    <div className='bg-dark-300 dark:bg-dark-900 absolute inset-0 size-full animate-pulse'></div>
                 )}
             </Map>
         </Card>

@@ -21,11 +21,10 @@ export default function Email() {
 
     return (
         <Card 
-            variant="contact"
             className='group relative bg-gradient-to-br from-green-100 to-emerald-100 dark:from-green-900/20 dark:to-emerald-900/20'
         >
             {/* Centered Apple Mail icon */}
-            <div className="w-full h-full flex items-center justify-center relative">
+            <div className='w-full h-full flex items-center justify-center relative'>
                 <IoMailOutline className='text-4xl md:text-6xl text-black dark:text-white' aria-label='Email' />
                 
                 {/* Copy button in bottom left */}

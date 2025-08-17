@@ -2,7 +2,6 @@
 
 import { cn } from '@/utils/lib';
 import { CardCategory } from '@/config/grid';
-import { useState } from 'react';
 
 // Define filter tabs with proper typing
 interface FilterTab {
@@ -24,9 +23,9 @@ interface NavbarProps {
 
 export default function Navbar({ selectedCategory, onCategoryChange }: NavbarProps) {
   return (
-    <div className="w-full flex justify-center my-8">
+    <div className='w-full flex justify-center my-8'>
       <nav>
-        <div className="inline-flex items-center rounded-full bg-white dark:bg-gray-900 shadow-sm px-6 py-2 gap-2">
+        <div className='inline-flex items-center rounded-full bg-white dark:bg-gray-900 shadow-sm px-6 py-2 gap-2'>
           {tabs.map((tab) => (
             <button
               key={tab.label}

@@ -13,8 +13,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
         lastModified: post.metadata.date,
     }));
 
-    const projects = getAllProjects().map((projects) => ({
-        url: `${siteConfig.url}/projects/${projects.slug}`,
+    const projects = getAllProjects().map((project) => ({
+        url: `${siteConfig.url}/projects/${project.slug}`,
         lastModified: new Date(),
     }));
 

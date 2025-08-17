@@ -1,18 +1,13 @@
 import { cn } from '@/utils/lib';
 
-// Define card variants for flexible layout control
-export type CardVariant = 'hero' | 'map' | 'process' | 'project' | 'contact';
-
 interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
     className?: string;
     children: React.ReactNode;
-    variant?: CardVariant; // Optional variant for layout control
 }
 
 export default function Card({ 
     className, 
     children, 
-    variant = 'project', // Default variant
     ...props 
 }: Readonly<CardProps>) {
     return (

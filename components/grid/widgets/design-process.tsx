@@ -13,11 +13,10 @@ export default function DesignProcess() {
 
     return (
         <Card 
-            variant="process"
             className='group relative bg-white'
         >
             {/* Mobile layout - ONLY the image, covering the card */}
-            <div className="md:hidden flex items-center justify-center w-full h-full p-2">
+            <div className='md:hidden flex items-center justify-center w-full h-full p-2'>
                 <Image
                     src='/doubleDiamond.png'
                     alt='Double Diamond Design Process'
@@ -29,7 +28,7 @@ export default function DesignProcess() {
             </div>
 
             {/* Desktop layout - full diagram view with text and button */}
-            <div className="hidden md:flex flex-col items-center justify-center w-full h-full gap-6">
+            <div className='hidden md:flex flex-col items-center justify-center w-full h-full gap-6'>
                 <div className='flex flex-1 items-center justify-center w-full h-full'>
                     <Image
                         src='/doubleDiamond.png'

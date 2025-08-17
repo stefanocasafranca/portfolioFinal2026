@@ -9,11 +9,10 @@ import Anchor from '../../ui/anchor';
 export default function LinkedIn() {
     return (
         <Card 
-            variant="contact"
             className='group relative bg-gradient-to-br from-blue-100 to-indigo-100 dark:from-blue-900/20 dark:to-indigo-900/20'
         >
             {/* Unified layout for all screens: centered title, icon button bottom left */}
-            <div className="w-full h-full flex flex-col items-center justify-center relative p-4">
+            <div className='w-full h-full flex flex-col items-center justify-center relative p-4'>
                 <h2 className='font-sf-pro text-2xl text-center w-full mb-0' title='LinkedIn'>
                     <span className='cancel-drag'>
                         LinkedIn
