@@ -87,6 +87,149 @@ const originalLayouts: { [key in Layouts]: Layout[] } = {
     ],
 };
 
+// Smart rearrangement within existing grid bounds - prioritizes highlighted cards
+function createSmartLayouts(highlightedItems: string[]): { [key in Layouts]: Layout[] } {
+    const createArrangement = (breakpoint: Layouts): Layout[] => {
+        const allLayouts = [...originalLayouts[breakpoint]];
+        const maxCols = breakpoint === 'sm' ? 2 : 4;
+        const maxRows = 4; // Keep within original 4-row grid boundary
+        
+        // Separate highlighted and dimmed items
+        const highlighted = allLayouts.filter(layout => highlightedItems.includes(layout.i));
+        const dimmed = allLayouts.filter(layout => !highlightedItems.includes(layout.i));
+        
+        // Sort highlighted items by original position (top-left first)
+        highlighted.sort((a, b) => (a.y * maxCols + a.x) - (b.y * maxCols + b.x));
+        
+        const newLayouts: Layout[] = [];
+        const occupiedSpaces = new Set<string>();
+        
+        // Function to check if a position is available
+        const isSpaceAvailable = (x: number, y: number, w: number, h: number): boolean => {
+            if (x + w > maxCols || y + h > maxRows) return false;
+            for (let cy = y; cy < y + h; cy++) {
+                for (let cx = x; cx < x + w; cx++) {
+                    if (occupiedSpaces.has(`${cx},${cy}`)) return false;
+                }
+            }
+            return true;
+        };
+        
+        // Function to mark space as occupied
+        const markSpaceOccupied = (x: number, y: number, w: number, h: number) => {
+            for (let cy = y; cy < y + h; cy++) {
+                for (let cx = x; cx < x + w; cx++) {
+                    occupiedSpaces.add(`${cx},${cy}`);
+                }
+            }
+        };
+        
+        // Function to find best position for an item - prioritizes top-left positioning
+        const findBestPosition = (w: number, h: number, isHighlighted: boolean = false): {x: number, y: number} | null => {
+            // For highlighted items, prioritize earlier rows and left positions
+            const rowOrder = isHighlighted ? [0, 1, 2, 3] : [0, 1, 2, 3];
+            
+            for (const y of rowOrder) {
+                if (y + h > maxRows) continue;
+                for (let x = 0; x <= maxCols - w; x++) {
+                    if (isSpaceAvailable(x, y, w, h)) {
+                        return { x, y };
+                    }
+                }
+            }
+            return null;
+        };
+        
+        // Place highlighted items first in optimal positions (top-left priority)
+        highlighted.forEach(layout => {
+            let w = layout.w;
+            let h = layout.h;
+            let position = findBestPosition(w, h, true);
+            
+            // If original size doesn't fit, try to compress (Plan Z)
+            if (!position && w > 1) {
+                w = Math.max(1, w - 1);
+                position = findBestPosition(w, h, true);
+            }
+            if (!position && h > 1) {
+                h = Math.max(1, h - 1);
+                position = findBestPosition(w, h, true);
+            }
+            if (!position && w > 1 && h > 1) {
+                // More aggressive compression if needed
+                w = 1;
+                h = 1;
+                position = findBestPosition(w, h, true);
+            }
+            
+            if (position) {
+                newLayouts.push({
+                    i: layout.i,
+                    x: position.x,
+                    y: position.y,
+                    w,
+                    h
+                });
+                markSpaceOccupied(position.x, position.y, w, h);
+            }
+        });
+        
+        // Place dimmed items in remaining spaces - they get pushed to edges/bottom
+        dimmed.forEach(layout => {
+            let w = layout.w;
+            let h = layout.h;
+            let position = findBestPosition(w, h, false);
+            
+            // Compress if needed (Plan Z)
+            if (!position && w > 1) {
+                w = Math.max(1, w - 1);
+                position = findBestPosition(w, h, false);
+            }
+            if (!position && h > 1) {
+                h = Math.max(1, h - 1);
+                position = findBestPosition(w, h, false);
+            }
+            if (!position && w > 1 && h > 1) {
+                // Aggressive compression for dimmed items
+                w = 1;
+                h = 1;
+                position = findBestPosition(w, h, false);
+            }
+            
+            if (position) {
+                newLayouts.push({
+                    i: layout.i,
+                    x: position.x,
+                    y: position.y,
+                    w,
+                    h
+                });
+                markSpaceOccupied(position.x, position.y, w, h);
+            }
+        });
+        
+        return newLayouts;
+    };
+    
+    return {
+        lg: createArrangement('lg'),
+        md: createArrangement('md'),
+        sm: createArrangement('sm')
+    };
+}
+
+// Create smart layouts for each category
+const aboutItems = ['description', 'location', 'resume', 'design-process', 'theme'];
+const projectItems = ['project', 'project2', 'project3', 'project4', 'theme'];
+const contactItems = ['description', 'linkedin', 'email', 'theme'];
+
+export const filteredLayouts = {
+    all: originalLayouts,
+    about: createSmartLayouts(aboutItems),
+    projects: createSmartLayouts(projectItems),
+    contact: createSmartLayouts(contactItems)
+};
+
 export const layouts = originalLayouts;
 
 const projectLargeLayout: Layout[] = [

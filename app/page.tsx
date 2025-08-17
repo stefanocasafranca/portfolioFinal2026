@@ -2,7 +2,7 @@
 
 import Container from '@/components/ui/container';
 import GridLayout from '@/components/grid/layout';
-import { gridItems, layouts, CardCategory } from '@/config/grid';
+import { gridItems, layouts, filteredLayouts, CardCategory } from '@/config/grid';
 import { siteConfig } from '@/config/site';
 import GridItem from '@/components/grid/item';
 import Navbar from '@/components/ui/navbar';
@@ -22,7 +22,7 @@ export default function Home() {
                 onCategoryChange={setSelectedCategory} 
             />
             <main className='py-8'>
-                <GridLayout layouts={layouts}>
+                <GridLayout layouts={filteredLayouts[selectedCategory as keyof typeof filteredLayouts] || filteredLayouts.all}>
                     {gridItems.map((item) => (
                         <GridItem 
                             key={item.i} 
