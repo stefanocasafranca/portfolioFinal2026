@@ -1,6 +1,6 @@
 'use client';
 
-import Card from '../../ui/card';
+import LinkCard from '../../ui/link-card';
 import { FiDownload } from 'react-icons/fi';
 
 /**
@@ -9,23 +9,35 @@ import { FiDownload } from 'react-icons/fi';
  */
 export default function Resume() {
     return (
-        <Card className='group relative flex flex-col items-center justify-center bg-white dark:bg-dark-900'>
+        <LinkCard 
+            className='group relative flex flex-col items-center justify-center bg-white dark:bg-dark-900'
+            href='/resume.pdf'
+            target='_blank'
+            aria-label='View Resume PDF'
+        >
             {/* Vertically centered content */}
             <div className='w-full flex flex-col items-center justify-center flex-grow'>
                 <span role='img' aria-label='Document' className='text-4xl mb-1 md:mb-2'>📄</span>
                 <h2 className='font-sf-pro text-2xl text-center mb-8 md:mb-12 mt-0 md:mt-8 text-black dark:text-white'>Resume</h2>
             </div>
-            {/* Download icon in the bottom left, styled like the email card's button */}
-            <a
-                href='/resume.pdf'
-                download
-                className='absolute bottom-3 left-3'
+            {/* Download icon in the bottom left - decorative button with download functionality */}
+            <button
+                onClick={(e) => {
+                    e.stopPropagation();
+                    const link = document.createElement('a');
+                    link.href = '/resume.pdf';
+                    link.download = 'stefano-casafranca-resume.pdf';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                }}
+                className='absolute bottom-3 left-3 z-10'
                 aria-label='Download Resume PDF'
             >
-                <div className='size-10 flex items-center justify-center rounded-full bg-white shadow transition active:scale-95'>
+                <div className='size-10 flex items-center justify-center rounded-full bg-white shadow transition active:scale-95 hover:shadow-md'>
                     <FiDownload className='text-xl text-gray-700 hover:text-black transition-colors' />
                 </div>
-            </a>
-        </Card>
+            </button>
+        </LinkCard>
     );
 }

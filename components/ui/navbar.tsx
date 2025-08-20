@@ -23,9 +23,8 @@ interface NavbarProps {
 
 export default function Navbar({ selectedCategory, onCategoryChange }: NavbarProps) {
   return (
-    <div className='w-full flex justify-center my-8'>
-      <nav>
-        <div className='inline-flex items-center rounded-full bg-white dark:bg-gray-900 shadow-sm px-6 py-2 gap-2'>
+    <nav>
+      <div className='inline-flex items-center rounded-full bg-white dark:bg-gray-900 shadow-sm px-6 py-2 gap-2'>
           {tabs.map((tab) => (
             <button
               key={tab.label}
@@ -45,8 +44,7 @@ export default function Navbar({ selectedCategory, onCategoryChange }: NavbarPro
               {tab.label}
             </button>
           ))}
-        </div>
-      </nav>
-    </div>
+      </div>
+    </nav>
   );
 } 

@@ -1,14 +1,18 @@
-import Card from '../../ui/card';
+import LinkCard from '../../ui/link-card';
 import Image from 'next/image';
 import { toKebabCase } from '@/utils/lib';
-import Anchor from '../../ui/anchor';
+import DecorativeCTA from '../../ui/decorative-cta';
 import { FaArrowRight } from 'react-icons/fa6';
 
 export default function Project4() {
     const projectName = 'Project Four';
 
     return (
-        <Card className='group relative bg-red-100'>
+        <LinkCard 
+            className='group relative bg-red-100'
+            href={`/projects/${toKebabCase(projectName)}`}
+            aria-label={`View ${projectName} project`}
+        >
             <Image
                 src="/projects/project-4.png"
                 alt={toKebabCase(projectName)}
@@ -19,18 +23,17 @@ export default function Project4() {
                 draggable='false'
             />
             <div className='absolute bottom-3 left-3'>
-                <Anchor
-                    className='cancel-drag size-10 justify-end transition-all ease-in-out group-hover:w-full'
-                    href={`/projects/${toKebabCase(projectName)}`}
-                    aria-label={projectName}>
+                <DecorativeCTA
+                    className='size-10 justify-end transition-all ease-in-out group-hover:w-full'
+                >
                     <span className='hidden whitespace-nowrap opacity-0 transition-all duration-300 ease-in group-hover:translate-x-0 group-hover:opacity-100 md:inline'>
                         {projectName}
                     </span>
                     <span>
                         <FaArrowRight className='-rotate-45 transition-transform duration-300 group-hover:rotate-0' />
                     </span>
-                </Anchor>
+                </DecorativeCTA>
             </div>
-        </Card>
+        </LinkCard>
     );
 } 

@@ -62,7 +62,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     return (
         <html lang='en' suppressHydrationWarning>
                             <body className={cn('font-sf-pro', 'dark:bg-dark-900 bg-gray-100 antialiased')}>
-                <ThemeProvider attribute='class' enableSystem={false}>
+                <ThemeProvider attribute='class' defaultTheme='light' enableSystem={false}>
                     {children}
                 </ThemeProvider>
                 <Analytics />

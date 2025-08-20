@@ -1,7 +1,7 @@
-import Card from '../../ui/card';
+import LinkCard from '../../ui/link-card';
 import Image from 'next/image';
 import { FaArrowRight } from 'react-icons/fa6';
-import Anchor from '../../ui/anchor';
+import DecorativeCTA from '../../ui/decorative-cta';
 import { toKebabCase } from '@/utils/lib';
 
 /**
@@ -12,8 +12,10 @@ export default function DesignProcess() {
     const methodName = 'Design Process';
 
     return (
-        <Card 
+        <LinkCard 
             className='group relative bg-white'
+            href={`/methods/${toKebabCase(methodName)}`}
+            aria-label={`View ${methodName} method`}
         >
             {/* Mobile layout - ONLY the image, covering the card */}
             <div className='md:hidden flex items-center justify-center w-full h-full p-2'>
@@ -42,19 +44,18 @@ export default function DesignProcess() {
                     />
                 </div>
                 <div className='absolute bottom-3 left-3'>
-                    <Anchor
-                        className='cancel-drag size-10 justify-end transition-all ease-in-out group-hover:w-full'
-                        href={`/methods/${toKebabCase(methodName)}`}
-                        aria-label={methodName}>
+                    <DecorativeCTA
+                        className='size-10 justify-end transition-all ease-in-out group-hover:w-full'
+                    >
                         <span className='hidden whitespace-nowrap opacity-0 transition-all duration-300 ease-in group-hover:translate-x-0 group-hover:opacity-100 md:inline'>
                             View Method
                         </span>
                         <span>
                             <FaArrowRight className='-rotate-45 transition-transform duration-300 group-hover:rotate-0' />
                         </span>
-                    </Anchor>
+                    </DecorativeCTA>
                 </div>
             </div>
-        </Card>
+        </LinkCard>
     );
 } 
