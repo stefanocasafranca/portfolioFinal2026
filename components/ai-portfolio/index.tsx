@@ -93,7 +93,7 @@ export default function AIPortfolio() {
               }}
             >
               <Image
-                src="/images/stefano-memoji.png"
+                src="/images/Stefano-memoji.png"
                 alt="Stefano's 3D Memoji Avatar - AI Portfolio Representation"
                 fill
                 className="object-contain"

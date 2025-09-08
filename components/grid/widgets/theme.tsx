@@ -65,9 +65,12 @@ function ThemeToggle() {
                         'flex size-10 items-center justify-center rounded-full border-2 transition-all duration-300 lg:size-12 lg:border-4 shadow-md',
                         isOn 
                             ? 'bg-white border-white/30 translate-x-full text-purple-600' 
-                            : 'bg-white border-gray-200 text-gray-400',
+                            : 'bg-white border-gray-200 text-gray-400 ring-1 ring-gray-300 ring-offset-0',
                         isActivating && 'animate-bounce'
-                    )}>
+                    )}
+                    style={!isOn ? { 
+                        boxShadow: '0 0 0 1px rgb(168 85 247), 0 0 0 2px rgb(209 213 219)'
+                    } : undefined}>
                     {/* AI robot icon - gray when OFF, colored when ACTIVATING/ON */}
                     {!useIconFallback ? (
                         <Image

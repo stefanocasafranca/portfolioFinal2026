@@ -21,9 +21,8 @@ export default function Description() {
                 priority
                 className='rounded-lg'
             />
-            <p className='leading-relaxed'>
-                Hi, I&apos;m <span className='font-sf-pro text-xl'>Stefano</span>, a UX Designer and Researcher learning to code.{' '}
-                <span className='hidden md:inline'>I am ready to high stress environments in order to build amazing products.</span>
+            <p className='leading-relaxed text-sm sm:text-base'>
+                Hi, I&apos;m <span className='font-sf-pro text-lg sm:text-xl font-semibold'>Stefano</span>, a <a href='https://jakobnielsenphd.substack.com/p/ux-unicorn' target='_blank' rel='noopener noreferrer' className='font-medium text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300 underline decoration-dotted underline-offset-2 transition-colors'>UX Unicorn</a> who does Design, Research and Coding. I&apos;m ready to <span className='font-semibold'>pour my heart and soul</span> into crafting experiences that truly <span className='font-medium'>tackle big problems</span>.
             </p>
         </Card>
     );

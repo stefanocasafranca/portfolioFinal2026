@@ -9,7 +9,8 @@ import DecorativeCTA from '../../ui/decorative-cta';
 export default function LinkedIn() {
     return (
         <LinkCard 
-            className='group relative bg-gradient-to-br from-blue-100 to-indigo-100 dark:from-blue-900/20 dark:to-indigo-900/20'
+            className='group relative'
+            style={{backgroundColor: '#c9def6'}}
             href='https://linkedin.com/in/stefano-casafranca'
             target='_blank'
             rel='noopener noreferrer'

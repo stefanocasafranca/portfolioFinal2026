@@ -22,7 +22,8 @@ export default function Email() {
 
     return (
         <LinkCard 
-            className='group relative bg-gradient-to-br from-green-100 to-emerald-100 dark:from-green-900/20 dark:to-emerald-900/20'
+            className='group relative'
+            style={{backgroundColor: '#f5efe6'}}
             href={`mailto:${email}`}
             aria-label='Send Email'
         >

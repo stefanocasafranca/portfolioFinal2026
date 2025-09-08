@@ -38,7 +38,7 @@ export default function Project3() {
                     className='size-10 justify-end transition-all ease-in-out group-hover:w-full'
                 >
                     <span className='hidden whitespace-nowrap opacity-0 transition-all duration-300 ease-in group-hover:translate-x-0 group-hover:opacity-100 md:inline'>
-                        View Project
+                        UX Startup Prototype
                     </span>
                     <span>
                         <FaArrowRight className='-rotate-45 transition-transform duration-300 group-hover:rotate-0' />
