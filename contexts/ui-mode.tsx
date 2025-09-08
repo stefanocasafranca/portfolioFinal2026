@@ -7,6 +7,7 @@ interface UIModeContextType {
   enterAiMode: () => void;
   exitAiMode: () => void;
   isAnimating: boolean;
+  isActivating: boolean;
 }
 
 const UIModeContext = createContext<UIModeContextType | undefined>(undefined);
@@ -18,13 +19,21 @@ interface UIModeProviderProps {
 export function UIModeProvider({ children }: UIModeProviderProps) {
   const [isAiMode, setIsAiMode] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [isActivating, setIsActivating] = useState(false);
 
   const enterAiMode = () => {
-    setIsAnimating(true);
-    setIsAiMode(true);
+    // First show the purple "activating" state
+    setIsActivating(true);
     
-    // Clear animation state after transition
-    setTimeout(() => setIsAnimating(false), 600);
+    // After a delay, start the actual transition
+    setTimeout(() => {
+      setIsActivating(false);
+      setIsAnimating(true);
+      setIsAiMode(true);
+      
+      // Clear animation state after transition
+      setTimeout(() => setIsAnimating(false), 600);
+    }, 800); // 800ms delay to see the purple activation
   };
 
   const exitAiMode = () => {
@@ -42,7 +51,8 @@ export function UIModeProvider({ children }: UIModeProviderProps) {
       isAiMode, 
       enterAiMode, 
       exitAiMode, 
-      isAnimating 
+      isAnimating,
+      isActivating
     }}>
       {children}
     </UIModeContext.Provider>

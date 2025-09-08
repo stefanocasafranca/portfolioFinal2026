@@ -28,12 +28,12 @@ export default function Theme() {
 
 function ThemeToggle() {
     const isMounted = useMounted();
-    const { isAiMode, enterAiMode } = useUIMode();
+    const { isAiMode, enterAiMode, isActivating } = useUIMode();
     const [useIconFallback, setUseIconFallback] = useState(false);
 
     const handleToggle = () => {
         // In normal mode, this enters AI mode
-        if (isMounted) {
+        if (isMounted && !isActivating) {
             enterAiMode();
         }
     };
@@ -41,29 +41,34 @@ function ThemeToggle() {
     if (!isMounted) return null;
 
     // OFF state (default) - circle left, gray background
+    // ACTIVATING state - circle moves right, purple background, icon activates
     // ON state (active) - circle right, gradient background
-    const isOn = isAiMode;
+    const isOn = isAiMode || isActivating;
 
     return (
         <div className="relative">
             <button
                 className={cn(
                     'cancel-drag flex h-10 w-20 cursor-pointer items-center rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-purple-500/50 lg:h-12 lg:w-24 shadow-lg hover:scale-105',
-                    isOn 
+                    isActivating 
+                        ? 'bg-gradient-to-r from-purple-500 to-indigo-600 animate-pulse' 
+                        : isAiMode 
                         ? 'bg-gradient-to-r from-purple-500 to-indigo-600' 
                         : 'bg-[#E0E0E0]'
                 )}
                 onClick={handleToggle}
-                aria-label={isOn ? 'Exit AI Portfolio mode' : 'Enter AI Portfolio mode'}
+                disabled={isActivating}
+                aria-label={isActivating ? 'Activating AI Portfolio...' : isOn ? 'Exit AI Portfolio mode' : 'Enter AI Portfolio mode'}
                 aria-pressed={isOn}>
                 <div
                     className={cn(
                         'flex size-10 items-center justify-center rounded-full border-2 transition-all duration-300 lg:size-12 lg:border-4 shadow-md',
                         isOn 
                             ? 'bg-white border-white/30 translate-x-full text-purple-600' 
-                            : 'bg-white border-gray-200 text-gray-400'
+                            : 'bg-white border-gray-200 text-gray-400',
+                        isActivating && 'animate-bounce'
                     )}>
-                    {/* AI robot icon - gray when OFF, colored when ON */}
+                    {/* AI robot icon - gray when OFF, colored when ACTIVATING/ON */}
                     {!useIconFallback ? (
                         <Image
                             src="/images/icons/ai-toggle.svg"
@@ -72,7 +77,7 @@ function ThemeToggle() {
                             height={20}
                             className={cn(
                                 "transition-all duration-300",
-                                isOn ? "opacity-100" : "opacity-60"
+                                (isActivating || isAiMode) ? "opacity-100" : "opacity-60"
                             )}
                             onError={() => setUseIconFallback(true)}
                         />
@@ -80,7 +85,7 @@ function ThemeToggle() {
                         <FaRobot 
                             className={cn(
                                 "w-5 h-5 transition-all duration-300",
-                                isOn ? "text-purple-600" : "text-[#9E9E9E]"
+                                (isActivating || isAiMode) ? "text-purple-600 animate-pulse" : "text-[#9E9E9E]"
                             )} 
                         />
                     )}
