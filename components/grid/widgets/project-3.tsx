@@ -1,10 +1,11 @@
 import LinkCard from '../../ui/link-card';
+import Image from 'next/image';
 import { FaArrowRight } from 'react-icons/fa6';
 import DecorativeCTA from '../../ui/decorative-cta';
 import { toKebabCase } from '@/utils/lib';
 
 export default function Project3() {
-    const projectName = 'Project Three';
+    const projectName = 'CLE';
 
     return (
         <LinkCard 
@@ -12,16 +13,25 @@ export default function Project3() {
             href={`/projects/${toKebabCase(projectName)}`}
             aria-label={`View ${projectName} project`}
         >
-            <div className='flex flex-col justify-center gap-6 p-8'>
-                <h2 className='font-sf-pro text-2xl' title={projectName}>
-                    <span className='cancel-drag'>
-                        {projectName}
-                    </span>
-                </h2>
-                <p className='line-clamp-3 leading-relaxed max-md:line-clamp-4 max-sm:line-clamp-2'>
-                    A horizontal bento card for the Project Three, styled to match the Portfolio Website card. Update this description as needed.
-                </p>
-                <small className='text-gray-600 dark:text-gray-400'>Next.js • React • Tailwind</small>
+            <div className='relative w-full h-full'>
+                <Image
+                    src='/images/3rdCard_CLE_Desktop&Tablet-1.png'
+                    alt={toKebabCase(projectName)}
+                    fill
+                    sizes='(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw'
+                    className='object-cover block md:hidden'
+                    priority
+                    draggable='false'
+                />
+                <Image
+                    src='/images/3rdCard_CLE_Desktop&Tablet.png'
+                    alt={toKebabCase(projectName)}
+                    fill
+                    sizes='(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw'
+                    className='object-cover hidden md:block'
+                    priority
+                    draggable='false'
+                />
             </div>
             <div className='absolute bottom-3 left-3'>
                 <DecorativeCTA

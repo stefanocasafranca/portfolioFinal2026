@@ -5,7 +5,7 @@ import DecorativeCTA from '../../ui/decorative-cta';
 import { FaArrowRight } from 'react-icons/fa6';
 
 export default function Project4() {
-    const projectName = 'Project Four';
+    const projectName = 'Fogo Direto';
 
     return (
         <LinkCard 
@@ -14,7 +14,7 @@ export default function Project4() {
             aria-label={`View ${projectName} project`}
         >
             <Image
-                src="/projects/project-4.png"
+                src='/images/4thCard_FogoDireto_Desktop&Tablet&Mobile.png'
                 alt={toKebabCase(projectName)}
                 fill
                 sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'

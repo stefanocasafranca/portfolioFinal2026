@@ -1,4 +1,3 @@
-import projectImage from '@/public/projects/next-blog-starter.png';
 import LinkCard from '../../ui/link-card';
 import Image from 'next/image';
 import { toKebabCase } from '@/utils/lib';
@@ -6,7 +5,7 @@ import DecorativeCTA from '../../ui/decorative-cta';
 import { FaArrowRight } from 'react-icons/fa6';
 
 export default function Project() {
-    const projectName = 'Next Blog Starter';
+    const projectName = 'Fazil Auto';
 
     return (
         <LinkCard 
@@ -15,12 +14,11 @@ export default function Project() {
             aria-label={`View ${projectName} project`}
         >
             <Image
-                src={projectImage}
+                src='/images/1stCard_FazilAuto_Desktop.png'
                 alt={toKebabCase(projectName)}
                 fill
                 sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
                 className='object-cover'
-                placeholder='blur'
                 priority
                 draggable='false'
             />
