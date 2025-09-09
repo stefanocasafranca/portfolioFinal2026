@@ -9,7 +9,7 @@ export default function Project4() {
 
     return (
         <LinkCard 
-            className='group relative bg-red-100'
+            className='group relative bg-white'
             href={`/projects/${toKebabCase(projectName)}`}
             aria-label={`View ${projectName} project`}
         >

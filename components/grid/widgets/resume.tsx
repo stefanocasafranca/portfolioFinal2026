@@ -11,7 +11,7 @@ export default function Resume() {
     return (
         <LinkCard 
             className='group relative flex flex-col items-center justify-center'
-            style={{backgroundColor: '#e9edf2'}}
+            style={{backgroundColor: '#f9fafb'}}
             href='/resume.pdf'
             target='_blank'
             aria-label='View Resume PDF'

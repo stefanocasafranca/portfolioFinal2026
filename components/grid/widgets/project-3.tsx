@@ -9,7 +9,7 @@ export default function Project3() {
 
     return (
         <LinkCard 
-            className='group relative bg-gradient-to-br from-green-100 to-yellow-100 dark:from-green-900/20 dark:to-yellow-900/20'
+            className='group relative bg-white'
             href={`/projects/${toKebabCase(projectName)}`}
             aria-label={`View ${projectName} project`}
         >

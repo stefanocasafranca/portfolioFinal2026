@@ -22,24 +22,25 @@ export default function Email() {
 
     return (
         <LinkCard 
-            className='group relative'
-            style={{backgroundColor: '#f5efe6'}}
+            className='group relative flex flex-col items-center justify-center'
+            style={{backgroundColor: '#fcfcfc'}}
             href={`mailto:${email}`}
             aria-label='Send Email'
         >
-            {/* Centered Apple Mail icon */}
-            <div className='w-full h-full flex items-center justify-center relative'>
-                <IoMailOutline className='text-4xl md:text-6xl text-black dark:text-white' aria-label='Email' />
-                
-                {/* Copy button in bottom left */}
-                <button
-                    className='cancel-drag size-10 flex items-center justify-center rounded-full bg-white absolute left-3 bottom-3 shadow transition active:scale-95 z-10'
-                    onClick={handleCopy}
-                    aria-label='Copy Email Address'
-                >
-                    {copied ? <FaCheck className='text-green-500' /> : <FaRegCopy className='text-black' />}
-                </button>
+            {/* Vertically centered content */}
+            <div className='w-full flex flex-col items-center justify-center flex-grow gap-2'>
+                <span role='img' aria-label='Email' className='text-5xl'>✉️</span>
+                <h2 className='font-sf-pro text-2xl text-center text-black dark:text-white'>E-mail</h2>
             </div>
+                
+            {/* Copy button in bottom left */}
+            <button
+                className='cancel-drag size-10 flex items-center justify-center rounded-full bg-white absolute left-3 bottom-3 shadow transition active:scale-95 z-10'
+                onClick={handleCopy}
+                aria-label='Copy Email Address'
+            >
+                {copied ? <FaCheck className='text-green-500' /> : <FaRegCopy className='text-black' />}
+            </button>
         </LinkCard>
     );
 } 

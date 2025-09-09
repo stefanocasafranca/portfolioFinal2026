@@ -9,19 +9,39 @@ export default function Project() {
 
     return (
         <LinkCard 
-            className='group relative bg-red-100'
+            className='group relative bg-white'
             href={`/projects/${toKebabCase(projectName)}`}
             aria-label={`View ${projectName} project`}
         >
-            <Image
-                src='/images/1stCard_FazilAuto_Desktop.png'
-                alt={toKebabCase(projectName)}
-                fill
-                sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
-                className='object-cover'
-                priority
-                draggable='false'
-            />
+            <div className='relative w-full h-full'>
+                <Image
+                    src='/images/1stCard_FazilAuto_Desktop-2.png'
+                    alt={toKebabCase(projectName)}
+                    fill
+                    sizes='(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw'
+                    className='object-cover block md:hidden'
+                    priority
+                    draggable='false'
+                />
+                <Image
+                    src='/images/1stCard_FazilAuto_Desktop.png'
+                    alt={toKebabCase(projectName)}
+                    fill
+                    sizes='(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw'
+                    className='object-cover hidden md:block lg:hidden'
+                    priority
+                    draggable='false'
+                />
+                <Image
+                    src='/images/1stCard_FazilAuto_Desktop.png'
+                    alt={toKebabCase(projectName)}
+                    fill
+                    sizes='(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw'
+                    className='object-cover hidden lg:block'
+                    priority
+                    draggable='false'
+                />
+            </div>
             <div className='absolute bottom-3 left-3'>
                 <DecorativeCTA
                     className='size-10 justify-end transition-all ease-in-out group-hover:w-full'

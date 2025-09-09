@@ -10,7 +10,7 @@ export default function LinkedIn() {
     return (
         <LinkCard 
             className='group relative'
-            style={{backgroundColor: '#c9def6'}}
+            style={{backgroundColor: '#fafbfc'}}
             href='https://linkedin.com/in/stefano-casafranca'
             target='_blank'
             rel='noopener noreferrer'
