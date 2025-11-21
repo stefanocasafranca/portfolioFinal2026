@@ -7,6 +7,7 @@ import Image from 'next/image';
 import CursorBackground from './cursor-background';
 import Header from '../ui/header';
 import AIPortfolioNavigation from './navigation';
+import PrivacyBanner from './privacy-banner';
 import { usePrefersReducedMotion } from '@/utils/hooks';
 import { useChatbot } from '@/utils/hooks/use-chatbot';
 
@@ -183,6 +184,9 @@ export default function AIPortfolio() {
       <div className="relative z-10 max-w-[1200px] max-lg:max-w-[800px] max-md:max-w-[375px] max-sm:max-w-[320px] mx-auto px-4 py-4">
         <AIPortfolioNavigation />
       </div>
+
+      {/* Privacy/Analytics Consent Banner */}
+      <PrivacyBanner />
     </motion.div>
   );
 }
