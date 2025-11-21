@@ -7,7 +7,7 @@ import { FaUser, FaBriefcase, FaCode, FaGamepad, FaEnvelope } from 'react-icons/
 import { usePrefersReducedMotion } from '@/utils/hooks';
 
 interface NavigationTab {
-    icon: React.ComponentType<{ className?: string }>;
+    icon: React.ComponentType<{ className?: string; style?: React.CSSProperties }>;
     label: string;
     id: string;
     bgColor: string;
