@@ -19,7 +19,8 @@ export default function Project4() {
                 fill
                 sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
                 className='object-cover'
-                priority
+                loading="lazy"
+                quality={85}
                 draggable='false'
             />
             <div className='absolute bottom-3 left-3'>

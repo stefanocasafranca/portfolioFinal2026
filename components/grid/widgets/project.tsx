@@ -21,6 +21,7 @@ export default function Project() {
                     sizes='(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw'
                     className='object-cover block md:hidden'
                     priority
+                    quality={90}
                     draggable='false'
                 />
                 <Image
@@ -30,6 +31,7 @@ export default function Project() {
                     sizes='(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw'
                     className='object-cover hidden md:block lg:hidden'
                     priority
+                    quality={90}
                     draggable='false'
                 />
                 <Image
@@ -39,6 +41,7 @@ export default function Project() {
                     sizes='(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw'
                     className='object-cover hidden lg:block'
                     priority
+                    quality={90}
                     draggable='false'
                 />
             </div>
