@@ -15,23 +15,21 @@ export default function Project3() {
         >
             <div className='relative w-full h-full'>
                 <Image
-                    src='/images/3rdCard_CLE_Desktop&Tablet-1.png'
+                    src='/images/3rdCard_CLE_Desktop&Tablet-1.webp'
                     alt={toKebabCase(projectName)}
                     fill
                     sizes='(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw'
                     className='object-cover block md:hidden'
                     loading="lazy"
-                    quality={85}
                     draggable='false'
                 />
                 <Image
-                    src='/images/3rdCard_CLE_Desktop&Tablet.png'
+                    src='/images/3rdCard_CLE_Desktop&Tablet.webp'
                     alt={toKebabCase(projectName)}
                     fill
                     sizes='(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw'
                     className='object-cover hidden md:block'
                     loading="lazy"
-                    quality={85}
                     draggable='false'
                 />
             </div>

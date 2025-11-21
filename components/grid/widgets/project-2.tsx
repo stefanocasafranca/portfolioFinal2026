@@ -15,33 +15,30 @@ export default function Project2() {
         >
             <div className='relative w-full h-full'>
                 <Image
-                    src='/images/2ndCard_ABI_Mobile.png'
+                    src='/images/2ndCard_ABI_Mobile.webp'
                     alt={toKebabCase(projectName)}
                     fill
                     sizes='(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw'
                     className='object-cover block md:hidden'
                     loading="lazy"
-                    quality={85}
                     draggable='false'
                 />
                 <Image
-                    src='/images/2ndCard_ABI_Tablet.png'
+                    src='/images/2ndCard_ABI_Tablet.webp'
                     alt={toKebabCase(projectName)}
                     fill
                     sizes='(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw'
                     className='object-cover hidden md:block lg:hidden'
                     loading="lazy"
-                    quality={85}
                     draggable='false'
                 />
                 <Image
-                    src='/images/2ndCard_ABI_Desktop.png'
+                    src='/images/2ndCard_ABI_Desktop.webp'
                     alt={toKebabCase(projectName)}
                     fill
                     sizes='(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw'
                     className='object-cover hidden lg:block'
                     loading="lazy"
-                    quality={85}
                     draggable='false'
                 />
             </div>
