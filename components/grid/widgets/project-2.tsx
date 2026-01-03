@@ -5,7 +5,7 @@ import DecorativeCTA from '../../ui/decorative-cta';
 import { toKebabCase } from '@/utils/lib';
 
 export default function Project2() {
-    const projectName = 'ABI';
+    const projectName = 'Redivo Sleep App';
 
     return (
         <LinkCard 
@@ -15,7 +15,7 @@ export default function Project2() {
         >
             <div className='relative w-full h-full'>
                 <Image
-                    src='/images/2ndCard_ABI_Mobile.webp'
+                    src='/images/2ndCard_Redivo_Mobile.png'
                     alt={toKebabCase(projectName)}
                     fill
                     sizes='(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw'
@@ -24,7 +24,7 @@ export default function Project2() {
                     draggable='false'
                 />
                 <Image
-                    src='/images/2ndCard_ABI_Tablet.webp'
+                    src='/images/2ndCard_Redivo_Tablet.png'
                     alt={toKebabCase(projectName)}
                     fill
                     sizes='(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw'
@@ -33,7 +33,7 @@ export default function Project2() {
                     draggable='false'
                 />
                 <Image
-                    src='/images/2ndCard_ABI_Desktop.webp'
+                    src='/images/2ndCard_Redivo_Desktop.png'
                     alt={toKebabCase(projectName)}
                     fill
                     sizes='(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw'
@@ -47,7 +47,7 @@ export default function Project2() {
                     className='size-10 justify-end transition-all ease-in-out group-hover:w-full'
                 >
                     <span className='hidden whitespace-nowrap opacity-0 transition-all duration-300 ease-in group-hover:translate-x-0 group-hover:opacity-100 md:inline'>
-                        UX/UI Website Redesign
+                        Redivo Sleep App
                     </span>
                     <span>
                         <FaArrowRight className='-rotate-45 transition-transform duration-300 group-hover:rotate-0' />
