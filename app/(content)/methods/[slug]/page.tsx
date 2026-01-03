@@ -67,8 +67,8 @@ export default async function MethodPage({ params }: { params: Params }) {
         {parsedImages.length > 0 && (
           <GridLayout layouts={projectLayouts} className='-mt-8 pb-16'>
             {parsedImages.map((image: { i: string; url: string }) => (
-              <div key={image.i}>
-                <Card className='relative'>
+              <div key={image.i} className='h-full'>
+                <Card className='relative h-full'>
                   <Image
                     src={image.url}
                     alt={title}
