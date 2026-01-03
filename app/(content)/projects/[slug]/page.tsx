@@ -1,5 +1,4 @@
 import Anchor from '@/components/ui/anchor';
-import Card from '@/components/ui/card';
 import Container from '@/components/ui/container';
 import GridLayout from '@/components/grid/layout';
 import { CustomMDX } from '@/components/ui/mdx';
@@ -9,7 +8,7 @@ import { notFound } from 'next/navigation';
 import Script from 'next/script';
 import { FaArrowRight, FaX } from 'react-icons/fa6';
 import { projectLayouts } from '@/config/grid';
-import Image from 'next/image';
+import ProjectImageWithDownload from '@/components/grid/widgets/project-image-with-download';
 
 type Params = Promise<{ slug: string }>;
 
@@ -106,20 +105,34 @@ const ProjectPage = async ({ params }: { params: Params }) => {
                 </Container>
                 {project.metadata.images && (
                     <GridLayout layouts={projectLayouts} className='-mt-8 pb-16'>
-                        {JSON.parse(project.metadata.images).map((image: { i: string; url: string }) => (
-                            <div key={image.i}>
-                                <Card className='relative'>
-                                    <Image
-                                        src={image.url}
+                        {JSON.parse(project.metadata.images).map((image: { i: string; url: string }) => {
+                            const isUxResearchImages2 = slug === 'ux-research' && image.i === 'images-2';
+                            const isUxResearchImages4 = slug === 'ux-research' && image.i === 'images-4';
+                            const showDownload = isUxResearchImages2 || isUxResearchImages4;
+                            
+                            // Different PDFs for different images
+                            let pdfPath = '';
+                            let pdfFilename = '';
+                            if (isUxResearchImages2) {
+                                pdfPath = '/projects/ux-research/Document_as_System_for_AIMediatedEndUserProgramming.pdf';
+                                pdfFilename = 'Document_as_System_for_AIMediatedEndUserProgramming.pdf';
+                            } else if (isUxResearchImages4) {
+                                pdfPath = '/projects/ux-research/Enhancing_Developer_Comprehension_of_Error_Notifications_through_Visual_Aid.pdf';
+                                pdfFilename = 'Enhancing_Developer_Comprehension_of_Error_Notifications_through_Visual_Aid.pdf';
+                            }
+                            
+                            return (
+                                <div key={image.i}>
+                                    <ProjectImageWithDownload
+                                        imageUrl={image.url}
                                         alt={project.metadata.title}
-                                        fill
-                                        objectFit='cover'
-                                        sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
-                                        draggable='false'
+                                        showDownload={showDownload}
+                                        pdfPath={pdfPath}
+                                        pdfFilename={pdfFilename}
                                     />
-                                </Card>
-                            </div>
-                        ))}
+                                </div>
+                            );
+                        })}
                     </GridLayout>
                 )}
             </main>
