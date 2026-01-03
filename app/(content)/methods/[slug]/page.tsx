@@ -1,13 +1,12 @@
 import Anchor from '@/components/ui/anchor';
-import Card from '@/components/ui/card';
 import Container from '@/components/ui/container';
 import { CustomMDX } from '@/components/ui/mdx';
 import { getAllMethods } from '@/utils/mdx';
 import { notFound } from 'next/navigation';
 import { FaArrowRight, FaX } from 'react-icons/fa6';
-import Image from 'next/image';
 import GridLayout from '@/components/grid/layout';
 import { projectLayouts } from '@/config/grid';
+import MethodImageWithLink from '@/components/grid/widgets/method-image-with-link';
 
 type Params = Promise<{ slug: string }>;
 
@@ -66,18 +65,13 @@ export default async function MethodPage({ params }: { params: Params }) {
         </Container>
         {parsedImages.length > 0 && (
           <GridLayout layouts={projectLayouts} className='-mt-8 pb-16'>
-            {parsedImages.map((image: { i: string; url: string }) => (
+            {parsedImages.map((image: { i: string; url: string; link?: string }) => (
               <div key={image.i} className='h-full'>
-                <Card className='relative h-full'>
-                  <Image
-                    src={image.url}
-                    alt={title}
-                    fill
-                    className='object-cover'
-                    sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
-                    draggable={false}
-                  />
-                </Card>
+                <MethodImageWithLink
+                  imageUrl={image.url}
+                  alt={title}
+                  link={image.link}
+                />
               </div>
             ))}
           </GridLayout>
