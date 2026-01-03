@@ -15,7 +15,7 @@ export default function Project() {
         >
             <div className='relative w-full h-full'>
                 <Image
-                    src='/images/1stCard_FazilAuto_Desktop-2.png'
+                    src='/images/1stCard_UXResearch_Mobile.png'
                     alt={toKebabCase(projectName)}
                     fill
                     sizes='(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw'
@@ -25,7 +25,7 @@ export default function Project() {
                     draggable='false'
                 />
                 <Image
-                    src='/images/1stCard_FazilAuto_Desktop.png'
+                    src='/images/1stCard_UXResearch_Tablet.png'
                     alt={toKebabCase(projectName)}
                     fill
                     sizes='(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw'
@@ -35,7 +35,7 @@ export default function Project() {
                     draggable='false'
                 />
                 <Image
-                    src='/images/1stCard_FazilAuto_Desktop.png'
+                    src='/images/1stCard_UXResearch_Desktop.png'
                     alt={toKebabCase(projectName)}
                     fill
                     sizes='(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw'

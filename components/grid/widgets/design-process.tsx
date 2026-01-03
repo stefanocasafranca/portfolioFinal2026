@@ -20,7 +20,7 @@ export default function DesignProcess() {
             {/* Mobile layout - ONLY the image, covering the card */}
             <div className='md:hidden flex items-center justify-center w-full h-full p-1'>
                 <Image
-                    src='/images/workShopDesign.webp'
+                    src='/images/WorkShop Design.png'
                     alt='Workshop Design Process'
                     className='object-contain w-full h-full'
                     fill
@@ -33,7 +33,7 @@ export default function DesignProcess() {
             <div className='hidden md:flex lg:hidden flex-col items-center justify-center w-full h-full gap-6 p-1'>
                 <div className='flex flex-1 items-center justify-center w-full h-full'>
                     <Image
-                        src='/images/workShopDesign.webp'
+                        src='/images/WorkShop Design.png'
                         alt='Workshop Design Process'
                         className='object-contain'
                         fill
@@ -59,7 +59,7 @@ export default function DesignProcess() {
             <div className='hidden lg:flex flex-col items-center justify-center w-full h-full gap-6 p-1'>
                 <div className='flex flex-1 items-center justify-center w-full h-full'>
                     <Image
-                        src='/images/workShopDesign.webp'
+                        src='/images/WorkShop Design.png'
                         alt='Workshop Design Process'
                         className='object-contain'
                         fill
