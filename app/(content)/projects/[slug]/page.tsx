@@ -107,7 +107,7 @@ const ProjectPage = async ({ params }: { params: Params }) => {
                 </Container>
                 {project.metadata.images && (
                     <GridLayout layouts={getProjectLayout(project.metadata.layout)} className='-mt-8 pb-16'>
-                        {JSON.parse(project.metadata.images).map((image: { i: string; url: string }) => {
+                        {JSON.parse(project.metadata.images).map((image: { i: string; url: string; link?: string }) => {
                             const isUxResearchImages2 = slug === 'ux-research' && image.i === 'images-2';
                             const isUxResearchImages4 = slug === 'ux-research' && image.i === 'images-4';
                             const showDownload = isUxResearchImages2 || isUxResearchImages4;
@@ -131,6 +131,7 @@ const ProjectPage = async ({ params }: { params: Params }) => {
                                         showDownload={showDownload}
                                         pdfPath={pdfPath}
                                         pdfFilename={pdfFilename}
+                                        link={image.link}
                                     />
                                 </div>
                             );
