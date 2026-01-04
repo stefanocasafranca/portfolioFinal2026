@@ -1,9 +1,8 @@
 import LinkCard from '../../ui/link-card';
-import { FaLinkedin } from 'react-icons/fa6';
-import DecorativeCTA from '../../ui/decorative-cta';
+import Image from 'next/image';
 
 /**
- * Contact card component for LinkedIn profile link
+ * Contact card component for GitHub profile link
  * Uses the 'contact' variant for consistent contact-related styling
  */
 export default function LinkedIn() {
@@ -11,23 +10,23 @@ export default function LinkedIn() {
         <LinkCard 
             className='group relative'
             style={{backgroundColor: '#fafbfc'}}
-            href='https://linkedin.com/in/stefano-casafranca'
+            href='https://github.com/stefanocasafranca'
             target='_blank'
             rel='noopener noreferrer'
-            aria-label='Visit LinkedIn Profile'
+            aria-label='Visit GitHub Profile'
         >
-            {/* Unified layout for all screens: centered title, icon button bottom left */}
+            {/* Unified layout for all screens: centered GitHub logo */}
             <div className='w-full h-full flex flex-col items-center justify-center relative p-4'>
-                <h2 className='font-sf-pro text-2xl text-center w-full mb-0' title='LinkedIn'>
-                    <span className='cancel-drag'>
-                        LinkedIn
-                    </span>
-                </h2>
-                <DecorativeCTA
-                    className='size-10 flex items-center justify-center rounded-full bg-white shadow absolute left-3 bottom-3'
-                >
-                    <FaLinkedin className='text-black text-2xl' />
-                </DecorativeCTA>
+                <div className='relative w-24 h-24 md:w-32 md:h-32' style={{ transform: 'scale(0.7)' }}>
+                    <Image
+                        src='/images/githubLogo.png'
+                        alt='GitHub'
+                        fill
+                        className='object-contain'
+                        loading="lazy"
+                        draggable='false'
+                    />
+                </div>
             </div>
         </LinkCard>
     );
