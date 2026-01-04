@@ -20,7 +20,7 @@ export default function GridLayout({ layouts, className, children }: Readonly<Re
         <section
             className={cn(
                 // Line 22: This sets the max container width (1200px)
-                'mx-auto max-w-[1200px] max-lg:max-w-[800px] max-md:max-w-[375px] max-sm:max-w-[320px]',
+                'mx-auto max-w-[1200px] max-lg:max-w-[1000px] max-md:max-w-[375px] max-sm:max-w-[320px]',
                 isMounted ? 'translate-y-0 opacity-100' : '-translate-y-6 opacity-0',
                 'transition-[opacity,_transform] duration-700',
                 className

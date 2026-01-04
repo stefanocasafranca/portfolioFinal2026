@@ -281,24 +281,24 @@ const bentoHorizontalLayout: { [key in Layouts]: Layout[] } = {
         { i: 'images-8', x: 2, y: 3, w: 2, h: 1 }, // Horizontal (bottom-right, 2x1)
     ],
     md: [
-        { i: 'images-1', x: 0, y: 0, w: 1, h: 1 },
-        { i: 'images-2', x: 1, y: 0, w: 2, h: 1 },
-        { i: 'images-3', x: 3, y: 0, w: 1, h: 2 },
-        { i: 'images-4', x: 0, y: 1, w: 1, h: 1 },
-        { i: 'images-5', x: 1, y: 1, w: 2, h: 1 },
-        { i: 'images-6', x: 0, y: 2, w: 2, h: 2 },
-        { i: 'images-7', x: 2, y: 2, w: 1, h: 1 },
-        { i: 'images-8', x: 3, y: 2, w: 1, h: 1 },
+        { i: 'images-1', x: 0, y: 0, w: 2, h: 1 }, // Same as lg - scaled proportionally (4 columns)
+        { i: 'images-2', x: 2, y: 0, w: 1, h: 1 }, // Same as lg - scaled proportionally
+        { i: 'images-3', x: 3, y: 0, w: 1, h: 2 }, // Same as lg - scaled proportionally
+        { i: 'images-4', x: 0, y: 1, w: 1, h: 1 }, // Same as lg - scaled proportionally
+        { i: 'images-5', x: 1, y: 1, w: 2, h: 1 }, // Same as lg - scaled proportionally
+        { i: 'images-6', x: 0, y: 2, w: 2, h: 2 }, // Same as lg - scaled proportionally
+        { i: 'images-7', x: 2, y: 2, w: 2, h: 1 }, // Same as lg - scaled proportionally
+        { i: 'images-8', x: 2, y: 3, w: 2, h: 1 }, // Same as lg - scaled proportionally
     ],
     sm: [
-        { i: 'images-1', x: 0, y: 0, w: 1, h: 1 },
-        { i: 'images-2', x: 1, y: 0, w: 1, h: 1 },
-        { i: 'images-3', x: 0, y: 1, w: 1, h: 2 },
-        { i: 'images-4', x: 1, y: 1, w: 1, h: 1 },
-        { i: 'images-5', x: 1, y: 2, w: 1, h: 1 },
-        { i: 'images-6', x: 0, y: 3, w: 2, h: 2 },
-        { i: 'images-7', x: 0, y: 5, w: 1, h: 1 },
-        { i: 'images-8', x: 1, y: 5, w: 1, h: 1 },
+        { i: 'images-1', x: 0, y: 0, w: 2, h: 1 }, // Top, full width
+        { i: 'images-2', x: 0, y: 1, w: 1, h: 1 }, // Below Card 1, left side
+        { i: 'images-3', x: 1, y: 1, w: 1, h: 2 }, // Right of Card 2, tall vertical (swapped with images-4)
+        { i: 'images-4', x: 0, y: 2, w: 1, h: 1 }, // Below Card 2, same size (swapped with images-3)
+        { i: 'images-5', x: 0, y: 3, w: 2, h: 1 }, // Below Card 3 and Card 4, full width
+        { i: 'images-7', x: 0, y: 4, w: 2, h: 1 }, // Below Card 5, full width
+        { i: 'images-6', x: 0, y: 5, w: 2, h: 2 }, // Below Card 7, large full width
+        { i: 'images-8', x: 0, y: 7, w: 2, h: 1 }, // At bottom, full width
     ],
 };
 
