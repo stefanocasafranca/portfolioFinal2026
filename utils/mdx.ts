@@ -13,6 +13,7 @@ interface PostMetadata extends BaseMetadata {
 interface ProjectMetadata extends BaseMetadata {
     links: string;
     images?: string;
+    layout?: string; // Optional layout preset: 'default', 'bento-horizontal', 'bento-vertical'
 }
 
 interface MethodMetadata extends BaseMetadata {

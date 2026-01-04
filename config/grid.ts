@@ -263,3 +263,84 @@ export const projectLayouts: { [key in Layouts]: Layout[] } = {
         { i: 'images-5', x: 2, y: 3, w: 2, h: 1 },
     ],
 };
+
+// Bento horizontal layout - matches reference image exactly (8 images)
+// Row 0: [2x1 horizontal] [1x1 square] [1x2 vertical]
+// Row 1: [1x1 square] [2x1 horizontal] [continues 1x2]
+// Row 2-3: [2x2 large] [2x1 horizontal] [continues 1x2]
+// Row 3: [continues 2x2] [2x1 horizontal]
+const bentoHorizontalLayout: { [key in Layouts]: Layout[] } = {
+    lg: [
+        { i: 'images-1', x: 0, y: 0, w: 2, h: 1 }, // Horizontal (top-left, 2x1)
+        { i: 'images-2', x: 2, y: 0, w: 1, h: 1 }, // Square (top-middle, 1x1)
+        { i: 'images-3', x: 3, y: 0, w: 1, h: 2 }, // Vertical (top-right, 1x2)
+        { i: 'images-4', x: 0, y: 1, w: 1, h: 1 }, // Square (middle-left, 1x1)
+        { i: 'images-5', x: 1, y: 1, w: 2, h: 1 }, // Horizontal (middle-center, 2x1)
+        { i: 'images-6', x: 0, y: 2, w: 2, h: 2 }, // Large (bottom-left, 2x2)
+        { i: 'images-7', x: 2, y: 2, w: 2, h: 1 }, // Horizontal (bottom-middle, 2x1)
+        { i: 'images-8', x: 2, y: 3, w: 2, h: 1 }, // Horizontal (bottom-right, 2x1)
+    ],
+    md: [
+        { i: 'images-1', x: 0, y: 0, w: 1, h: 1 },
+        { i: 'images-2', x: 1, y: 0, w: 2, h: 1 },
+        { i: 'images-3', x: 3, y: 0, w: 1, h: 2 },
+        { i: 'images-4', x: 0, y: 1, w: 1, h: 1 },
+        { i: 'images-5', x: 1, y: 1, w: 2, h: 1 },
+        { i: 'images-6', x: 0, y: 2, w: 2, h: 2 },
+        { i: 'images-7', x: 2, y: 2, w: 1, h: 1 },
+        { i: 'images-8', x: 3, y: 2, w: 1, h: 1 },
+    ],
+    sm: [
+        { i: 'images-1', x: 0, y: 0, w: 1, h: 1 },
+        { i: 'images-2', x: 1, y: 0, w: 1, h: 1 },
+        { i: 'images-3', x: 0, y: 1, w: 1, h: 2 },
+        { i: 'images-4', x: 1, y: 1, w: 1, h: 1 },
+        { i: 'images-5', x: 1, y: 2, w: 1, h: 1 },
+        { i: 'images-6', x: 0, y: 3, w: 2, h: 2 },
+        { i: 'images-7', x: 0, y: 5, w: 1, h: 1 },
+        { i: 'images-8', x: 1, y: 5, w: 1, h: 1 },
+    ],
+};
+
+// Bento vertical layout - 1x2 vertical cards with 1x1 squares
+const bentoVerticalLayout: { [key in Layouts]: Layout[] } = {
+    lg: [
+        { i: 'images-1', x: 0, y: 0, w: 1, h: 2 }, // Vertical card
+        { i: 'images-2', x: 1, y: 0, w: 1, h: 1 }, // Square
+        { i: 'images-3', x: 2, y: 0, w: 1, h: 1 }, // Square
+        { i: 'images-4', x: 1, y: 1, w: 2, h: 1 }, // Horizontal card
+        { i: 'images-5', x: 0, y: 2, w: 3, h: 2 }, // Large card
+    ],
+    md: [
+        { i: 'images-1', x: 0, y: 0, w: 1, h: 2 },
+        { i: 'images-2', x: 1, y: 0, w: 1, h: 1 },
+        { i: 'images-3', x: 2, y: 0, w: 1, h: 1 },
+        { i: 'images-4', x: 1, y: 1, w: 2, h: 1 },
+        { i: 'images-5', x: 0, y: 2, w: 3, h: 2 },
+    ],
+    sm: [
+        { i: 'images-1', x: 0, y: 0, w: 1, h: 2 },
+        { i: 'images-2', x: 1, y: 0, w: 1, h: 1 },
+        { i: 'images-3', x: 0, y: 2, w: 2, h: 1 },
+        { i: 'images-4', x: 0, y: 3, w: 1, h: 1 },
+        { i: 'images-5', x: 1, y: 3, w: 1, h: 2 },
+    ],
+};
+
+// Layout presets registry
+export const projectLayoutPresets: Record<string, { [key in Layouts]: Layout[] }> = {
+    'default': projectLayouts,
+    'bento-horizontal': bentoHorizontalLayout,
+    'bento-vertical': bentoVerticalLayout,
+};
+
+/**
+ * Get project layout based on layout preset name
+ * Falls back to 'default' if layout is not specified or invalid
+ */
+export function getProjectLayout(layoutName?: string): { [key in Layouts]: Layout[] } {
+    if (!layoutName || !projectLayoutPresets[layoutName]) {
+        return projectLayoutPresets['default'];
+    }
+    return projectLayoutPresets[layoutName];
+}

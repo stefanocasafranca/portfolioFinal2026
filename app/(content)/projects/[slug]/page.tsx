@@ -7,7 +7,7 @@ import { getAllProjects } from '@/utils/mdx';
 import { notFound } from 'next/navigation';
 import Script from 'next/script';
 import { FaArrowRight, FaX } from 'react-icons/fa6';
-import { projectLayouts } from '@/config/grid';
+import { getProjectLayout } from '@/config/grid';
 import ProjectImageWithDownload from '@/components/grid/widgets/project-image-with-download';
 
 type Params = Promise<{ slug: string }>;
@@ -106,7 +106,7 @@ const ProjectPage = async ({ params }: { params: Params }) => {
                     </div>
                 </Container>
                 {project.metadata.images && (
-                    <GridLayout layouts={projectLayouts} className='-mt-8 pb-16'>
+                    <GridLayout layouts={getProjectLayout(project.metadata.layout)} className='-mt-8 pb-16'>
                         {JSON.parse(project.metadata.images).map((image: { i: string; url: string }) => {
                             const isUxResearchImages2 = slug === 'ux-research' && image.i === 'images-2';
                             const isUxResearchImages4 = slug === 'ux-research' && image.i === 'images-4';
