@@ -4,8 +4,8 @@ import { FaArrowRight } from 'react-icons/fa6';
 import DecorativeCTA from '../../ui/decorative-cta';
 import { toKebabCase } from '@/utils/lib';
 
-export default function Project3() {
-    const projectName = 'CLE';
+export default function Project5() {
+    const projectName = 'Code Learning Evolution';
 
     return (
         <LinkCard 
@@ -38,7 +38,7 @@ export default function Project3() {
                     className='size-10 justify-end transition-all ease-in-out group-hover:w-full'
                 >
                     <span className='hidden whitespace-nowrap opacity-0 transition-all duration-300 ease-in group-hover:translate-x-0 group-hover:opacity-100 md:inline'>
-                        UX Startup Prototype
+                        Code Learning Evolution
                     </span>
                     <span>
                         <FaArrowRight className='-rotate-45 transition-transform duration-300 group-hover:rotate-0' />
@@ -47,4 +47,5 @@ export default function Project3() {
             </div>
         </LinkCard>
     );
-} 
+}
+

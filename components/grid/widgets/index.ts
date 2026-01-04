@@ -7,10 +7,11 @@ import Project3 from '@/components/grid/widgets/project-3';
 import Project from '@/components/grid/widgets/project';
 import Project2 from '@/components/grid/widgets/project-2';
 import Project4 from '@/components/grid/widgets/project-4';
+import Project5 from '@/components/grid/widgets/project-5';
 import LinkedIn from '@/components/grid/widgets/linkedin';
 import Location from '@/components/grid/widgets/location';
 import Resume from '@/components/grid/widgets/resume';
 import Theme from '@/components/grid/widgets/theme';
 
 // Export all widgets for use in the grid configuration
-export { DesignProcess, Description, Email, Project3, Project, Project2, Project4, LinkedIn, Location, Resume, Theme };
+export { DesignProcess, Description, Email, Project3, Project, Project2, Project4, Project5, LinkedIn, Location, Resume, Theme };

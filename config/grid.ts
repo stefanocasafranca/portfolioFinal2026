@@ -1,4 +1,4 @@
-import { Description, Location, Project, Resume, Project2, Theme, LinkedIn, DesignProcess, Email, Project3, Project4 } from '@/components/grid/widgets';
+import { Description, Location, Project, Resume, Project2, Theme, LinkedIn, DesignProcess, Email, Project3, Project4, Project5 } from '@/components/grid/widgets';
 import { Layout } from 'react-grid-layout';
 
 // Define card categories for filtering
@@ -22,6 +22,7 @@ export const gridItems: GridItem[] = [
     { i: 'email', component: Email, category: 'contact' },
     { i: 'project3', component: Project3, category: 'projects' },
     { i: 'project4', component: Project4, category: 'projects' },
+    { i: 'project5', component: Project5, category: 'projects' },
     { i: 'design-process', component: DesignProcess, category: 'about' }, // Design process belongs to About
 ];
 
@@ -42,7 +43,8 @@ const originalLayouts: { [key in Layouts]: Layout[] } = {
         { i: 'linkedin', x: 1, y: 2, w: 1, h: 1 },
         //Row 4 
         { i: 'design-process', x: 2, y: 2, w: 2, h: 1 },
-        { i: 'project3', x: 0, y: 4, w: 2, h: 1 },
+        { i: 'project3', x: 0, y: 4, w: 1, h: 1 },
+        { i: 'project5', x: 1, y: 4, w: 1, h: 1 },
         { i: 'email', x: 2, y: 4, w: 1, h: 1 },
         { i: 'project4', x: 3, y: 4, w: 1, h: 1 },
     ],
@@ -61,7 +63,8 @@ const originalLayouts: { [key in Layouts]: Layout[] } = {
         { i: 'design-process', x: 2, y: 3, w: 2, h: 2 },
         //Row 6
         { i: 'email', x: 0, y: 5, w: 1, h: 1 },
-        { i: 'project3', x: 1, y: 6, w: 2, h: 1 },
+        { i: 'project3', x: 1, y: 6, w: 1, h: 1 },
+        { i: 'project5', x: 2, y: 6, w: 1, h: 1 },
         { i: 'project4', x: 3, y: 6, w: 1, h: 1 },
     ],
     sm: [
@@ -79,11 +82,12 @@ const originalLayouts: { [key in Layouts]: Layout[] } = {
         { i: 'resume', x: 1, y: 6, w: 1, h: 1 },
         //Row 7
         { i: 'design-process', x: 1, y: 7, w: 1, h: 1 },
-        //Row 8 and 9
-        { i: 'project3', x: 0, y: 8, w: 2, h: 2 },
-        //Row 10
-        { i: 'email', x: 0, y: 10, w: 1, h: 1 },
-        { i: 'project4', x: 1, y: 10, w: 1, h: 1 },
+        //Row 8
+        { i: 'project3', x: 0, y: 8, w: 1, h: 1 },
+        { i: 'project5', x: 1, y: 8, w: 1, h: 1 },
+        //Row 9
+        { i: 'email', x: 0, y: 9, w: 1, h: 1 },
+        { i: 'project4', x: 1, y: 9, w: 1, h: 1 },
     ],
 };
 
@@ -225,7 +229,7 @@ function createSmartLayouts(highlightedItems: string[]): { [key in Layouts]: Lay
 
 // Create smart layouts for each category
 const aboutItems = ['description', 'location', 'resume', 'design-process', 'theme'];
-const projectItems = ['project', 'project2', 'project3', 'project4', 'theme'];
+const projectItems = ['project', 'project2', 'project3', 'project4', 'project5', 'theme'];
 const contactItems = ['description', 'linkedin', 'email', 'theme'];
 
 export const filteredLayouts = {
