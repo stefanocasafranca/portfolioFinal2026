@@ -5,7 +5,7 @@ import DecorativeCTA from '../../ui/decorative-cta';
 import { toKebabCase } from '@/utils/lib';
 
 export default function Project3() {
-    const projectName = 'CLE';
+    const projectName = 'ACC Bioscience Incubator Website Redesign';
 
     return (
         <LinkCard 
@@ -15,20 +15,11 @@ export default function Project3() {
         >
             <div className='relative w-full h-full'>
                 <Image
-                    src='/images/3rdCard_CLE_Desktop&Tablet-1.webp'
+                    src='/images/NewCardABI_Desktop & Tablet.png'
                     alt={toKebabCase(projectName)}
                     fill
                     sizes='(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw'
-                    className='object-cover block md:hidden'
-                    loading="lazy"
-                    draggable='false'
-                />
-                <Image
-                    src='/images/3rdCard_CLE_Desktop&Tablet.webp'
-                    alt={toKebabCase(projectName)}
-                    fill
-                    sizes='(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw'
-                    className='object-cover hidden md:block'
+                    className='object-cover object-center'
                     loading="lazy"
                     draggable='false'
                 />
@@ -38,7 +29,7 @@ export default function Project3() {
                     className='size-10 justify-end transition-all ease-in-out group-hover:w-full'
                 >
                     <span className='hidden whitespace-nowrap opacity-0 transition-all duration-300 ease-in group-hover:translate-x-0 group-hover:opacity-100 md:inline'>
-                        UX Startup Prototype
+                        Website UX Design
                     </span>
                     <span>
                         <FaArrowRight className='-rotate-45 transition-transform duration-300 group-hover:rotate-0' />

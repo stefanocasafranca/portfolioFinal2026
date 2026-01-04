@@ -85,16 +85,18 @@ const ProjectPage = async ({ params }: { params: Params }) => {
                         <div>
                             <p className='text-xl leading-relaxed font-medium'>{project.metadata.description}</p>
                             <div className='flex flex-wrap items-center gap-3 pt-4'>
-                                {JSON.parse(project.metadata.links).map((link: { url: string; name: string }) => (
-                                    <Anchor
-                                        key={link.url}
-                                        href={link.url}
-                                        target='_blank'
-                                        rel='noreferrer nofollow noopener'
-                                        className='inline-flex px-5 py-3 text-sm'>
-                                        {link.name}
-                                        <FaArrowRight className='-rotate-45 transition-transform duration-300 group-hover:rotate-0' />
-                                    </Anchor>
+                                {JSON.parse(project.metadata.links).map((link: { url?: string; name: string }, index: number) => (
+                                    link.url ? (
+                                        <Anchor
+                                            key={`${link.name}-${link.url}-${index}`}
+                                            href={link.url}
+                                            target='_blank'
+                                            rel='noreferrer nofollow noopener'
+                                            className='inline-flex px-5 py-3 text-sm'>
+                                            {link.name}
+                                            <FaArrowRight className='-rotate-45 transition-transform duration-300 group-hover:rotate-0' />
+                                        </Anchor>
+                                    ) : null
                                 ))}
                             </div>
                         </div>
