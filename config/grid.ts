@@ -92,7 +92,12 @@ function createSmartLayouts(highlightedItems: string[]): { [key in Layouts]: Lay
     const createArrangement = (breakpoint: Layouts): Layout[] => {
         const allLayouts = [...originalLayouts[breakpoint]];
         const maxCols = breakpoint === 'sm' ? 2 : 4;
-        const maxRows = 4; // Keep within original 4-row grid boundary
+        // Calculate max rows based on original layout - mobile needs more rows
+        const maxRows = breakpoint === 'sm' 
+            ? Math.max(...allLayouts.map(l => l.y + l.h), 11) // Mobile: allow up to row 10+height
+            : breakpoint === 'md'
+            ? Math.max(...allLayouts.map(l => l.y + l.h), 7) // Tablet: allow up to row 6+height
+            : 5; // Desktop: 4-row grid boundary
         
         // Separate highlighted and dimmed items
         const highlighted = allLayouts.filter(layout => highlightedItems.includes(layout.i));
@@ -126,8 +131,8 @@ function createSmartLayouts(highlightedItems: string[]): { [key in Layouts]: Lay
         
         // Function to find best position for an item - prioritizes top-left positioning
         const findBestPosition = (w: number, h: number, isHighlighted: boolean = false): {x: number, y: number} | null => {
-            // For highlighted items, prioritize earlier rows and left positions
-            const rowOrder = isHighlighted ? [0, 1, 2, 3] : [0, 1, 2, 3];
+            // Generate row order dynamically based on maxRows - check all available rows
+            const rowOrder = Array.from({ length: maxRows }, (_, i) => i);
             
             for (const y of rowOrder) {
                 if (y + h > maxRows) continue;
@@ -229,6 +234,9 @@ export const filteredLayouts = {
     projects: createSmartLayouts(projectItems),
     contact: createSmartLayouts(contactItems)
 };
+
+
+//POP-UPS FOR PROJECTS LAYOUTS -- MAKE THEM PERSONALIZED FOR EACH PROJECT (AFTER PUTTING THE NEW CONTENT)
 
 export const layouts = originalLayouts;
 

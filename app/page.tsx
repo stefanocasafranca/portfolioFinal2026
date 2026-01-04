@@ -105,8 +105,8 @@ export default function Home() {
                                 <div className="flex justify-center">
                                     <Header />
                                 </div>
-                                {/* Navbar centered */}
-                                <div className="flex justify-center">
+                                {/* Navbar centered - allow horizontal scroll on very small screens */}
+                                <div className="flex justify-center w-full min-w-0 px-2">
                                     <Navbar 
                                         selectedCategory={selectedCategory} 
                                         onCategoryChange={setSelectedCategory} 

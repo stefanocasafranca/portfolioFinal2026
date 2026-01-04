@@ -23,18 +23,20 @@ interface NavbarProps {
 
 export default function Navbar({ selectedCategory, onCategoryChange }: NavbarProps) {
   return (
-    <nav>
-      <div className='inline-flex items-center rounded-full bg-white dark:bg-gray-900 shadow-sm px-6 py-2 gap-2'>
+    <nav className="flex justify-center w-full min-w-0">
+      <div className='inline-flex items-center rounded-full bg-white dark:bg-gray-900 shadow-sm px-2 py-1 sm:px-3 sm:py-1.5 md:px-6 md:py-2 gap-0.5 sm:gap-1 md:gap-2 flex-shrink-0'>
           {tabs.map((tab) => (
             <button
               key={tab.label}
               className={cn(
-                'font-sf-pro font-semibold text-sm transition-all flex items-center justify-center px-5 py-2 rounded-full',
+                'font-sf-pro font-semibold text-[11px] sm:text-xs md:text-sm transition-all flex items-center justify-center px-1.5 py-1 sm:px-2 sm:py-1.5 md:px-5 md:py-2 rounded-full whitespace-nowrap',
+                'min-h-[28px] min-w-[28px] sm:min-h-[32px] md:min-h-[40px]', // Ensure minimum touch target size
                 selectedCategory === tab.value
                   ? 'bg-white dark:bg-gray-800 text-black dark:text-white shadow-sm scale-105'
                   : 'bg-transparent text-black/90 dark:text-white/90 hover:bg-gray-100 dark:hover:bg-gray-700',
-                'focus:outline-none',
-                'mx-1'
+                'focus:outline-none active:scale-95', // Mobile tap feedback
+                'mx-0.5 sm:mx-0.5 md:mx-1',
+                'cursor-pointer touch-manipulation' // Better mobile interaction
               )}
               type="button"
               tabIndex={0}
