@@ -20,8 +20,16 @@ export default function Theme() {
     
     // Render normal homepage toggle card
     return (
-        <Card className="relative flex h-full flex-col items-center justify-center">
+        <Card className="relative flex h-full flex-col items-center justify-center gap-4 p-6">
             <ThemeToggle />
+            <div className="flex flex-col items-center gap-2">
+                <h2 className="font-sf-pro text-xl md:text-2xl font-semibold text-black text-center">
+                    AI Portfolio
+                </h2>
+                <p className="font-sf-pro text-xs md:text-sm text-gray-500 text-center">
+                    Interactive AI version of me
+                </p>
+            </div>
         </Card>
     );
 }
