@@ -327,11 +327,43 @@ const bentoVerticalLayout: { [key in Layouts]: Layout[] } = {
     ],
 };
 
+// Bento redivo layout - similar to bento-horizontal but with images-6 and images-7 as horizontal tiles side by side
+const bentoRedivoLayout: { [key in Layouts]: Layout[] } = {
+    lg: [
+        { i: 'images-1', x: 0, y: 0, w: 2, h: 1 }, // Horizontal (top-left, 2x1)
+        { i: 'images-2', x: 2, y: 0, w: 1, h: 1 }, // Square (top-middle, 1x1)
+        { i: 'images-3', x: 3, y: 0, w: 1, h: 2 }, // Vertical (top-right, 1x2)
+        { i: 'images-4', x: 0, y: 1, w: 1, h: 1 }, // Square (middle-left, 1x1)
+        { i: 'images-5', x: 1, y: 1, w: 2, h: 1 }, // Horizontal (middle-center, 2x1)
+        { i: 'images-6', x: 0, y: 2, w: 2, h: 1 }, // Horizontal (bottom-left, 2x1) - VIDEO
+        { i: 'images-7', x: 2, y: 2, w: 2, h: 1 }, // Horizontal (bottom-right, 2x1) - VIDEO
+    ],
+    md: [
+        { i: 'images-1', x: 0, y: 0, w: 2, h: 1 }, // Same as lg - scaled proportionally (4 columns)
+        { i: 'images-2', x: 2, y: 0, w: 1, h: 1 }, // Same as lg - scaled proportionally
+        { i: 'images-3', x: 3, y: 0, w: 1, h: 2 }, // Same as lg - scaled proportionally
+        { i: 'images-4', x: 0, y: 1, w: 1, h: 1 }, // Same as lg - scaled proportionally
+        { i: 'images-5', x: 1, y: 1, w: 2, h: 1 }, // Same as lg - scaled proportionally
+        { i: 'images-6', x: 0, y: 2, w: 2, h: 1 }, // Same as lg - scaled proportionally - VIDEO
+        { i: 'images-7', x: 2, y: 2, w: 2, h: 1 }, // Same as lg - scaled proportionally - VIDEO
+    ],
+    sm: [
+        { i: 'images-1', x: 0, y: 0, w: 2, h: 1 }, // Top, full width
+        { i: 'images-2', x: 0, y: 1, w: 1, h: 1 }, // Below Card 1, left side
+        { i: 'images-3', x: 1, y: 1, w: 1, h: 2 }, // Right of Card 2, tall vertical
+        { i: 'images-4', x: 0, y: 2, w: 1, h: 1 }, // Below Card 2, same size
+        { i: 'images-5', x: 0, y: 3, w: 2, h: 1 }, // Below Card 3 and Card 4, full width
+        { i: 'images-6', x: 0, y: 4, w: 2, h: 1 }, // Below Card 5, full width - VIDEO
+        { i: 'images-7', x: 0, y: 5, w: 2, h: 1 }, // Below Card 6, full width - VIDEO
+    ],
+};
+
 // Layout presets registry
 export const projectLayoutPresets: Record<string, { [key in Layouts]: Layout[] }> = {
     'default': projectLayouts,
     'bento-horizontal': bentoHorizontalLayout,
     'bento-vertical': bentoVerticalLayout,
+    'bento-redivo': bentoRedivoLayout,
 };
 
 /**

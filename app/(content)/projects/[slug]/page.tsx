@@ -132,6 +132,7 @@ const ProjectPage = async ({ params }: { params: Params }) => {
                                         pdfPath={pdfPath}
                                         pdfFilename={pdfFilename}
                                         link={image.link}
+                                        imageId={image.i}
                                     />
                                 </div>
                             );

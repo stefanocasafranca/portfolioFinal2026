@@ -12,6 +12,13 @@ interface ProjectImageWithDownloadProps {
     pdfPath: string;
     pdfFilename: string;
     link?: string; // Optional link for opening in new tab
+    imageId?: string; // Image ID to identify specific tiles (e.g., 'images-7')
+}
+
+// Check if URL is a video file
+function isVideoFile(url: string): boolean {
+    const videoExtensions = ['.mp4', '.webm', '.ogg', '.mov', '.avi'];
+    return videoExtensions.some(ext => url.toLowerCase().endsWith(ext));
 }
 
 export default function ProjectImageWithDownload({
@@ -21,17 +28,35 @@ export default function ProjectImageWithDownload({
     pdfPath,
     pdfFilename,
     link,
+    imageId,
 }: ProjectImageWithDownloadProps) {
+    const isVideo = isVideoFile(imageUrl);
+    // For images-7, use object-contain to maintain natural aspect ratio
+    const useContain = isVideo && imageId === 'images-7';
+    
     return (
-        <Card className='relative'>
-            <Image
-                src={imageUrl}
-                alt={alt}
-                fill
-                objectFit='cover'
-                sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
-                draggable='false'
-            />
+        <Card className={`relative ${isVideo ? '!bg-black dark:!bg-black' : ''}`}>
+            {isVideo ? (
+                <video
+                    src={imageUrl}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    preload="auto"
+                    className={`absolute inset-0 w-full h-full ${useContain ? 'object-contain' : 'object-cover'}`}
+                    style={{ objectFit: useContain ? 'contain' : 'cover' }}
+                />
+            ) : (
+                <Image
+                    src={imageUrl}
+                    alt={alt}
+                    fill
+                    objectFit='cover'
+                    sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
+                    draggable='false'
+                />
+            )}
             {showDownload && (
                 <button
                     onClick={(e) => {
