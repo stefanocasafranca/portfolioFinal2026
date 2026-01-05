@@ -90,6 +90,13 @@ export default function ProjectImageWithDownload({
                     </div>
                 </a>
             )}
+            {isVideo && imageId === 'images-6' && (
+                <div className='absolute bottom-3 left-3 z-10'>
+                    <div className='px-3 py-1.5 rounded-md bg-black/70 backdrop-blur-sm text-white text-xs font-medium'>
+                        Time-lapse 28&apos; min
+                    </div>
+                </div>
+            )}
         </Card>
     );
 }
