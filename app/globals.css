@@ -6,7 +6,7 @@
 @theme {
     --breakpoint-*: initial;
     --breakpoint-sm: 374px;
-    --breakpoint-md: 799px;
+    --breakpoint-md: 800px; /* Changed from 799px to match react-grid-layout breakpoint */
     --breakpoint-lg: 1199px;
 
     --font-sf-pro: -applewhen-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;

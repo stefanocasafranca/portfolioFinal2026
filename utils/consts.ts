@@ -5,7 +5,7 @@
  */
 export const breakpoints: { [key: string]: number } = {
     lg: 1199, // Large screens (1200px and up)
-    md: 799,  // Medium screens (800px to 1199px)
+    md: 800,  // Medium screens (800px to 1199px) - changed from 799 to 800 so 799px uses sm
     sm: 374,  // Small screens (375px to 799px)
     xs: 319,  // Extra small screens (320px to 374px)
     xxs: 0,   // Mobile screens (below 320px)

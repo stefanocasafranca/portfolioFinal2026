@@ -80,13 +80,13 @@ const originalLayouts: { [key in Layouts]: Layout[] } = {
         { i: 'project2', x: 1, y: 4, w: 1, h: 2 }, // And Row 6 bc height is 2
         //Row 6 - following lg order: ai-portfolio
         { i: 'ai-portfolio', x: 0, y: 5, w: 1, h: 1 },
-        //Row 6 - following lg order: github-card
-        { i: 'github-card', x: 1, y: 6, w: 1, h: 1 },
-        //Row 7 - following lg order: project5 (CLE - 2x1 full width)
-        { i: 'project5', x: 0, y: 7, w: 2, h: 1 }, // CLE card 2x1 (full width on mobile)
-        //Row 8 - following lg order: project3, design-process
-        { i: 'project3', x: 0, y: 8, w: 1, h: 1 },
-        { i: 'design-process', x: 1, y: 8, w: 1, h: 1 }, // Workshop Design
+        //Row 6 - project5 (CLE) moved up one row from y:7 to y:6
+        { i: 'project5', x: 0, y: 6, w: 2, h: 1 }, // CLE card 2x1 (full width on mobile) - moved up one row
+        //Row 7 - project3 on its own row, 2x1 (full width)
+        { i: 'project3', x: 0, y: 7, w: 2, h: 1 },
+        //Row 8 - design-process and github-card together
+        { i: 'design-process', x: 0, y: 8, w: 1, h: 1 }, // Workshop Design
+        { i: 'github-card', x: 1, y: 8, w: 1, h: 1 }, // GitHub card next to design-process
         //Row 9 - following lg order: email, project4
         { i: 'email', x: 0, y: 9, w: 1, h: 1 },
         { i: 'project4', x: 1, y: 9, w: 1, h: 1 },
