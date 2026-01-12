@@ -15,11 +15,29 @@ export default function Project5() {
         >
             <div className='relative w-full h-full'>
                 <Image
-                    src='/images/4thCard_CLE_Desktop&Tablet&Mobile.png'
+                    src='/images/3rdCard_CLE_Desktop&Tablet&Phone.png'
                     alt={toKebabCase(projectName)}
                     fill
-                    sizes='(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw'
-                    className='object-cover object-center'
+                    sizes='(max-width: 640px) 100vw, (max-width: 1999px) 50vw, 50vw'
+                    className='object-cover object-center block md:hidden'
+                    loading="lazy"
+                    draggable='false'
+                />
+                <Image
+                    src='/images/3rdCard_CLE_Tablet-1.png'
+                    alt={toKebabCase(projectName)}
+                    fill
+                    sizes='(max-width: 640px) 100vw, (max-width: 1199px) 50vw, 50vw'
+                    className='object-cover object-center hidden md:block [@media(min-width:1200px)]:!hidden'
+                    loading="lazy"
+                    draggable='false'
+                />
+                <Image
+                    src='/images/3rdCard_CLE_Desktop&Tablet&Phone.png'
+                    alt={toKebabCase(projectName)}
+                    fill
+                    sizes='(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 50vw'
+                    className='object-cover object-center !hidden [@media(min-width:1200px)]:!block'
                     loading="lazy"
                     draggable='false'
                 />

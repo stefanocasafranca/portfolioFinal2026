@@ -24,7 +24,7 @@ export default function GridItem({
         if (selectedCategory === 'all') return true;
         if (selectedCategory === 'about') return ['description', 'location', 'resume', 'design-process', 'theme'].includes(id);
         if (selectedCategory === 'projects') return ['project', 'project2', 'project3', 'project4', 'theme'].includes(id);
-        if (selectedCategory === 'contact') return ['description', 'linkedin', 'email', 'theme'].includes(id);
+        if (selectedCategory === 'contact') return ['description', 'ai-portfolio-card', 'email', 'theme'].includes(id);
         return false;
     };
 

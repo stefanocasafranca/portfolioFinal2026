@@ -17,8 +17,8 @@ export const gridItems: GridItem[] = [
     { i: 'project', component: Project, category: 'projects' },
     { i: 'resume', component: Resume, category: 'about' },
     { i: 'project2', component: Project2, category: 'projects' },
-    { i: 'theme', component: Theme, category: 'theme' }, // Theme card - no category, never highlighted
-    { i: 'linkedin', component: LinkedIn, category: 'contact' },
+    { i: 'ai-portfolio', component: Theme, category: 'theme' }, // AI Portfolio toggle card
+    { i: 'github-card', component: LinkedIn, category: 'contact' }, // GitHub card
     { i: 'email', component: Email, category: 'contact' },
     { i: 'project3', component: Project3, category: 'projects' },
     { i: 'project4', component: Project4, category: 'projects' },
@@ -39,53 +39,55 @@ const originalLayouts: { [key in Layouts]: Layout[] } = {
         { i: 'resume', x: 0, y: 1, w: 1, h: 1 },
         { i: 'project2', x: 1, y: 1, w: 2, h: 1 },
         //Row 3                   
-        { i: 'theme', x: 0, y: 2, w: 1, h: 1 },
-        { i: 'linkedin', x: 1, y: 2, w: 1, h: 1 },
-        //Row 4 
-        { i: 'design-process', x: 2, y: 2, w: 2, h: 1 },
-        { i: 'project3', x: 0, y: 4, w: 1, h: 1 },
-        { i: 'project5', x: 1, y: 4, w: 1, h: 1 },
-        { i: 'email', x: 2, y: 4, w: 1, h: 1 },
-        { i: 'project4', x: 3, y: 4, w: 1, h: 1 },
+        { i: 'ai-portfolio', x: 0, y: 2, w: 1, h: 1 },
+        { i: 'github-card', x: 1, y: 2, w: 1, h: 1 },
+        { i: 'project5', x: 2, y: 2, w: 2, h: 1 }, // CLE card moved to 2x1 position
+        //Row 4 - moved from y:4 to y:3 to eliminate gap
+        { i: 'project3', x: 0, y: 3, w: 1, h: 1 },
+        { i: 'design-process', x: 1, y: 3, w: 1, h: 1 }, // Workshop Design moved to 1x1 position
+        { i: 'email', x: 2, y: 3, w: 1, h: 1 },
+        { i: 'project4', x: 3, y: 3, w: 1, h: 1 },
     ],
     md: [
-        //Row 1
+        //Row 1 - following lg order: description, location, project
         { i: 'description', x: 0, y: 0, w: 2, h: 2 }, // And Row 2 bc height is 2
         { i: 'location', x: 2, y: 0, w: 2, h: 1 },
-        //Row 2
-        { i: 'linkedin', x: 2, y: 1, w: 1, h: 1 },
-        { i: 'project', x: 3, y: 1, w: 1, h: 2 }, // And Row 3 bc height is 2
-        //Row 3
-        { i: 'resume', x: 0, y: 2, w: 2, h: 1 },
-        { i: 'theme', x: 2, y: 2, w: 1, h: 1 },
-        //Row 4 and 5
-        { i: 'project2', x: 0, y: 3, w: 2, h: 2 },
-        { i: 'design-process', x: 2, y: 3, w: 2, h: 2 },
-        //Row 6
-        { i: 'email', x: 0, y: 5, w: 1, h: 1 },
-        { i: 'project3', x: 1, y: 6, w: 1, h: 1 },
-        { i: 'project5', x: 2, y: 6, w: 1, h: 1 },
-        { i: 'project4', x: 3, y: 6, w: 1, h: 1 },
+        { i: 'project', x: 2, y: 1, w: 2, h: 2 }, // And Row 2-3 bc height is 2
+        //Row 3 - following lg order: ai-portfolio (swapped with resume), project2
+        { i: 'ai-portfolio', x: 0, y: 2, w: 2, h: 1 }, // AI Portfolio takes 2x1 slot
+        { i: 'project2', x: 0, y: 3, w: 2, h: 2 }, // Spans rows 3-4
+        { i: 'project5', x: 2, y: 3, w: 2, h: 2 }, // CLE card 2x2, spans rows 3-4
+        //Row 5 - following lg order: resume (swapped with ai-portfolio), github-card
+        { i: 'resume', x: 0, y: 5, w: 1, h: 1 }, // Resume takes 1x1 slot
+        { i: 'github-card', x: 1, y: 5, w: 1, h: 1 },
+        //Row 6 - resume, github-card, and project3 fill the row (no blank space)
+        { i: 'project3', x: 2, y: 5, w: 2, h: 1 }, // ACC Bioscience - 2x1 fills the blank space after resume and github
+        //Row 7 - design-process, email, and project4 all on same row
+        { i: 'design-process', x: 0, y: 6, w: 2, h: 1 }, // Workshop Design - 2x1 for md screens
+        { i: 'email', x: 2, y: 6, w: 1, h: 1 }, // Email next to design-process, same row
+        { i: 'project4', x: 3, y: 6, w: 1, h: 1 }, // Project4 next to email, same row
     ],
     sm: [
-        //Row 1 and 2
+        //Row 1-2 - following lg order: description
         { i: 'description', x: 0, y: 0, w: 2, h: 2 },
-        //Row 3
+        //Row 3 - following lg order: location
         { i: 'location', x: 0, y: 2, w: 2, h: 1 },
-        //Row 4
-        { i: 'linkedin', x: 0, y: 3, w: 1, h: 1 },
-        { i: 'project', x: 1, y: 3, w: 1, h: 2 }, // And Row 5 bc height is 2
-        //Row 5
-        { i: 'theme', x: 0, y: 4, w: 1, h: 1 },
-        //Row 6
-        { i: 'project2', x: 0, y: 6, w: 1, h: 2 }, // and Row 7 bc height is 2
-        { i: 'resume', x: 1, y: 6, w: 1, h: 1 },
-        //Row 7
-        { i: 'design-process', x: 1, y: 7, w: 1, h: 1 },
-        //Row 8
+        //Row 4-5 - following lg order: project
+        { i: 'project', x: 0, y: 3, w: 1, h: 2 }, // And Row 5 bc height is 2
+        //Row 4 - following lg order: resume
+        { i: 'resume', x: 1, y: 3, w: 1, h: 1 },
+        //Row 5 - following lg order: project2
+        { i: 'project2', x: 1, y: 4, w: 1, h: 2 }, // And Row 6 bc height is 2
+        //Row 6 - following lg order: ai-portfolio
+        { i: 'ai-portfolio', x: 0, y: 5, w: 1, h: 1 },
+        //Row 6 - following lg order: github-card
+        { i: 'github-card', x: 1, y: 6, w: 1, h: 1 },
+        //Row 7 - following lg order: project5 (CLE - 2x1 full width)
+        { i: 'project5', x: 0, y: 7, w: 2, h: 1 }, // CLE card 2x1 (full width on mobile)
+        //Row 8 - following lg order: project3, design-process
         { i: 'project3', x: 0, y: 8, w: 1, h: 1 },
-        { i: 'project5', x: 1, y: 8, w: 1, h: 1 },
-        //Row 9
+        { i: 'design-process', x: 1, y: 8, w: 1, h: 1 }, // Workshop Design
+        //Row 9 - following lg order: email, project4
         { i: 'email', x: 0, y: 9, w: 1, h: 1 },
         { i: 'project4', x: 1, y: 9, w: 1, h: 1 },
     ],
@@ -228,9 +230,9 @@ function createSmartLayouts(highlightedItems: string[]): { [key in Layouts]: Lay
 }
 
 // Create smart layouts for each category
-const aboutItems = ['description', 'location', 'resume', 'design-process', 'theme'];
-const projectItems = ['project', 'project2', 'project3', 'project4', 'project5', 'theme'];
-const contactItems = ['description', 'linkedin', 'email', 'theme'];
+const aboutItems = ['description', 'location', 'resume', 'design-process', 'ai-portfolio'];
+const projectItems = ['project', 'project2', 'project3', 'project4', 'project5', 'ai-portfolio'];
+const contactItems = ['description', 'github-card', 'email', 'ai-portfolio'];
 
 export const filteredLayouts = {
     all: originalLayouts,

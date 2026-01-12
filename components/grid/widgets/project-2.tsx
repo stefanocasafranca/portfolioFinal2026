@@ -27,8 +27,8 @@ export default function Project2() {
                     src='/images/2ndCard_Redivo_Tablet.png'
                     alt={toKebabCase(projectName)}
                     fill
-                    sizes='(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw'
-                    className='object-cover hidden md:block lg:hidden'
+                    sizes='(max-width: 640px) 100vw, (max-width: 1199px) 50vw, 33vw'
+                    className='object-cover hidden md:block [@media(min-width:1200px)]:hidden'
                     loading="lazy"
                     draggable='false'
                 />
@@ -37,7 +37,7 @@ export default function Project2() {
                     alt={toKebabCase(projectName)}
                     fill
                     sizes='(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw'
-                    className='object-cover hidden lg:block'
+                    className='object-cover hidden [@media(min-width:1200px)]:block'
                     loading="lazy"
                     draggable='false'
                 />

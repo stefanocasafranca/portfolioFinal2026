@@ -15,11 +15,29 @@ export default function Project3() {
         >
             <div className='relative w-full h-full'>
                 <Image
+                    src='/images/NewCardABI_Mobile.png'
+                    alt={toKebabCase(projectName)}
+                    fill
+                    sizes='(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw'
+                    className='object-cover object-center block md:hidden'
+                    loading="lazy"
+                    draggable='false'
+                />
+                <Image
+                    src='/images/project3_ABI_NewOne.png'
+                    alt={toKebabCase(projectName)}
+                    fill
+                    sizes='(max-width: 640px) 100vw, (max-width: 1199px) 50vw, 25vw'
+                    className='object-cover object-center hidden md:block [@media(min-width:1200px)]:hidden'
+                    loading="lazy"
+                    draggable='false'
+                />
+                <Image
                     src='/images/NewCardABI_Desktop & Tablet.png'
                     alt={toKebabCase(projectName)}
                     fill
                     sizes='(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw'
-                    className='object-cover object-center'
+                    className='object-cover object-center hidden [@media(min-width:1200px)]:block'
                     loading="lazy"
                     draggable='false'
                 />
