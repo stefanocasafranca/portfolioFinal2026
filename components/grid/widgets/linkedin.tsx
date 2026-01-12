@@ -1,5 +1,6 @@
 import LinkCard from '../../ui/link-card';
 import Image from 'next/image';
+import { IoOpenOutline } from 'react-icons/io5';
 
 /**
  * Contact card component for GitHub profile link
@@ -26,6 +27,12 @@ export default function LinkedIn() {
                         loading="lazy"
                         draggable='false'
                     />
+                </div>
+            </div>
+            {/* Icon positioned at bottom-left, matching design process modal style */}
+            <div className='absolute bottom-3 left-3 z-10'>
+                <div className='size-10 flex items-center justify-center rounded-full bg-white shadow transition active:scale-95 hover:shadow-md'>
+                    <IoOpenOutline className='text-xl text-gray-700 hover:text-black transition-colors' />
                 </div>
             </div>
         </LinkCard>

@@ -42,7 +42,8 @@ export default async function MethodPage({ params }: { params: Params }) {
           <div className='grid grid-cols-2 gap-10 pb-8 max-md:grid-cols-1'>
             <div>
               {description && <p className='text-xl leading-relaxed font-medium'>{description}</p>}
-              {parsedLinks.length > 0 && (
+              {/* Hide links for design-process method */}
+              {parsedLinks.length > 0 && slug !== 'design-process' && (
                 <div className='flex flex-wrap items-center gap-3 pt-4'>
                   {parsedLinks.map((link: { url: string; name: string }) => (
                     <Anchor

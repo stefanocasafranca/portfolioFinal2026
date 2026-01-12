@@ -21,8 +21,8 @@ export default function Description() {
                 priority
                 className='rounded-lg'
             />
-            <p className='leading-relaxed text-sm sm:text-base'>
-                Hi, I&apos;m <span className='font-sf-pro text-lg sm:text-xl font-semibold'>Stefano</span>, a <span className='font-medium text-purple-600 dark:text-purple-400'>UX Generalist</span> who does Design, Research and Coding. I&apos;m ready to <span className='font-semibold'>pour my heart and soul</span> into great projects.
+            <p className='leading-relaxed text-[15px] sm:text-[17px]'>
+                Hi, I&apos;m <span className='font-sf-pro text-[19px] sm:text-[21px] font-semibold'>Stefano</span>, a UX Researcher/Designer who develops software. I&apos;m ready to <span className='font-semibold'>pour my heart and soul</span> into great projects.
             </p>
         </Card>
     );

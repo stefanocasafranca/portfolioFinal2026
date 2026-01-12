@@ -84,21 +84,24 @@ const ProjectPage = async ({ params }: { params: Params }) => {
                     <div className='grid grid-cols-2 gap-10 pb-8 max-md:grid-cols-1'>
                         <div>
                             <p className='text-xl leading-relaxed font-medium'>{project.metadata.description}</p>
-                            <div className='flex flex-wrap items-center gap-3 pt-4'>
-                                {JSON.parse(project.metadata.links).map((link: { url?: string; name: string }, index: number) => (
-                                    link.url ? (
-                                        <Anchor
-                                            key={`${link.name}-${link.url}-${index}`}
-                                            href={link.url}
-                                            target='_blank'
-                                            rel='noreferrer nofollow noopener'
-                                            className='inline-flex px-5 py-3 text-sm'>
-                                            {link.name}
-                                            <FaArrowRight className='-rotate-45 transition-transform duration-300 group-hover:rotate-0' />
-                                        </Anchor>
-                                    ) : null
-                                ))}
-                            </div>
+                            {/* Only show links for "Website Redesign" and "BBQ Patented Design" */}
+                            {(slug === 'acc-bioscience-incubator-website-redesign' || slug === 'fogo-direto') && (
+                                <div className='flex flex-wrap items-center gap-3 pt-4'>
+                                    {JSON.parse(project.metadata.links).map((link: { url?: string; name: string }, index: number) => (
+                                        link.url ? (
+                                            <Anchor
+                                                key={`${link.name}-${link.url}-${index}`}
+                                                href={link.url}
+                                                target='_blank'
+                                                rel='noreferrer nofollow noopener'
+                                                className='inline-flex px-5 py-3 text-sm'>
+                                                {link.name}
+                                                <FaArrowRight className='-rotate-45 transition-transform duration-300 group-hover:rotate-0' />
+                                            </Anchor>
+                                        ) : null
+                                    ))}
+                                </div>
+                            )}
                         </div>
                         <div className='prose dark:prose-invert'>
                             <CustomMDX source={project.content} />
