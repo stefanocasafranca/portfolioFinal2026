@@ -358,12 +358,61 @@ const bentoRedivoLayout: { [key in Layouts]: Layout[] } = {
     ],
 };
 
+// CLE layout - complete 11-tile layout matching reference design
+// Row 1: images-1 (1x1), images-2 (2x1), images-3 (1x1)
+// Row 2: images-4 (1x1), images-5 (2x1), images-6 (1x1)
+// Row 3: images-7 (2x1), images-8 (2x1)
+// Row 4: images-9 (2x2), images-10 (2x1 on right)
+// Row 5: images-9 (continues 2x2), images-11 (2x1 on right)
+const cleLayout: { [key in Layouts]: Layout[] } = {
+    lg: [
+        { i: 'images-1', x: 0, y: 0, w: 1, h: 1 }, // Row 1: 1x1 (top-left)
+        { i: 'images-2', x: 1, y: 0, w: 2, h: 1 }, // Row 1: 2x1 (top-center)
+        { i: 'images-3', x: 3, y: 0, w: 1, h: 1 }, // Row 1: 1x1 (top-right)
+        { i: 'images-4', x: 0, y: 1, w: 1, h: 1 }, // Row 2: 1x1 (below images-1)
+        { i: 'images-5', x: 1, y: 1, w: 2, h: 1 }, // Row 2: 2x1 (below images-2)
+        { i: 'images-6', x: 3, y: 1, w: 1, h: 1 }, // Row 2: 1x1 (below images-3)
+        { i: 'images-7', x: 0, y: 2, w: 2, h: 1 }, // Row 3: 2x1 (left)
+        { i: 'images-8', x: 2, y: 2, w: 2, h: 1 }, // Row 3: 2x1 (right)
+        { i: 'images-9', x: 0, y: 3, w: 2, h: 2 }, // Row 4-5: 2x2 (large, spans 2 rows)
+        { i: 'images-10', x: 2, y: 3, w: 2, h: 1 }, // Row 4: 2x1 (right side)
+        { i: 'images-11', x: 2, y: 4, w: 2, h: 1 }, // Row 5: 2x1 (right side, below images-10)
+    ],
+    md: [
+        { i: 'images-1', x: 0, y: 0, w: 1, h: 1 },
+        { i: 'images-2', x: 1, y: 0, w: 2, h: 1 },
+        { i: 'images-3', x: 3, y: 0, w: 1, h: 1 },
+        { i: 'images-4', x: 0, y: 1, w: 1, h: 1 },
+        { i: 'images-5', x: 1, y: 1, w: 2, h: 1 },
+        { i: 'images-6', x: 3, y: 1, w: 1, h: 1 },
+        { i: 'images-7', x: 0, y: 2, w: 2, h: 1 },
+        { i: 'images-8', x: 2, y: 2, w: 2, h: 1 },
+        { i: 'images-9', x: 0, y: 3, w: 2, h: 2 },
+        { i: 'images-10', x: 2, y: 3, w: 2, h: 1 },
+        { i: 'images-11', x: 2, y: 4, w: 2, h: 1 },
+    ],
+    sm: [
+        { i: 'images-1', x: 0, y: 0, w: 1, h: 1 }, // Row 1: 1x1 (maintains ratio)
+        { i: 'images-2', x: 0, y: 1, w: 2, h: 1 }, // Row 2: 2x1 (maintains ratio - full width, follows images-1)
+        { i: 'images-3', x: 1, y: 0, w: 1, h: 1 }, // Row 1: 1x1 (maintains ratio, next to images-1)
+        { i: 'images-4', x: 0, y: 2, w: 1, h: 1 }, // Row 3: 1x1 (maintains ratio)
+        { i: 'images-5', x: 0, y: 3, w: 2, h: 1 }, // Row 4: 2x1 (maintains ratio - full width, follows images-4)
+        { i: 'images-6', x: 1, y: 2, w: 1, h: 1 }, // Row 3: 1x1 (maintains ratio, next to images-4)
+        { i: 'images-7', x: 0, y: 4, w: 2, h: 1 }, // Row 5: 2x1 (maintains ratio - full width)
+        { i: 'images-8', x: 0, y: 5, w: 2, h: 1 }, // Row 6: 2x1 (maintains ratio - full width)
+        { i: 'images-9', x: 0, y: 6, w: 2, h: 2 }, // Row 7-8: 2x2 (maintains ratio - full width, spans 2 rows)
+        { i: 'images-10', x: 0, y: 8, w: 2, h: 1 }, // Row 9: 2x1 (maintains ratio - full width)
+        { i: 'images-11', x: 0, y: 9, w: 2, h: 1 }, // Row 10: 2x1 (maintains ratio - full width)
+    ],
+};
+
 // Layout presets registry
 export const projectLayoutPresets: Record<string, { [key in Layouts]: Layout[] }> = {
     'default': projectLayouts,
     'bento-horizontal': bentoHorizontalLayout,
     'bento-vertical': bentoVerticalLayout,
     'bento-redivo': bentoRedivoLayout,
+    'cle': cleLayout,
 };
 
 /**

@@ -33,9 +33,16 @@ export default function ProjectImageWithDownload({
     const isVideo = isVideoFile(imageUrl);
     // For images-7, use object-contain to maintain natural aspect ratio
     const useContain = isVideo && imageId === 'images-7';
+    // For images-9 and images-11, add white border and background to remove black perimeter
+    const hasWhiteBorder = imageId === 'images-9' || imageId === 'images-11';
+    // Scale videos for images-9 and images-11 to eliminate black perimeter
+    // images-9: 1.1x, images-11: 1.055x
+    const videoScale = imageId === 'images-9' ? 1.1 : (imageId === 'images-11' ? 1.055 : 1);
+    // Use white background for videos with white border instead of black
+    const videoBgColor = hasWhiteBorder ? '!bg-white dark:!bg-white' : (isVideo ? '!bg-black dark:!bg-black' : '');
     
-    return (
-        <Card className={`relative ${isVideo ? '!bg-black dark:!bg-black' : ''}`}>
+    const cardContent = (
+        <Card className={`relative ${videoBgColor}`}>
             {isVideo ? (
                 <video
                     src={imageUrl}
@@ -45,7 +52,10 @@ export default function ProjectImageWithDownload({
                     playsInline
                     preload="auto"
                     className={`absolute inset-0 w-full h-full ${useContain ? 'object-contain' : 'object-cover'}`}
-                    style={{ objectFit: useContain ? 'contain' : 'cover' }}
+                    style={{ 
+                        objectFit: useContain ? 'contain' : 'cover',
+                        transform: `scale(${videoScale})`
+                    }}
                 />
             ) : (
                 <Image
@@ -99,5 +109,7 @@ export default function ProjectImageWithDownload({
             )}
         </Card>
     );
+
+    return cardContent;
 }
 
