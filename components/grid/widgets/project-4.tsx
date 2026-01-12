@@ -14,7 +14,7 @@ export default function Project4() {
             aria-label={`View ${projectName} project`}
         >
             <Image
-                src='/images/4thCard_FogoDireto_Desktop&Tablet&Mobile.png'
+                src='/images/FogoDireto_Desktop&Tablet&Mobile.png'
                 alt={toKebabCase(projectName)}
                 fill
                 sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
