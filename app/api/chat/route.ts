@@ -2,9 +2,16 @@ import { OpenAI } from 'openai';
 import { NextResponse } from 'next/server';
 import { sql } from '@vercel/postgres';
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+// Lazy initialization - only create client when needed (at runtime, not during build)
+function getOpenAIClient() {
+  const apiKey = process.env.OPENAI_API_KEY;
+  if (!apiKey) {
+    throw new Error('Missing OPENAI_API_KEY environment variable');
+  }
+  return new OpenAI({
+    apiKey,
+  });
+}
 
 
 // System message - Stefano speaking in first person
@@ -144,6 +151,9 @@ export async function POST(request: Request) {
       ...conversationHistory,
       { role: 'user', content: message },
     ];
+
+    // Create OpenAI client (lazy initialization)
+    const openai = getOpenAIClient();
 
     // Create streaming completion
     const stream = await openai.chat.completions.create({
