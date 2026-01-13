@@ -22,9 +22,9 @@ export default function GridItem({
     // Determine if this card should be highlighted (visible) or dimmed
     const isHighlighted = () => {
         if (selectedCategory === 'all') return true;
-        if (selectedCategory === 'about') return ['description', 'location', 'resume', 'design-process', 'theme'].includes(id);
+        if (selectedCategory === 'about') return ['description', 'location', 'resume', 'design-process', 'github-card', 'email', 'ai-portfolio'].includes(id);
         if (selectedCategory === 'projects') return ['project', 'project2', 'project3', 'project4', 'theme'].includes(id);
-        if (selectedCategory === 'contact') return ['description', 'ai-portfolio-card', 'email', 'theme'].includes(id);
+        if (selectedCategory === 'contact') return ['description', 'ai-portfolio', 'github-card', 'email', 'theme'].includes(id);
         return false;
     };
 

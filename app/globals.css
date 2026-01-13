@@ -43,6 +43,17 @@
     }
 }
 
+/* Utility class for hiding scrollbars */
+@layer utilities {
+    .scrollbar-hide {
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+    }
+    .scrollbar-hide::-webkit-scrollbar {
+        display: none;  /* Chrome, Safari and Opera */
+    }
+}
+
 @keyframes playing {
     0% {
         height: 4px;

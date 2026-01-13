@@ -18,24 +18,12 @@ export default function DesignProcess() {
             aria-label={`View ${methodName} method`}
         >
             {/* Mobile layout - ONLY the image, covering the card */}
-            <div className='md:hidden flex items-center justify-center w-full h-full p-1'>
-                <Image
-                    src='/images/WorkShop Design.png'
-                    alt='Workshop Design Process'
-                    className='object-contain w-full h-full'
-                    fill
-                    loading="lazy"
-                    draggable={false}
-                />
-            </div>
-
-            {/* Tablet layout - full size */}
-            <div className='hidden md:flex lg:hidden flex-col items-center justify-center w-full h-full gap-6 p-1'>
-                <div className='flex flex-1 items-center justify-center w-full h-full'>
+            <div className='md:hidden flex items-center justify-center w-full h-full p-1 overflow-hidden'>
+                <div className='relative w-full h-full' style={{ transform: 'scale(1.3)' }}>
                     <Image
                         src='/images/WorkShop Design.png'
                         alt='Workshop Design Process'
-                        className='object-contain'
+                        className='object-contain w-full h-full'
                         fill
                         loading="lazy"
                         draggable={false}
@@ -43,17 +31,35 @@ export default function DesignProcess() {
                 </div>
             </div>
 
-            {/* Large desktop layout - full size image */}
-            <div className='hidden lg:flex flex-col items-center justify-center w-full h-full gap-6 p-1'>
+            {/* Tablet layout - full size */}
+            <div className='hidden md:flex lg:hidden flex-col items-center justify-center w-full h-full gap-6 p-1 overflow-hidden'>
                 <div className='flex flex-1 items-center justify-center w-full h-full'>
-                    <Image
-                        src='/images/WorkShop Design.png'
-                        alt='Workshop Design Process'
-                        className='object-contain'
-                        fill
-                        loading="lazy"
-                        draggable={false}
-                    />
+                    <div className='relative w-full h-full' style={{ transform: 'scale(1.3)' }}>
+                        <Image
+                            src='/images/WorkShop Design.png'
+                            alt='Workshop Design Process'
+                            className='object-contain'
+                            fill
+                            loading="lazy"
+                            draggable={false}
+                        />
+                    </div>
+                </div>
+            </div>
+
+            {/* Large desktop layout - full size image */}
+            <div className='hidden lg:flex flex-col items-center justify-center w-full h-full gap-6 p-1 overflow-hidden'>
+                <div className='flex flex-1 items-center justify-center w-full h-full'>
+                    <div className='relative w-full h-full' style={{ transform: 'scale(1.3)' }}>
+                        <Image
+                            src='/images/WorkShop Design.png'
+                            alt='Workshop Design Process'
+                            className='object-contain'
+                            fill
+                            loading="lazy"
+                            draggable={false}
+                        />
+                    </div>
                 </div>
             </div>
 
