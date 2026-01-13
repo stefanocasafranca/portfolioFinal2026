@@ -175,6 +175,8 @@ export default function ProjectModal({ project, onClose, scrollPosition, onResto
                             imageUrl={image.url}
                             alt={`${projectData.metadata.title} - ${image.i}`}
                             showDownload={false}
+                            pdfPath=""
+                            pdfFilename=""
                             imageId={image.i}
                           />
                         </div>
