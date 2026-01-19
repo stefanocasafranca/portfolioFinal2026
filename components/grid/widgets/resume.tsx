@@ -12,7 +12,7 @@ export default function Resume() {
         <LinkCard 
             className='group relative flex flex-col items-center justify-center'
             style={{backgroundColor: '#f9fafb'}}
-            href='/resume.pdf'
+            href='/UX_ProductDesigner-Stefano Casafranca-Resume2026.pdf'
             target='_blank'
             aria-label='View Resume PDF'
         >
@@ -26,8 +26,8 @@ export default function Resume() {
                 onClick={(e) => {
                     e.stopPropagation();
                     const link = document.createElement('a');
-                    link.href = '/resume.pdf';
-                    link.download = 'stefano-casafranca-resume.pdf';
+                    link.href = '/UX_ProductDesigner-Stefano Casafranca-Resume2026.pdf';
+                    link.download = 'UX_ProductDesigner-Stefano Casafranca-Resume2026.pdf';
                     document.body.appendChild(link);
                     link.click();
                     document.body.removeChild(link);
