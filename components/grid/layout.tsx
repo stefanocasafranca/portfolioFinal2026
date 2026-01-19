@@ -120,7 +120,8 @@ export default function GridLayout({ layouts, className, children }: Readonly<Re
                 onBreakpointChange={handleBreakpointChange}
                 isDraggable={false}
                 compactType={null}
-                margin={[16, 16]}>
+                margin={[16, 16]}
+                containerPadding={[16, 16]}>
                 {children}
             </ResponsiveGridLayout>
         </section>
