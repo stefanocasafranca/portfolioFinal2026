@@ -4,6 +4,7 @@ import { cn } from '@/utils/lib';
 import { Analytics } from '@vercel/analytics/react';
 import type { Metadata, Viewport } from 'next';
 import { ThemeProvider } from './providers';
+import { ErrorBoundary } from '@/components/error-boundary';
 
 import './globals.css';
 
@@ -70,10 +71,12 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     return (
         <html lang='en' suppressHydrationWarning>
             <body className={cn('font-sf-pro', 'dark:bg-dark-900 bg-gray-100 antialiased')} suppressHydrationWarning>
-                <ThemeProvider attribute='class' defaultTheme='light' enableSystem={false}>
-                    {children}
-                </ThemeProvider>
-                <Analytics />
+                <ErrorBoundary>
+                    <ThemeProvider attribute='class' defaultTheme='light' enableSystem={false}>
+                        {children}
+                    </ThemeProvider>
+                    <Analytics />
+                </ErrorBoundary>
             </body>
         </html>
     );

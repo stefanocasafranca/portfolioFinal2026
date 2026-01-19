@@ -39,8 +39,15 @@ export default function ProjectModal({ project, onClose, scrollPosition, onResto
 
   useEffect(() => {
     if (project) {
-      // Lock body scroll when modal is open
+      // Lock body scroll when modal is open - use safer method for mobile
+      const originalOverflow = document.body.style.overflow;
+      const originalPosition = document.body.style.position;
       document.body.style.overflow = 'hidden';
+      // Prevent scroll on mobile Safari
+      if (typeof window !== 'undefined' && 'ontouchstart' in window) {
+        document.body.style.position = 'fixed';
+        document.body.style.width = '100%';
+      }
       setIsLoading(true);
       setError(null);
       
@@ -58,14 +65,19 @@ export default function ProjectModal({ project, onClose, scrollPosition, onResto
           setError(err.message);
           setIsLoading(false);
         });
+
+      return () => {
+        // Restore original styles
+        document.body.style.overflow = originalOverflow;
+        document.body.style.position = originalPosition;
+        document.body.style.width = '';
+      };
     } else {
       document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
       setProjectData(null);
     }
-
-    return () => {
-      document.body.style.overflow = '';
-    };
   }, [project]);
 
   const handleClose = () => {

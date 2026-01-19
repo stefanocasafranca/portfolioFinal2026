@@ -24,12 +24,26 @@ export default function AIPortfolio() {
   const [selectedProject, setSelectedProject] = useState<ProjectMedia | null>(null);
   const [savedScrollPosition, setSavedScrollPosition] = useState(0);
 
-  // Auto-scroll to bottom when new messages arrive
+  // Auto-scroll to bottom when new messages arrive - throttled to prevent performance issues
   useEffect(() => {
-    if (messagesEndRef.current && !selectedProject) {
-      messagesEndRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
-    }
-  }, [messages, isLoading, selectedProject]);
+    if (!messagesEndRef.current || selectedProject || isLoading) return;
+    
+    // Throttle scroll to prevent excessive calls during streaming
+    const timeoutId = setTimeout(() => {
+      if (messagesEndRef.current && !selectedProject) {
+        try {
+          messagesEndRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
+        } catch (err) {
+          // Fallback for mobile browsers that may have issues with smooth scroll
+          if (messagesEndRef.current) {
+            messagesEndRef.current.scrollIntoView({ behavior: 'auto', block: 'end' });
+          }
+        }
+      }
+    }, 100); // Small delay to batch rapid updates
+
+    return () => clearTimeout(timeoutId);
+  }, [messages.length, selectedProject, isLoading]);
 
   // Handle project tile click - save scroll position and open modal
   const handleProjectClick = (project: ProjectMedia) => {
@@ -43,17 +57,33 @@ export default function AIPortfolio() {
   const handleModalClose = () => {
     setSelectedProject(null);
     // Restore scroll position after a brief delay to ensure DOM is ready
-    setTimeout(() => {
-      if (scrollContainerRef.current) {
-        scrollContainerRef.current.scrollTop = savedScrollPosition;
-      }
-    }, 100);
+    // Use requestAnimationFrame for better mobile performance
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        if (scrollContainerRef.current) {
+          try {
+            scrollContainerRef.current.scrollTop = savedScrollPosition;
+          } catch (err) {
+            // Silently fail if scroll restoration fails on mobile
+            console.warn('Scroll restoration failed:', err);
+          }
+        }
+      }, 150);
+    });
   };
 
   const handleRestoreScroll = (position: number) => {
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollTop = position;
-    }
+    // Use requestAnimationFrame for better mobile performance
+    requestAnimationFrame(() => {
+      if (scrollContainerRef.current) {
+        try {
+          scrollContainerRef.current.scrollTop = position;
+        } catch (err) {
+          // Silently fail if scroll restoration fails on mobile
+          console.warn('Scroll restoration failed:', err);
+        }
+      }
+    });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -321,8 +351,13 @@ export default function AIPortfolio() {
               setTimeout(() => {
                 const input = document.querySelector('input[type="text"]') as HTMLInputElement;
                 input?.focus();
-                // Scroll input into view on mobile
-                input?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                // Scroll input into view on mobile - use auto behavior to prevent crashes
+                try {
+                  input?.scrollIntoView({ behavior: 'auto', block: 'center' });
+                } catch (err) {
+                  // Silently fail if scroll fails on mobile
+                  console.warn('Input scroll failed:', err);
+                }
               }, 100);
             }}
           />

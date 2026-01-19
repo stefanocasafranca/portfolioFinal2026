@@ -14,17 +14,29 @@ function useBreakpoint() {
     const [breakpoint, setBreakpoint] = useState<string>('xxs');
 
     useEffect(() => {
+        let timeoutId: NodeJS.Timeout;
+        
         const handleResize = () => {
-            const width = window.innerWidth;
-            const newBreakpoint = Object.keys(breakpoints).find((key) => width > breakpoints[key]) ?? 'xxs';
-            setBreakpoint(newBreakpoint);
+            // Throttle resize events to prevent excessive updates on mobile
+            clearTimeout(timeoutId);
+            timeoutId = setTimeout(() => {
+                const width = window.innerWidth;
+                const newBreakpoint = Object.keys(breakpoints).find((key) => width > breakpoints[key]) ?? 'xxs';
+                setBreakpoint((prev) => {
+                    // Only update if breakpoint actually changed
+                    return prev !== newBreakpoint ? newBreakpoint : prev;
+                });
+            }, 150);
         };
 
         // Calculate initial breakpoint immediately
         if (typeof window !== 'undefined') {
             handleResize();
-            window.addEventListener('resize', handleResize);
-            return () => window.removeEventListener('resize', handleResize);
+            window.addEventListener('resize', handleResize, { passive: true });
+            return () => {
+                window.removeEventListener('resize', handleResize);
+                clearTimeout(timeoutId);
+            };
         }
     }, []);
 

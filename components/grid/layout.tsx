@@ -38,8 +38,8 @@ export default function GridLayout({ layouts, className, children }: Readonly<Re
                 isResizable={false}
                 //This passes the row height (280px for large screens) to react-grid-layout  
                 rowHeight={safeRowHeight}
-                useCSSTransforms={false}
-                measureBeforeMount
+                useCSSTransforms={true}
+                measureBeforeMount={false}
                 draggableCancel='.cancel-drag'
                 onBreakpointChange={setBreakpoint}
                 isDraggable={false}

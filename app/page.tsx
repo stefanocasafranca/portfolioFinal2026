@@ -12,6 +12,7 @@ import { useUIMode } from '@/contexts/ui-mode';
 import { usePrefersReducedMotion } from '@/utils/hooks';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
+import { ErrorBoundary } from '@/components/error-boundary';
 
 export default function Home() {
     // Lightweight state management for filtering - following directives
@@ -71,7 +72,9 @@ export default function Home() {
                         {...getTransitionProps(true)}
                         className="absolute inset-0"
                     >
-                        <AIPortfolio />
+                        <ErrorBoundary>
+                            <AIPortfolio />
+                        </ErrorBoundary>
                     </motion.div>
                 ) : (
                     // Normal Portfolio Mode - unmounted when in AI mode

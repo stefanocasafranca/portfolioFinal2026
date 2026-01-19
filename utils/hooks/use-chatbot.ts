@@ -133,13 +133,16 @@ export function useChatbot(): UseChatbotReturn {
               if (parsed.content) {
                 streamedContent += parsed.content;
 
+                // Throttle updates to prevent excessive re-renders on mobile
                 // Update the assistant message with accumulated content
                 setMessages((prev) => {
                   const newMessages = [...prev];
-                  newMessages[assistantMessageIndex] = {
-                    role: 'assistant',
-                    content: streamedContent
-                  };
+                  if (newMessages[assistantMessageIndex]) {
+                    newMessages[assistantMessageIndex] = {
+                      role: 'assistant',
+                      content: streamedContent
+                    };
+                  }
                   return newMessages;
                 });
               }

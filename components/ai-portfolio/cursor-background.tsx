@@ -5,20 +5,43 @@ import { usePrefersReducedMotion } from '@/utils/hooks';
 
 export default function CursorBackground() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isMobile, setIsMobile] = useState(false);
   const prefersReducedMotion = usePrefersReducedMotion();
 
+  // Detect mobile devices to disable cursor tracking
   useEffect(() => {
-    if (prefersReducedMotion) return;
+    const checkMobile = () => {
+      const isMobileDevice = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) ||
+        (typeof window !== 'undefined' && window.innerWidth < 768) ||
+        ('ontouchstart' in window);
+      setIsMobile(isMobileDevice);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
+  useEffect(() => {
+    if (prefersReducedMotion || isMobile) return;
+
+    let rafId: number;
     const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
+      // Throttle updates using requestAnimationFrame
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
+        setMousePosition({ x: e.clientX, y: e.clientY });
+      });
     };
 
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, [prefersReducedMotion]);
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      if (rafId) cancelAnimationFrame(rafId);
+    };
+  }, [prefersReducedMotion, isMobile]);
 
-  if (prefersReducedMotion) {
+  if (prefersReducedMotion || isMobile) {
     return (
       <div className="fixed inset-0 pointer-events-none bg-gradient-to-br from-blue-50/20 via-purple-50/15 to-indigo-50/20 dark:from-blue-950/20 dark:via-purple-950/15 dark:to-indigo-950/20" />
     );
