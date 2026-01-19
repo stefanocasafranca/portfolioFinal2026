@@ -4,9 +4,7 @@ import { useMounted, usePrefersReducedMotion } from '@/utils/hooks';
 import { cn } from '@/utils/lib';
 import { useUIMode } from '@/contexts/ui-mode';
 import { FaRobot } from 'react-icons/fa6';
-import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useState } from 'react';
 import Card from '../../ui/card';
 
 export default function Theme() {
@@ -37,7 +35,6 @@ export default function Theme() {
 function ThemeToggle() {
     const isMounted = useMounted();
     const { isAiMode, enterAiMode, isActivating } = useUIMode();
-    const [useIconFallback, setUseIconFallback] = useState(false);
 
     const handleToggle = () => {
         // In normal mode, this enters AI mode
@@ -80,26 +77,12 @@ function ThemeToggle() {
                         boxShadow: '0 0 0 1px rgb(168 85 247), 0 0 0 2px rgb(209 213 219)'
                     } : undefined}>
                     {/* AI robot icon - gray when OFF, colored when ACTIVATING/ON */}
-                    {!useIconFallback ? (
-                        <Image
-                            src="/images/icons/ai-toggle.svg"
-                            alt="AI Portfolio"
-                            width={20}
-                            height={20}
-                            className={cn(
-                                "transition-all duration-300",
-                                (isActivating || isAiMode) ? "opacity-100" : "opacity-60"
-                            )}
-                            onError={() => setUseIconFallback(true)}
-                        />
-                    ) : (
-                        <FaRobot 
-                            className={cn(
-                                "w-5 h-5 transition-all duration-300",
-                                (isActivating || isAiMode) ? "text-purple-600 animate-pulse" : "text-[#9E9E9E]"
-                            )} 
-                        />
-                    )}
+                    <FaRobot 
+                        className={cn(
+                            "w-5 h-5 transition-all duration-300",
+                            (isActivating || isAiMode) ? "text-purple-600 animate-pulse" : "text-[#9E9E9E]"
+                        )} 
+                    />
                 </div>
             </button>
         </div>

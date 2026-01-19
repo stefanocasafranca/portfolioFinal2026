@@ -23,6 +23,7 @@ export default function LinkedIn() {
                         src='/images/githubLogo.png'
                         alt='GitHub'
                         fill
+                        sizes='(max-width: 768px) 96px, 128px'
                         className='object-contain'
                         loading="lazy"
                         draggable='false'

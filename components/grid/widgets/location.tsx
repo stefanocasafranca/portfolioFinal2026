@@ -6,6 +6,7 @@ import { useRef, useState } from 'react';
 import { FaMinus, FaPlus } from 'react-icons/fa6';
 import Map, { MapRef } from 'react-map-gl';
 import Card from '../../ui/card';
+import 'mapbox-gl/dist/mapbox-gl.css';
 
 // Map configuration constants
 const MAX_ZOOM = 8;

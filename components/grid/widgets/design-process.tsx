@@ -25,6 +25,7 @@ export default function DesignProcess() {
                         alt='Workshop Design Process'
                         className='object-contain w-full h-full'
                         fill
+                        sizes='(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw'
                         loading="lazy"
                         draggable={false}
                     />
@@ -40,6 +41,7 @@ export default function DesignProcess() {
                             alt='Workshop Design Process'
                             className='object-contain'
                             fill
+                            sizes='(max-width: 1024px) 50vw, 33vw'
                             loading="lazy"
                             draggable={false}
                         />
@@ -56,6 +58,7 @@ export default function DesignProcess() {
                             alt='Workshop Design Process'
                             className='object-contain'
                             fill
+                            sizes='(max-width: 1024px) 50vw, 33vw'
                             loading="lazy"
                             draggable={false}
                         />

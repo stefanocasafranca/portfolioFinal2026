@@ -4,7 +4,7 @@ import { breakpoints, cols, rowHeights } from '@/utils/consts';
 import { useBreakpoint, useMounted } from '@/utils/hooks';
 import { cn } from '@/utils/lib';
 import { Responsive, ResponsiveProps, WidthProvider } from 'react-grid-layout';
-import { useRef, useEffect, useCallback } from 'react';
+import { useRef, useEffect, useCallback, useState } from 'react';
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
@@ -21,9 +21,24 @@ export default function GridLayout({ layouts, className, children }: Readonly<Re
     const isScrollingRef = useRef(false);
     const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
     const pendingBreakpointRef = useRef<string | null>(null);
+    // Initialize grid breakpoint - start with 'xxs' to avoid hydration mismatch
+    // Will be updated on mount via useEffect
+    const [gridBreakpoint, setGridBreakpoint] = useState<string>('xxs');
+    
+    // Initialize breakpoint on client mount to avoid hydration mismatch
+    useEffect(() => {
+        if (typeof window === 'undefined') return;
+        const width = window.innerWidth;
+        // Find the largest breakpoint where width > breakpoint value
+        const sortedBreakpoints = Object.entries(breakpoints).sort((a, b) => b[1] - a[1]);
+        const found = sortedBreakpoints.find(([_, value]) => width > value);
+        const initialBreakpoint = found ? found[0] : 'xxs';
+        setGridBreakpoint(initialBreakpoint);
+    }, []);
 
-    // Use a default breakpoint if not yet calculated (prevents undefined rowHeight)
-    const safeBreakpoint = breakpoint || 'xxs';
+    // Use the breakpoint from react-grid-layout (via onBreakpointChange) for row height
+    // This ensures row height matches the actual breakpoint being used by the grid
+    const safeBreakpoint = gridBreakpoint || breakpoint || 'xxs';
     const safeRowHeight = rowHeights[safeBreakpoint] || rowHeights.xxs;
 
     // Track scroll state to prevent layout recalculations during scroll
@@ -64,6 +79,7 @@ export default function GridLayout({ layouts, className, children }: Readonly<Re
     }, [breakpoint, setBreakpoint]);
 
     // Debounced breakpoint change handler that respects scroll state
+    // This receives the breakpoint from react-grid-layout itself
     const handleBreakpointChange = useCallback((newBreakpoint: string) => {
         if (isScrollingRef.current) {
             // Store pending breakpoint change until scroll ends
@@ -71,7 +87,9 @@ export default function GridLayout({ layouts, className, children }: Readonly<Re
             return;
         }
         
-        // Only update if breakpoint actually changed
+        // Update both our breakpoint state and the grid breakpoint state
+        // The grid breakpoint is what we use for row height
+        setGridBreakpoint(newBreakpoint);
         if (newBreakpoint !== breakpoint) {
             setBreakpoint(newBreakpoint);
             pendingBreakpointRef.current = null;
