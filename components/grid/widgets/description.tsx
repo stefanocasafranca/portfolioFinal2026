@@ -20,7 +20,7 @@ export default function Description() {
                 placeholder='blur'
                 priority
                 className='rounded-lg'
-                style={{ width: '120px', height: '120px', objectFit: 'cover' }}
+                style={{ height: 'auto' }}
             />
             <p className='leading-relaxed text-[15px] sm:text-[17px]'>
                 Hi, I&apos;m <span className='font-sf-pro text-[19px] sm:text-[21px] font-semibold'>Stefano</span>, a UX Researcher/Designer who develops software. I&apos;m ready to <span className='font-semibold'>pour my heart and soul</span> into great projects.

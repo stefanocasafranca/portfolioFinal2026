@@ -13,18 +13,16 @@ export default function Project4() {
             href={`/projects/${toKebabCase(projectName)}`}
             aria-label={`View ${projectName} project`}
         >
-            <div className='absolute inset-0 w-full h-full'>
-                <Image
-                    src='/images/FogoDireto_Desktop&Tablet&Mobile.png'
-                    alt={toKebabCase(projectName)}
-                    fill
-                    sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
-                    className='object-cover'
-                    priority
-                    quality={85}
-                    draggable='false'
-                />
-            </div>
+            <Image
+                src='/images/FogoDireto_Desktop&Tablet&Mobile.png'
+                alt={toKebabCase(projectName)}
+                fill
+                sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
+                className='object-cover'
+                loading="lazy"
+                quality={85}
+                draggable='false'
+            />
             <div className='absolute bottom-3 left-3'>
                 <DecorativeCTA
                     className='size-10 justify-end transition-all ease-in-out group-hover:w-full'

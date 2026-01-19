@@ -12,16 +12,16 @@ import { useUIMode } from '@/contexts/ui-mode';
 import { usePrefersReducedMotion } from '@/utils/hooks';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
-import { ErrorBoundary } from '@/components/error-boundary';
 
 export default function Home() {
     // Lightweight state management for filtering - following directives
     const [selectedCategory, setSelectedCategory] = useState<CardCategory | 'all'>('all');
     const { isAiMode, isAnimating } = useUIMode();
     const prefersReducedMotion = usePrefersReducedMotion();
+    const shouldReduceMotion = prefersReducedMotion === true;
 
     const getTransitionProps = (isAiPortfolio = false) => {
-        if (prefersReducedMotion) return {};
+        if (shouldReduceMotion) return {};
         
         if (isAiPortfolio) {
             return {
@@ -72,9 +72,7 @@ export default function Home() {
                         {...getTransitionProps(true)}
                         className="absolute inset-0"
                     >
-                        <ErrorBoundary>
-                            <AIPortfolio />
-                        </ErrorBoundary>
+                        <AIPortfolio />
                     </motion.div>
                 ) : (
                     // Normal Portfolio Mode - unmounted when in AI mode

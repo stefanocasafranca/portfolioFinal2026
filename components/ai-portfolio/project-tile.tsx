@@ -13,14 +13,15 @@ interface ProjectTileProps {
 
 export default function ProjectTile({ project, onClick }: ProjectTileProps) {
   const prefersReducedMotion = usePrefersReducedMotion();
+  const shouldReduceMotion = prefersReducedMotion === true;
   const mediaUrl = project.media[0];
   const isVideo = mediaUrl?.endsWith('.mov') || mediaUrl?.endsWith('.mp4') || mediaUrl?.endsWith('.webm');
 
   return (
     <motion.div
-      initial={prefersReducedMotion ? {} : { opacity: 0, scale: 0.9, y: 10 }}
-      animate={prefersReducedMotion ? {} : { opacity: 1, scale: 1, y: 0 }}
-      transition={prefersReducedMotion ? {} : { duration: 0.3 }}
+      initial={shouldReduceMotion ? {} : { opacity: 0, scale: 0.9, y: 10 }}
+      animate={shouldReduceMotion ? {} : { opacity: 1, scale: 1, y: 0 }}
+      transition={shouldReduceMotion ? {} : { duration: 0.3 }}
       className="my-4"
     >
       <button

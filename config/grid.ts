@@ -230,25 +230,15 @@ function createSmartLayouts(highlightedItems: string[]): { [key in Layouts]: Lay
 }
 
 // Create smart layouts for each category
-// These arrays must match the isHighlighted logic in components/grid/item.tsx
-const aboutItems = ['description', 'location', 'resume', 'design-process', 'github-card', 'email', 'ai-portfolio'];
+const aboutItems = ['description', 'location', 'resume', 'design-process', 'ai-portfolio'];
 const projectItems = ['project', 'project2', 'project3', 'project4', 'project5', 'ai-portfolio'];
-const contactItems = ['description', 'ai-portfolio', 'github-card', 'email'];
-
-// Custom Contact layout that preserves original positions for perfect alignment
-// This ensures cards maintain their exact positions from originalLayouts with proper spacing
-// IMPORTANT: Include ALL cards (both visible and dimmed) so react-grid-layout knows where to place everything
-const createContactLayouts = (): { [key in Layouts]: Layout[] } => {
-    // Return all original layouts - this ensures all cards (visible and dimmed) are positioned correctly
-    // The GridItem component handles visibility/dimming, but react-grid-layout needs all layouts
-    return originalLayouts;
-};
+const contactItems = ['description', 'github-card', 'email', 'ai-portfolio'];
 
 export const filteredLayouts = {
     all: originalLayouts,
     about: createSmartLayouts(aboutItems),
     projects: createSmartLayouts(projectItems),
-    contact: createContactLayouts() // Use custom layout that preserves original positions
+    contact: createSmartLayouts(contactItems)
 };
 
 

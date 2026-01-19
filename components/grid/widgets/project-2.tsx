@@ -13,7 +13,7 @@ export default function Project2() {
             href={`/projects/${toKebabCase(projectName)}`}
             aria-label={`View ${projectName} project`}
         >
-            <div className='absolute inset-0 w-full h-full'>
+            <div className='relative w-full h-full'>
                 <Image
                     src='/images/2ndCard_Redivo_Mobile.png'
                     alt={toKebabCase(projectName)}
@@ -29,7 +29,7 @@ export default function Project2() {
                     fill
                     sizes='(max-width: 640px) 100vw, (max-width: 1199px) 50vw, 33vw'
                     className='object-cover hidden md:block [@media(min-width:1200px)]:hidden'
-                    loading="lazy"
+                    priority
                     draggable='false'
                 />
                 <Image

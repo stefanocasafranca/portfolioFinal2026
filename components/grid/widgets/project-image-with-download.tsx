@@ -62,7 +62,7 @@ export default function ProjectImageWithDownload({
                     src={imageUrl}
                     alt={alt}
                     fill
-                    style={{ objectFit: 'cover' }}
+                    objectFit='cover'
                     sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
                     draggable='false'
                 />

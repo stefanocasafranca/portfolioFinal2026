@@ -2,19 +2,11 @@ import { siteConfig } from '@/config/site';
 import { sfPro } from '@/utils/fonts';
 import { cn } from '@/utils/lib';
 import { Analytics } from '@vercel/analytics/react';
-import type { Metadata, Viewport } from 'next';
+import type { Metadata } from 'next';
 import { ThemeProvider } from './providers';
-import { ErrorBoundary } from '@/components/error-boundary';
+import 'mapbox-gl/dist/mapbox-gl.css';
 
 import './globals.css';
-
-export const viewport: Viewport = {
-    width: 'device-width',
-    initialScale: 1,
-    maximumScale: 5,
-    userScalable: true,
-    viewportFit: 'cover',
-};
 
 export const metadata: Metadata = {
     title: {
@@ -70,56 +62,11 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
     return (
         <html lang='en' suppressHydrationWarning>
-            <head>
-                {process.env.NODE_ENV === 'development' && (
-                    <script
-                        dangerouslySetInnerHTML={{
-                            __html: `
-                                (function() {
-                                    const originalLog = console.log;
-                                    const originalInfo = console.info;
-                                    const originalWarn = console.warn;
-                                    
-                                    console.log = function(...args) {
-                                        const message = args.join(' ');
-                                        if (message.includes('Vercel Web Analytics') || 
-                                            message.includes('Fast Refresh') ||
-                                            message.includes('pageview')) {
-                                            return;
-                                        }
-                                        originalLog.apply(console, args);
-                                    };
-                                    
-                                    console.info = function(...args) {
-                                        const message = args.join(' ');
-                                        if (message.includes('React DevTools') || 
-                                            message.includes('Download the React DevTools')) {
-                                            return;
-                                        }
-                                        originalInfo.apply(console, args);
-                                    };
-                                    
-                                    console.warn = function(...args) {
-                                        const message = args.join(' ');
-                                        if (message.includes('Largest Contentful Paint') && 
-                                            message.includes('priority')) {
-                                            return;
-                                        }
-                                        originalWarn.apply(console, args);
-                                    };
-                                })();
-                            `,
-                        }}
-                    />
-                )}
-            </head>
-            <body className={cn('font-sf-pro', 'dark:bg-dark-900 bg-gray-100 antialiased')} suppressHydrationWarning>
-                <ErrorBoundary>
-                    <ThemeProvider attribute='class' defaultTheme='light' enableSystem={false}>
-                        {children}
-                    </ThemeProvider>
-                    {process.env.NODE_ENV === 'production' && <Analytics />}
-                </ErrorBoundary>
+                            <body className={cn('font-sf-pro', 'dark:bg-dark-900 bg-gray-100 antialiased')} suppressHydrationWarning>
+                <ThemeProvider attribute='class' defaultTheme='light' enableSystem={false}>
+                    {children}
+                </ThemeProvider>
+                {process.env.NODE_ENV === 'production' && <Analytics />}
             </body>
         </html>
     );

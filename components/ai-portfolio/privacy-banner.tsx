@@ -10,23 +10,41 @@ export default function PrivacyBanner() {
   const [showBanner, setShowBanner] = useState(false);
 
   useEffect(() => {
-    // Check if user has already consented
-    const hasConsented = localStorage.getItem(CONSENT_KEY);
-    if (!hasConsented) {
-      // Show banner after a short delay for better UX
-      const timer = setTimeout(() => setShowBanner(true), 1000);
-      return () => clearTimeout(timer);
+    // Check if user has already consented (client-side only)
+    if (typeof window === 'undefined') return;
+    
+    try {
+      const hasConsented = localStorage.getItem(CONSENT_KEY);
+      if (!hasConsented) {
+        // Show banner after a short delay for better UX
+        const timer = setTimeout(() => setShowBanner(true), 1000);
+        return () => clearTimeout(timer);
+      }
+    } catch {
+      // Silently handle localStorage errors
     }
   }, []);
 
   const handleAccept = () => {
-    localStorage.setItem(CONSENT_KEY, 'true');
+    if (typeof window !== 'undefined') {
+      try {
+        localStorage.setItem(CONSENT_KEY, 'true');
+      } catch {
+        // Silently handle localStorage errors
+      }
+    }
     setShowBanner(false);
   };
 
   const handleDismiss = () => {
     // Still set consent as true since using the chat implies consent
-    localStorage.setItem(CONSENT_KEY, 'true');
+    if (typeof window !== 'undefined') {
+      try {
+        localStorage.setItem(CONSENT_KEY, 'true');
+      } catch {
+        // Silently handle localStorage errors
+      }
+    }
     setShowBanner(false);
   };
 

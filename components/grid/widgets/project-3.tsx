@@ -13,7 +13,7 @@ export default function Project3() {
             href={`/projects/${toKebabCase(projectName)}`}
             aria-label={`View ${projectName} project`}
         >
-            <div className='absolute inset-0 w-full h-full'>
+            <div className='relative w-full h-full'>
                 <Image
                     src='/images/project3_ABI_NewOne.png'
                     alt={toKebabCase(projectName)}

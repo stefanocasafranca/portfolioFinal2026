@@ -16,8 +16,12 @@ interface UseChatbotReturn {
 const STORAGE_KEY = 'stefano-ai-chat-history';
 const SESSION_KEY = 'stefano-ai-session-id';
 
-// Generate or retrieve session ID
+// Generate or retrieve session ID (client-side only)
 function getSessionId(): string {
+  if (typeof window === 'undefined') {
+    return `temp-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+  }
+  
   try {
     let sessionId = localStorage.getItem(SESSION_KEY);
     if (!sessionId) {
@@ -37,8 +41,10 @@ export function useChatbot(): UseChatbotReturn {
   const [error, setError] = useState<string | null>(null);
   const [sessionId] = useState<string>(() => getSessionId());
 
-  // Load messages from localStorage on mount
+  // Load messages from localStorage on mount (client-side only)
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+    
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
@@ -48,14 +54,23 @@ export function useChatbot(): UseChatbotReturn {
         }
       }
     } catch (err) {
-      console.error('Failed to load chat history from localStorage:', err);
+      // Silently handle errors - don't log to console in production
+      if (process.env.NODE_ENV === 'development') {
+        console.error('Failed to load chat history from localStorage:', err);
+      }
       // Clear corrupted data
-      localStorage.removeItem(STORAGE_KEY);
+      try {
+        localStorage.removeItem(STORAGE_KEY);
+      } catch {
+        // Ignore removal errors
+      }
     }
   }, []);
 
-  // Save messages to localStorage whenever they change
+  // Save messages to localStorage whenever they change (client-side only)
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+    
     try {
       if (messages.length > 0) {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
@@ -63,8 +78,11 @@ export function useChatbot(): UseChatbotReturn {
         localStorage.removeItem(STORAGE_KEY);
       }
     } catch (err) {
-      console.error('Failed to save chat history to localStorage:', err);
-      // Handle quota exceeded or other storage errors
+      // Silently handle errors - don't log to console in production
+      if (process.env.NODE_ENV === 'development') {
+        console.error('Failed to save chat history to localStorage:', err);
+      }
+      // Handle quota exceeded or other storage errors silently
     }
   }, [messages]);
 
@@ -74,13 +92,19 @@ export function useChatbot(): UseChatbotReturn {
     setIsLoading(true);
     setError(null);
 
-    // Add user message immediately
+    // Add user message immediately and capture conversation history
     const userMessage: Message = { role: 'user', content: message };
-    setMessages((prev) => [...prev, userMessage]);
-
-    // Add empty assistant message that will be populated with streaming content
-    const assistantMessageIndex = messages.length + 1;
-    setMessages((prev) => [...prev, { role: 'assistant', content: '' }]);
+    let assistantMessageIndex = 0;
+    let conversationHistory: Message[] = [];
+    
+    setMessages((prev) => {
+      conversationHistory = [...prev, userMessage];
+      const newMessages = [...conversationHistory];
+      assistantMessageIndex = newMessages.length;
+      // Add empty assistant message that will be populated with streaming content
+      newMessages.push({ role: 'assistant', content: '' });
+      return newMessages;
+    });
 
     try {
       const response = await fetch('/api/chat', {
@@ -90,7 +114,7 @@ export function useChatbot(): UseChatbotReturn {
         },
         body: JSON.stringify({
           message,
-          conversationHistory: messages,
+          conversationHistory,
           sessionId, // Include session ID for analytics
         }),
       });
@@ -133,16 +157,13 @@ export function useChatbot(): UseChatbotReturn {
               if (parsed.content) {
                 streamedContent += parsed.content;
 
-                // Throttle updates to prevent excessive re-renders on mobile
                 // Update the assistant message with accumulated content
                 setMessages((prev) => {
                   const newMessages = [...prev];
-                  if (newMessages[assistantMessageIndex]) {
-                    newMessages[assistantMessageIndex] = {
-                      role: 'assistant',
-                      content: streamedContent
-                    };
-                  }
+                  newMessages[assistantMessageIndex] = {
+                    role: 'assistant',
+                    content: streamedContent
+                  };
                   return newMessages;
                 });
               }
@@ -162,15 +183,20 @@ export function useChatbot(): UseChatbotReturn {
     } finally {
       setIsLoading(false);
     }
-  }, [messages]);
+  }, [sessionId]);
 
   const clearMessages = useCallback(() => {
     setMessages([]);
     setError(null);
-    try {
-      localStorage.removeItem(STORAGE_KEY);
-    } catch (err) {
-      console.error('Failed to clear chat history from localStorage:', err);
+    if (typeof window !== 'undefined') {
+      try {
+        localStorage.removeItem(STORAGE_KEY);
+      } catch (err) {
+        // Silently handle errors - don't log to console in production
+        if (process.env.NODE_ENV === 'development') {
+          console.error('Failed to clear chat history from localStorage:', err);
+        }
+      }
     }
   }, []);
 

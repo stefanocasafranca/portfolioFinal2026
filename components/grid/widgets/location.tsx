@@ -6,7 +6,6 @@ import { useRef, useState } from 'react';
 import { FaMinus, FaPlus } from 'react-icons/fa6';
 import Map, { MapRef } from 'react-map-gl';
 import Card from '../../ui/card';
-import 'mapbox-gl/dist/mapbox-gl.css';
 
 // Map configuration constants
 const MAX_ZOOM = 8;
@@ -31,17 +30,6 @@ export default function Location() {
 
     const mapRef = useRef<MapRef>(null);
     const { theme } = useTheme();
-
-    // If no Mapbox token, show a fallback message instead of crashing
-    if (!mapboxToken) {
-        return (
-            <Card className='relative size-full flex items-center justify-center'>
-                <p className='text-sm text-gray-500 dark:text-gray-400 text-center px-4'>
-                    Map unavailable
-                </p>
-            </Card>
-        );
-    }
 
     // Handle zoom controls with debouncing
     const handleZoom = (zoomIn: boolean) => {

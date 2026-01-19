@@ -13,7 +13,7 @@ export default function Project5() {
             href="/projects/cle"
             aria-label={`View ${projectName} project`}
         >
-            <div className='absolute inset-0 w-full h-full'>
+            <div className='relative w-full h-full'>
                 <Image
                     src='/images/3rdCard_CLE_Desktop&Tablet&Phone.png'
                     alt={toKebabCase(projectName)}
@@ -38,7 +38,7 @@ export default function Project5() {
                     fill
                     sizes='(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 50vw'
                     className='object-cover object-center !hidden [@media(min-width:1200px)]:!block'
-                    loading="lazy"
+                    priority
                     draggable='false'
                 />
             </div>

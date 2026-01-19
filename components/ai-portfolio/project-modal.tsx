@@ -33,6 +33,7 @@ interface ProjectData {
 
 export default function ProjectModal({ project, onClose, scrollPosition, onRestoreScroll }: ProjectModalProps) {
   const prefersReducedMotion = usePrefersReducedMotion();
+  const shouldReduceMotion = prefersReducedMotion === true;
   const [isLoading, setIsLoading] = useState(true);
   const [projectData, setProjectData] = useState<ProjectData | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -97,9 +98,9 @@ export default function ProjectModal({ project, onClose, scrollPosition, onResto
           
           {/* Modal Content */}
           <motion.div
-            initial={prefersReducedMotion ? {} : { opacity: 0, scale: 0.95, y: 20 }}
-            animate={prefersReducedMotion ? {} : { opacity: 1, scale: 1, y: 0 }}
-            exit={prefersReducedMotion ? {} : { opacity: 0, scale: 0.95, y: 20 }}
+            initial={shouldReduceMotion ? {} : { opacity: 0, scale: 0.95, y: 20 }}
+            animate={shouldReduceMotion ? {} : { opacity: 1, scale: 1, y: 0 }}
+            exit={shouldReduceMotion ? {} : { opacity: 0, scale: 0.95, y: 20 }}
             transition={{ duration: 0.3 }}
             className="fixed inset-4 sm:inset-8 md:inset-12 lg:inset-16 z-50 bg-white dark:bg-gray-900 rounded-2xl shadow-2xl overflow-hidden flex flex-col"
             onClick={(e) => e.stopPropagation()}
