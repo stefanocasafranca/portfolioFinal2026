@@ -230,9 +230,10 @@ function createSmartLayouts(highlightedItems: string[]): { [key in Layouts]: Lay
 }
 
 // Create smart layouts for each category
+// These arrays must match the isHighlighted logic in components/grid/item.tsx
 const aboutItems = ['description', 'location', 'resume', 'design-process', 'github-card', 'email', 'ai-portfolio'];
 const projectItems = ['project', 'project2', 'project3', 'project4', 'project5', 'ai-portfolio'];
-const contactItems = ['description', 'github-card', 'email', 'ai-portfolio'];
+const contactItems = ['description', 'ai-portfolio', 'github-card', 'email'];
 
 export const filteredLayouts = {
     all: originalLayouts,
