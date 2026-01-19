@@ -31,6 +31,17 @@ export default function Location() {
     const mapRef = useRef<MapRef>(null);
     const { theme } = useTheme();
 
+    // If no Mapbox token, show a fallback message instead of crashing
+    if (!mapboxToken) {
+        return (
+            <Card className='relative size-full flex items-center justify-center'>
+                <p className='text-sm text-gray-500 dark:text-gray-400 text-center px-4'>
+                    Map unavailable
+                </p>
+            </Card>
+        );
+    }
+
     // Handle zoom controls with debouncing
     const handleZoom = (zoomIn: boolean) => {
         if (isButtonDisabled) return;
