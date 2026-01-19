@@ -230,7 +230,7 @@ function createSmartLayouts(highlightedItems: string[]): { [key in Layouts]: Lay
 }
 
 // Create smart layouts for each category
-const aboutItems = ['description', 'location', 'resume', 'design-process', 'ai-portfolio'];
+const aboutItems = ['description', 'location', 'resume', 'design-process', 'github-card', 'email', 'ai-portfolio'];
 const projectItems = ['project', 'project2', 'project3', 'project4', 'project5', 'ai-portfolio'];
 const contactItems = ['description', 'github-card', 'email', 'ai-portfolio'];
 
