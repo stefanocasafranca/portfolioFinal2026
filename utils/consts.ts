@@ -17,7 +17,7 @@ export const breakpoints: { [key: string]: number } = {
  * Larger values create taller cards, smaller values create more compact layouts
  */
 export const rowHeights: { [key: string]: number } = {
-    lg: 288, // Large screens: matches column width (288px) for perfect 1:1 card ratios
+    lg: 280, // Large screens: optimized for filtered layouts alignment
     md: 180, // Medium screens: balanced height for tablets
     sm: 164, // Small screens: compact height for mobile
     xs: 136, // Extra small screens: minimal height for small mobile
