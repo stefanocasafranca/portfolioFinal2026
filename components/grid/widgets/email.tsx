@@ -24,7 +24,7 @@ export default function Email() {
         } catch (err) {
             // Silently handle errors - don't log to console in production
             if (process.env.NODE_ENV === 'development') {
-                console.error('Failed to copy email:', err);
+            console.error('Failed to copy email:', err);
             }
         }
     };

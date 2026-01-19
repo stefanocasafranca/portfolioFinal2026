@@ -64,8 +64,8 @@ export default function AIPortfolioNavigation() {
     const shouldReduceMotion = prefersReducedMotion === true;
 
     const handleTabClick = (tabId: string) => {
-        setActiveTab(prevTab => prevTab === tabId ? '' : tabId);
-        // Future: Expand this to show different content based on tab
+            setActiveTab(prevTab => prevTab === tabId ? '' : tabId);
+            // Future: Expand this to show different content based on tab
     };
 
     return (

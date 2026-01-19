@@ -56,11 +56,11 @@ export function useChatbot(): UseChatbotReturn {
     } catch (err) {
       // Silently handle errors - don't log to console in production
       if (process.env.NODE_ENV === 'development') {
-        console.error('Failed to load chat history from localStorage:', err);
+      console.error('Failed to load chat history from localStorage:', err);
       }
       // Clear corrupted data
       try {
-        localStorage.removeItem(STORAGE_KEY);
+      localStorage.removeItem(STORAGE_KEY);
       } catch {
         // Ignore removal errors
       }
@@ -80,7 +80,7 @@ export function useChatbot(): UseChatbotReturn {
     } catch (err) {
       // Silently handle errors - don't log to console in production
       if (process.env.NODE_ENV === 'development') {
-        console.error('Failed to save chat history to localStorage:', err);
+      console.error('Failed to save chat history to localStorage:', err);
       }
       // Handle quota exceeded or other storage errors silently
     }
@@ -96,12 +96,12 @@ export function useChatbot(): UseChatbotReturn {
     const userMessage: Message = { role: 'user', content: message };
     let assistantMessageIndex = 0;
     let conversationHistory: Message[] = [];
-    
+
     setMessages((prev) => {
       conversationHistory = [...prev, userMessage];
       const newMessages = [...conversationHistory];
       assistantMessageIndex = newMessages.length;
-      // Add empty assistant message that will be populated with streaming content
+    // Add empty assistant message that will be populated with streaming content
       newMessages.push({ role: 'assistant', content: '' });
       return newMessages;
     });
@@ -189,12 +189,12 @@ export function useChatbot(): UseChatbotReturn {
     setMessages([]);
     setError(null);
     if (typeof window !== 'undefined') {
-      try {
-        localStorage.removeItem(STORAGE_KEY);
-      } catch (err) {
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+    } catch (err) {
         // Silently handle errors - don't log to console in production
         if (process.env.NODE_ENV === 'development') {
-          console.error('Failed to clear chat history from localStorage:', err);
+      console.error('Failed to clear chat history from localStorage:', err);
         }
       }
     }

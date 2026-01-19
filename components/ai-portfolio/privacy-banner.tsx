@@ -14,11 +14,11 @@ export default function PrivacyBanner() {
     if (typeof window === 'undefined') return;
     
     try {
-      const hasConsented = localStorage.getItem(CONSENT_KEY);
-      if (!hasConsented) {
-        // Show banner after a short delay for better UX
-        const timer = setTimeout(() => setShowBanner(true), 1000);
-        return () => clearTimeout(timer);
+    const hasConsented = localStorage.getItem(CONSENT_KEY);
+    if (!hasConsented) {
+      // Show banner after a short delay for better UX
+      const timer = setTimeout(() => setShowBanner(true), 1000);
+      return () => clearTimeout(timer);
       }
     } catch {
       // Silently handle localStorage errors
@@ -28,7 +28,7 @@ export default function PrivacyBanner() {
   const handleAccept = () => {
     if (typeof window !== 'undefined') {
       try {
-        localStorage.setItem(CONSENT_KEY, 'true');
+    localStorage.setItem(CONSENT_KEY, 'true');
       } catch {
         // Silently handle localStorage errors
       }
@@ -40,7 +40,7 @@ export default function PrivacyBanner() {
     // Still set consent as true since using the chat implies consent
     if (typeof window !== 'undefined') {
       try {
-        localStorage.setItem(CONSENT_KEY, 'true');
+    localStorage.setItem(CONSENT_KEY, 'true');
       } catch {
         // Silently handle localStorage errors
       }
