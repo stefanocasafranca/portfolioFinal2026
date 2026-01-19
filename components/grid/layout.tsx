@@ -16,6 +16,10 @@ export default function GridLayout({ layouts, className, children }: Readonly<Re
     const { breakpoint, setBreakpoint } = useBreakpoint();
     const isMounted = useMounted();
 
+    // Use a default breakpoint if not yet calculated (prevents undefined rowHeight)
+    const safeBreakpoint = breakpoint || 'xxs';
+    const safeRowHeight = rowHeights[safeBreakpoint] || rowHeights.xxs;
+
     return (
         <section
             className={cn(
@@ -33,7 +37,7 @@ export default function GridLayout({ layouts, className, children }: Readonly<Re
                 isBounded
                 isResizable={false}
                 //This passes the row height (280px for large screens) to react-grid-layout  
-                rowHeight={rowHeights[breakpoint]}
+                rowHeight={safeRowHeight}
                 useCSSTransforms={false}
                 measureBeforeMount
                 draggableCancel='.cancel-drag'

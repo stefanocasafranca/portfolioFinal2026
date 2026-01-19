@@ -10,7 +10,8 @@ import { breakpoints } from './consts';
  * @returns Object containing current breakpoint and setter function
  */
 function useBreakpoint() {
-    const [breakpoint, setBreakpoint] = useState<string>('');
+    // Initialize with 'xxs' as default for mobile-first approach
+    const [breakpoint, setBreakpoint] = useState<string>('xxs');
 
     useEffect(() => {
         const handleResize = () => {
@@ -19,9 +20,12 @@ function useBreakpoint() {
             setBreakpoint(newBreakpoint);
         };
 
-        handleResize();
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
+        // Calculate initial breakpoint immediately
+        if (typeof window !== 'undefined') {
+            handleResize();
+            window.addEventListener('resize', handleResize);
+            return () => window.removeEventListener('resize', handleResize);
+        }
     }, []);
 
     return { breakpoint, setBreakpoint };
