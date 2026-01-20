@@ -16,8 +16,6 @@ const INITIAL_VIEW_STATE = {
     zoom: MAX_ZOOM,
 };
 
-const mapboxToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
-
 /**
  * Map card component for location display
  * Uses the 'map' variant for consistent map-related styling
@@ -30,6 +28,9 @@ export default function Location() {
 
     const mapRef = useRef<MapRef>(null);
     const { theme } = useTheme();
+
+    // Read Mapbox token - NEXT_PUBLIC_ vars are embedded at build time
+    const mapboxToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
 
     // Handle zoom controls with debouncing
     const handleZoom = (zoomIn: boolean) => {
