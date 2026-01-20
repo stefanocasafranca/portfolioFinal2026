@@ -31,6 +31,11 @@ export default function Location() {
 
     // Read Mapbox token - NEXT_PUBLIC_ vars are embedded at build time
     const mapboxToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
+    
+    // Debug: Log token status (only in development)
+    if (process.env.NODE_ENV === 'development') {
+        console.log('Mapbox token available:', !!mapboxToken);
+    }
 
     // Handle zoom controls with debouncing
     const handleZoom = (zoomIn: boolean) => {
