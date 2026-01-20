@@ -23,6 +23,7 @@ export default function Project() {
                     priority
                     quality={90}
                     draggable='false'
+                    loading='eager'
                 />
                 <Image
                     src='/images/1stCard_UXResearch_Tablet.png'
@@ -30,9 +31,9 @@ export default function Project() {
                     fill
                     sizes='(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw'
                     className='object-cover hidden md:block lg:hidden'
-                    priority
                     quality={90}
                     draggable='false'
+                    loading='lazy'
                 />
                 <Image
                     src='/images/1stCard_UXResearch_Desktop.png'
@@ -40,9 +41,9 @@ export default function Project() {
                     fill
                     sizes='(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw'
                     className='object-cover hidden lg:block'
-                    priority
                     quality={90}
                     draggable='false'
+                    loading='lazy'
                 />
             </div>
             <div className='absolute bottom-3 left-3'>

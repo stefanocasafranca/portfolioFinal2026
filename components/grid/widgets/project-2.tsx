@@ -20,8 +20,9 @@ export default function Project2() {
                     fill
                     sizes='(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw'
                     className='object-cover block md:hidden'
-                    loading="lazy"
+                    priority
                     draggable='false'
+                    loading='eager'
                 />
                 <Image
                     src='/images/2ndCard_Redivo_Tablet.png'
@@ -29,8 +30,8 @@ export default function Project2() {
                     fill
                     sizes='(max-width: 640px) 100vw, (max-width: 1199px) 50vw, 33vw'
                     className='object-cover hidden md:block [@media(min-width:1200px)]:hidden'
-                    priority
                     draggable='false'
+                    loading='lazy'
                 />
                 <Image
                     src='/images/2ndCard_Redivo_Desktop.png'
@@ -38,8 +39,8 @@ export default function Project2() {
                     fill
                     sizes='(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw'
                     className='object-cover hidden [@media(min-width:1200px)]:block'
-                    priority
                     draggable='false'
+                    loading='lazy'
                 />
             </div>
             <div className='absolute bottom-3 left-3'>

@@ -22,6 +22,7 @@ export default function Project5() {
                     className='object-cover object-center block md:hidden'
                     priority
                     draggable='false'
+                    loading='eager'
                 />
                 <Image
                     src='/images/3rdCard_CLE_Tablet-1.png'
@@ -38,8 +39,8 @@ export default function Project5() {
                     fill
                     sizes='(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 50vw'
                     className='object-cover object-center !hidden [@media(min-width:1200px)]:!block'
-                    priority
                     draggable='false'
+                    loading='lazy'
                 />
             </div>
             <div className='absolute bottom-3 left-3'>

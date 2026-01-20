@@ -49,25 +49,38 @@ export default function Location() {
 
     const mapStyle = `mapbox://styles/mapbox/${theme === 'dark' ? 'dark-v11' : 'streets-v12'}`;
 
+    // If no Mapbox token, show placeholder instead of broken map
+    if (!mapboxToken) {
+        return (
+            <Card className='relative size-full flex items-center justify-center'>
+                <div className='text-center p-4'>
+                    <p className='text-sm text-gray-500 dark:text-gray-400'>Map unavailable</p>
+                </div>
+            </Card>
+        );
+    }
+
     return (
         <Card className='relative size-full'>
-            <Map
-                mapboxAccessToken={mapboxToken}
-                mapStyle={mapStyle}
-                ref={mapRef}
-                scrollZoom={false}
-                dragPan={false}
-                doubleClickZoom={false}
-                attributionControl={false}
-                dragRotate={false}
-                pitchWithRotate={false}
-                touchZoomRotate={false}
-                antialias
-                reuseMaps
-                onLoad={() => setIsMapLoaded(true)}
-                initialViewState={INITIAL_VIEW_STATE}
-                maxZoom={MAX_ZOOM}
-                minZoom={MIN_ZOOM}>
+            <div className='absolute inset-0 w-full h-full'>
+                <Map
+                    mapboxAccessToken={mapboxToken}
+                    mapStyle={mapStyle}
+                    ref={mapRef}
+                    scrollZoom={false}
+                    dragPan={false}
+                    doubleClickZoom={false}
+                    attributionControl={false}
+                    dragRotate={false}
+                    pitchWithRotate={false}
+                    touchZoomRotate={false}
+                    antialias
+                    reuseMaps
+                    onLoad={() => setIsMapLoaded(true)}
+                    initialViewState={INITIAL_VIEW_STATE}
+                    maxZoom={MAX_ZOOM}
+                    minZoom={MIN_ZOOM}
+                    style={{ width: '100%', height: '100%' }}>
                 {isMapLoaded ? (
                     <div className='absolute inset-x-3 bottom-3 flex items-center justify-between'>
                         <Button
@@ -86,7 +99,8 @@ export default function Location() {
                 ) : (
                     <div className='bg-dark-300 dark:bg-dark-900 absolute inset-0 size-full animate-pulse'></div>
                 )}
-            </Map>
+                </Map>
+            </div>
         </Card>
     );
 }

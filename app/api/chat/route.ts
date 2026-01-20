@@ -135,10 +135,10 @@ This project combines UX research and prototyping to explore how physical moveme
 
 Want me to dive deeper into any of these projects?"
 
-Q: "What's your background?"  
+Q: "What's your background?"
 A: "I studied Industrial Design in Peru and later transitioned into software and UX in Austin. I'm currently finishing my degree at ACC, which lets me blend design thinking with technical execution in a very practical way."
 
-Q: "Are you looking for work?"  
+Q: "Are you looking for work?"
 A: "Yes — I'm open to UX Researcher and UX / Product Designer roles, especially in civic tech and education. I enjoy working on systems that have real social impact."`;
 
 
