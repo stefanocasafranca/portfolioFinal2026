@@ -66,22 +66,22 @@ export default function Location() {
     return (
         <Card className='relative size-full'>
             <div className='absolute inset-0 w-full h-full'>
-                <Map
-                    mapboxAccessToken={mapboxToken}
-                    mapStyle={mapStyle}
-                    ref={mapRef}
-                    scrollZoom={false}
-                    dragPan={false}
-                    doubleClickZoom={false}
-                    attributionControl={false}
-                    dragRotate={false}
-                    pitchWithRotate={false}
-                    touchZoomRotate={false}
-                    antialias
-                    reuseMaps
-                    onLoad={() => setIsMapLoaded(true)}
-                    initialViewState={INITIAL_VIEW_STATE}
-                    maxZoom={MAX_ZOOM}
+            <Map
+                mapboxAccessToken={mapboxToken}
+                mapStyle={mapStyle}
+                ref={mapRef}
+                scrollZoom={false}
+                dragPan={false}
+                doubleClickZoom={false}
+                attributionControl={false}
+                dragRotate={false}
+                pitchWithRotate={false}
+                touchZoomRotate={false}
+                antialias
+                reuseMaps
+                onLoad={() => setIsMapLoaded(true)}
+                initialViewState={INITIAL_VIEW_STATE}
+                maxZoom={MAX_ZOOM}
                     minZoom={MIN_ZOOM}
                     style={{ width: '100%', height: '100%' }}>
                 {isMapLoaded ? (
@@ -102,7 +102,7 @@ export default function Location() {
                 ) : (
                     <div className='bg-dark-300 dark:bg-dark-900 absolute inset-0 size-full animate-pulse'></div>
                 )}
-                </Map>
+            </Map>
             </div>
         </Card>
     );
