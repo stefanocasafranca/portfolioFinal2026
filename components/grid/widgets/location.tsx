@@ -52,9 +52,11 @@ export default function Location() {
     // If no Mapbox token, show placeholder instead of broken map
     if (!mapboxToken) {
         return (
-            <Card className='relative size-full flex items-center justify-center'>
+            <Card className='relative size-full flex items-center justify-center bg-gray-50 dark:bg-dark-800'>
                 <div className='text-center p-4'>
-                    <p className='text-sm text-gray-500 dark:text-gray-400'>Map unavailable</p>
+                    <div className='text-4xl mb-2'>📍</div>
+                    <p className='text-sm font-medium text-gray-600 dark:text-gray-300'>Austin, TX</p>
+                    <p className='text-xs text-gray-400 dark:text-gray-500 mt-1'>Location</p>
                 </div>
             </Card>
         );
