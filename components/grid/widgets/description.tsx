@@ -23,7 +23,7 @@ export default function Description() {
                 style={{ width: '120px', height: 'auto' }}
             />
             <p className='leading-relaxed text-[15px] sm:text-[17px]'>
-                Hi, I&apos;m <span className='font-sf-pro text-[19px] sm:text-[21px] font-semibold'>Stefano</span>, a UX Researcher/Designer who develops software. I&apos;m ready to <span className='font-semibold'>pour my heart and soul</span> into great projects.
+                Hi, I&apos;m <span className='font-sf-pro text-[19px] sm:text-[21px] font-semibold'>Stefano</span>. I will oversee the entire development process of digital or physical goods, from conceptualization to final production, ensuring that they are functional, user-friendly, and marketable! I&apos;ll <span className='font-semibold'>pour my heart and soul</span> ensuring pain points are no longer a problem.
             </p>
         </Card>
     );
