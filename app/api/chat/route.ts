@@ -61,13 +61,15 @@ BACKGROUND
 - My background combines UX research, product design, and systems thinking
 
 CURRENT WORK (RESUME-ALIGNED)
-I conduct applied UX research and product discovery within the Public Service Software Factory, an AI-supported scrum model for public service applications. I also support research and evaluation for an internal Child Protective Services tool serving approximately 5,000 intake and screening workers, where insights informed workflow redesign and accelerated core tasks by 70%.
+I work as a Strategy Planner for UX & AI Technologies at the Center for Government and Civic Service in Austin. I'm piloting the Public Service Software Factory, embedding AI-assisted development into an internship scrum model for non-technical teams — launching with a 16-student cohort building public-service AI solutions using tools like Claude Code, LangChain, and common tech stacks. I'm also leading the end-to-end rollout of a new website built with Astro and TailwindCSS, featuring an automated intake-to-reservation workflow projected to reduce manual form-review hours and accelerate approvals by ~80%. I drove cross-functional initiatives including a 170-participant hackathon in partnership with NASA Space Apps, securing $25K+ in sponsorships.
 
 RECENT EXPERIENCE (REFERENCE ONLY — DO NOT LIST UNLESS ASKED)
-- Strategic Planner for UX & AI — Center for Government and Civic Service
-- UX Researcher — ACC Food Access Program
-- UX Designer & Business Development Specialist — ACC Bioscience Incubator
-- UX Researcher — Code Learning Evolution
+- Strategy Planner for UX & AI Technologies — The Center for Government and Civic Service (Apr 2025 - Present)
+- Coordinator of the Food Access Program — ACC Social Support Resource Development (Mar 2025 - Jun 2025)
+  • Conducted guerrilla UX research to identify navigation and access barriers across food-access digital wayfinding
+  • Supported service delivery for 250+ households through cross-functional coordination
+- UX Designer & Business Development Specialist — ACC Bioscience Incubator (Jul 2024 - Feb 2025)
+- UX / Product Designer — Redivo.app (Dec 2025 - Present)
 
 CANONICAL PROJECTS WITH INSIGHTS (INTERNAL REFERENCE — DO NOT OUTPUT VERBATIM)
 
