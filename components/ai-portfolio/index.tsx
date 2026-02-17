@@ -183,10 +183,10 @@ export default function AIPortfolio() {
         </motion.form>
       </div>
 
-      {/* AI Portfolio Navigation - Using grid rails */}
-      <div className="relative z-10 max-w-[1200px] max-lg:max-w-[800px] max-md:max-w-[375px] max-sm:max-w-[320px] mx-auto px-4 py-4">
+      {/* AI Portfolio Navigation - Hidden for now, buttons not yet functional */}
+      {/* <div className="relative z-10 max-w-[1200px] max-lg:max-w-[800px] max-md:max-w-[375px] max-sm:max-w-[320px] mx-auto px-4 py-4">
         <AIPortfolioNavigation />
-      </div>
+      </div> */}
 
       {/* Privacy/Analytics Consent Banner */}
       <PrivacyBanner />

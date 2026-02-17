@@ -1,10 +1,8 @@
 'use client';
 
-import { useMounted, usePrefersReducedMotion } from '@/utils/hooks';
+import { useMounted } from '@/utils/hooks';
 import { cn } from '@/utils/lib';
 import { useUIMode } from '@/contexts/ui-mode';
-import { FaRobot } from 'react-icons/fa6';
-import { motion, AnimatePresence } from 'framer-motion';
 import Card from '../../ui/card';
 
 export default function Theme() {
@@ -22,10 +20,10 @@ export default function Theme() {
             <ThemeToggle />
             <div className="flex flex-col items-center gap-2">
                 <h2 className="font-sf-pro text-xl md:text-2xl font-semibold text-black text-center">
-                    AI Portfolio
+                    Ask me anything
                 </h2>
                 <p className="font-sf-pro text-xs md:text-sm text-gray-500 text-center">
-                    Interactive AI version of me
+                    AI Portfolio
                 </p>
             </div>
         </Card>
@@ -45,46 +43,26 @@ function ThemeToggle() {
 
     if (!isMounted) return null;
 
-    // OFF state (default) - circle left, gray background
-    // ACTIVATING state - circle moves right, purple background, icon activates
-    // ON state (active) - circle right, gradient background
     const isOn = isAiMode || isActivating;
 
     return (
-        <div className="relative">
-            <button
+        <button
+            className={cn(
+                'cancel-drag relative h-[31px] w-[51px] cursor-pointer rounded-full transition-colors duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-green-500/50 focus:ring-offset-2',
+                isOn ? 'bg-[#34C759]' : 'bg-[#E9E9EB]'
+            )}
+            onClick={handleToggle}
+            disabled={isActivating}
+            aria-label={isActivating ? 'Activating AI Portfolio...' : isOn ? 'Exit AI Portfolio mode' : 'Enter AI Portfolio mode'}
+            aria-pressed={isOn}
+        >
+            <span
                 className={cn(
-                    'cancel-drag flex h-10 w-20 cursor-pointer items-center rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-purple-500/50 lg:h-12 lg:w-24 shadow-lg hover:scale-105',
-                    isActivating 
-                        ? 'bg-gradient-to-r from-purple-500 to-indigo-600 animate-pulse' 
-                        : isAiMode 
-                        ? 'bg-gradient-to-r from-purple-500 to-indigo-600' 
-                        : 'bg-[#E0E0E0]'
+                    'absolute top-[2px] left-[2px] h-[27px] w-[27px] rounded-full bg-white shadow-md transition-transform duration-300 ease-in-out',
+                    isOn && 'translate-x-[20px]',
+                    isActivating && 'animate-pulse'
                 )}
-                onClick={handleToggle}
-                disabled={isActivating}
-                aria-label={isActivating ? 'Activating AI Portfolio...' : isOn ? 'Exit AI Portfolio mode' : 'Enter AI Portfolio mode'}
-                aria-pressed={isOn}>
-                <div
-                    className={cn(
-                        'flex size-10 items-center justify-center rounded-full border-2 transition-all duration-300 lg:size-12 lg:border-4 shadow-md',
-                        isOn 
-                            ? 'bg-white border-white/30 translate-x-full text-purple-600' 
-                            : 'bg-white border-gray-200 text-gray-400 ring-1 ring-gray-300 ring-offset-0',
-                        isActivating && 'animate-bounce'
-                    )}
-                    style={!isOn ? { 
-                        boxShadow: '0 0 0 1px rgb(168 85 247), 0 0 0 2px rgb(209 213 219)'
-                    } : undefined}>
-                    {/* AI robot icon - gray when OFF, colored when ACTIVATING/ON */}
-                    <FaRobot 
-                        className={cn(
-                            "w-5 h-5 transition-all duration-300",
-                            (isActivating || isAiMode) ? "text-purple-600 animate-pulse" : "text-[#9E9E9E]"
-                        )} 
-                    />
-                </div>
-            </button>
-        </div>
+            />
+        </button>
     );
 }

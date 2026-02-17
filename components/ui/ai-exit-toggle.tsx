@@ -1,10 +1,8 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { FaRobot } from 'react-icons/fa6';
 import { useUIMode } from '@/contexts/ui-mode';
 import { usePrefersReducedMotion } from '@/utils/hooks';
-import { cn } from '@/utils/lib';
 
 export default function AIExitToggle() {
     const { exitAiMode } = useUIMode();
@@ -21,16 +19,14 @@ export default function AIExitToggle() {
             {...animationProps}
             className="flex items-center"
         >
-            {/* Toggle button in ON state - same as homepage toggle but showing ON */}
+            {/* Apple-style toggle in ON state (green) */}
             <button
-                className="cancel-drag flex h-10 w-20 cursor-pointer items-center rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-purple-500/50 lg:h-12 lg:w-24 shadow-lg hover:scale-105 bg-gradient-to-r from-purple-500 to-indigo-600"
+                className="cancel-drag relative h-[31px] w-[51px] cursor-pointer rounded-full bg-[#34C759] transition-colors duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-green-500/50 focus:ring-offset-2"
                 onClick={exitAiMode}
                 aria-label="Exit AI Portfolio mode"
-                aria-pressed="true">
-                <div
-                    className="flex size-10 items-center justify-center rounded-full border-2 transition-all duration-300 lg:size-12 lg:border-4 shadow-md bg-white border-white/30 translate-x-full text-purple-600">
-                    <FaRobot className="w-5 h-5 text-purple-600" />
-                </div>
+                aria-pressed="true"
+            >
+                <span className="absolute top-[2px] left-[2px] h-[27px] w-[27px] translate-x-[20px] rounded-full bg-white shadow-md transition-transform duration-300 ease-in-out" />
             </button>
         </motion.div>
     );
