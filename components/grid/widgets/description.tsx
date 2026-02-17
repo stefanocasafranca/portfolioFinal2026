@@ -15,15 +15,14 @@ export default function Description() {
             <Image
                 src={profile}
                 alt={siteConfig.title}
-                width={120}
-                height={120}
+                width={100}
+                height={100}
                 placeholder='blur'
                 priority
-                className='rounded-lg'
-                style={{ width: '120px', height: 'auto' }}
+                className='rounded-lg w-[85px] sm:w-[100px] h-auto'
             />
-            <p className='leading-relaxed text-[15px] sm:text-[17px]'>
-                Hi, I&apos;m <span className='font-sf-pro text-[19px] sm:text-[21px] font-semibold'>Stefano</span>. I will oversee the entire development process of digital or physical goods, from conceptualization to final production, ensuring that they are functional, user-friendly, and marketable! I&apos;ll <span className='font-semibold'>pour my heart and soul</span> ensuring pain points are no longer a problem.
+            <p className='leading-relaxed text-[14px] sm:text-[16px]'>
+                Hi, I&apos;m <span className='font-sf-pro text-[18px] sm:text-[20px] font-semibold'>Stefano</span>. I will oversee the entire development process of digital or physical goods, from conceptualization to final production, ensuring that they are functional, user-friendly, and marketable! I&apos;ll <span className='font-semibold'>pour my heart and soul</span> ensuring pain points are no longer a problem.
             </p>
         </Card>
     );

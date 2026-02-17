@@ -113,19 +113,22 @@ const ProjectPage = async ({ params }: { params: Params }) => {
                         {JSON.parse(project.metadata.images).map((image: { i: string; url: string; link?: string }) => {
                             const isUxResearchImages2 = slug === 'ux-research' && image.i === 'images-2';
                             const isUxResearchImages4 = slug === 'ux-research' && image.i === 'images-4';
-                            const showDownload = isUxResearchImages2 || isUxResearchImages4;
-                            
-                            // Different PDFs for different images
+                            // Only images-2 shows download button; images-4 now opens external link
+                            const showDownload = isUxResearchImages2;
+
+                            // PDF for images-2 download
                             let pdfPath = '';
                             let pdfFilename = '';
                             if (isUxResearchImages2) {
                                 pdfPath = '/projects/ux-research/Document_as_System_for_AIMediatedEndUserProgramming.pdf';
                                 pdfFilename = 'Document_as_System_for_AIMediatedEndUserProgramming.pdf';
-                            } else if (isUxResearchImages4) {
-                                pdfPath = '/projects/ux-research/Enhancing_Developer_Comprehension_of_Error_Notifications_through_Visual_Aid.pdf';
-                                pdfFilename = 'Enhancing_Developer_Comprehension_of_Error_Notifications_through_Visual_Aid.pdf';
                             }
-                            
+
+                            // External link for images-4 (opens in new tab)
+                            const externalLink = isUxResearchImages4
+                                ? 'https://rochi.utcluj.ro/icusi/proceedings/articles/2/ICUSI_2025_p33-41.pdf'
+                                : image.link;
+
                             return (
                                 <div key={image.i}>
                                     <ProjectImageWithDownload
@@ -134,7 +137,7 @@ const ProjectPage = async ({ params }: { params: Params }) => {
                                         showDownload={showDownload}
                                         pdfPath={pdfPath}
                                         pdfFilename={pdfFilename}
-                                        link={image.link}
+                                        link={externalLink}
                                         imageId={image.i}
                                     />
                                 </div>
