@@ -1,0 +1,40 @@
+---
+title: BUILD_SCRIPT.md
+description: An open-source developer tool that turns a Google Doc into the source of truth for a client's website. Non-technical business owners describe what they want in plain English. The site updates automatically. No CMS, no tickets, no back-and-forth.
+links: [{"name": "GitHub","url": "https://github.com/stefanocasafranca/claude-build-script-plugin"}, {"name": "ACM CUI 2026 Paper", "url": "#"}]
+layout: default
+images: [{"i":"images-1","url":"/projects/build-script/images-1.png"},{"i":"images-2","url":"/projects/build-script/images-2.png"},{"i":"images-3","url":"/projects/build-script/images-3.png"},{"i":"images-4","url":"/projects/build-script/images-4.png"},{"i":"images-5","url":"/projects/build-script/images-5.png"}]
+---
+
+## The Problem
+
+43% of the web runs on WordPress. Most of those sites were built by an agency. And most of those agencies are still answering support tickets about phone number changes.
+
+The loop never ends: client calls, agency tickets, developer bills an hour, text change deployed, repeat. Neither side scales.
+
+## The Insight
+
+The real interface between a client and their website isn't a CMS dashboard. It's the conversation. What if we replaced that conversation with a document the client already knows how to use?
+
+## The Solution
+
+The client opens a Google Doc and describes what they want in plain English. A background daemon watches the document, detects changes after 10 seconds of idle time, and injects the diff into Claude Code. The AI reads the change, updates the site code, and logs an attributed commit: who asked, what changed, when.
+
+The Google Doc becomes the source of truth. The client never touches code, a CMS, or a support ticket. They just type.
+
+## Validation
+
+Ran a 12-participant within-subjects user study (90-minute sessions) comparing document-driven development against traditional chat-based AI prompting.
+
+Results showed statistically significant improvements across all measures:
+- **Perceived control:** 4.5 vs 3.4 out of 5
+- **Interpretability:** 4.4 vs 3.2 out of 5
+- **Recoverability:** 4.3 vs 2.9 out of 5
+
+All p < .001 with large effect sizes.
+
+Participants described the shift as going from "asking for favors" to "designing the system."
+
+## Status
+
+Presented at LangChain Austin. Paper submitted to ACM CUI 2026 (Conversational User Interfaces), Bremen, Germany. Acceptance notice expected May 7, 2026. Open source on GitHub.

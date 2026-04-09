@@ -85,7 +85,7 @@ const ProjectPage = async ({ params }: { params: Params }) => {
                         <div>
                             <p className='text-xl leading-relaxed font-medium'>{project.metadata.description}</p>
                             {/* Only show links for "Website Redesign" and "BBQ Patented Design" */}
-                            {(slug === 'acc-bioscience-incubator-website-redesign' || slug === 'fogo-direto') && (
+                            {(slug === 'acc-bioscience-incubator-website-redesign' || slug === 'fogo-direto' || slug === 'build-script') && (
                                 <div className='flex flex-wrap items-center gap-3 pt-4'>
                                     {JSON.parse(project.metadata.links).map((link: { url?: string; name: string }, index: number) => (
                                         link.url ? (
@@ -120,8 +120,8 @@ const ProjectPage = async ({ params }: { params: Params }) => {
                             let pdfPath = '';
                             let pdfFilename = '';
                             if (isUxResearchImages2) {
-                                pdfPath = '/projects/ux-research/Document_as_System_for_AIMediatedEndUserProgramming.pdf';
-                                pdfFilename = 'Document_as_System_for_AIMediatedEndUserProgramming.pdf';
+                                pdfPath = '/projects/ux-research/BUILDSCRIPT_md__Document_as_System_Abstractions_for_AI_Mediated_Programming.pdf';
+                                pdfFilename = 'BUILDSCRIPT_md__Document_as_System_Abstractions_for_AI_Mediated_Programming.pdf';
                             }
 
                             // External link for images-4 (opens in new tab)
