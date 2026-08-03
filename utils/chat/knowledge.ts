@@ -15,7 +15,7 @@ export interface KnowledgeDoc {
     kind: KnowledgeKind;
 }
 
-type RawDoc = {
+export type RawDoc = {
     slug: string;
     content: string;
     metadata: { title?: string; description?: string };
@@ -25,8 +25,11 @@ type RawDoc = {
  * Many project files are frontmatter only. Falling back to the description
  * keeps every project reachable by the chat; a written case study simply
  * gives the model far more to work with.
+ *
+ * Exported so the drop/fallback decision can be unit-tested directly against
+ * constructed inputs, independent of what real content files happen to contain.
  */
-function toKnowledgeDoc(raw: RawDoc, kind: KnowledgeKind): KnowledgeDoc | null {
+export function toKnowledgeDoc(raw: RawDoc, kind: KnowledgeKind): KnowledgeDoc | null {
     const title = raw.metadata.title?.trim() ?? '';
     const description = raw.metadata.description?.trim() ?? '';
     const body = raw.content.trim() || description;

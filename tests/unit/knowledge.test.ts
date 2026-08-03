@@ -3,7 +3,17 @@ import {
     getKnowledgeDocs,
     getAlwaysOnDocs,
     getRetrievableDocs,
+    toKnowledgeDoc,
+    type RawDoc,
 } from '@/utils/chat/knowledge';
+
+function makeRaw(content: string, description: string): RawDoc {
+    return {
+        slug: 'fixture-slug',
+        content,
+        metadata: { title: 'Fixture Title', description },
+    };
+}
 
 describe('getKnowledgeDocs', () => {
     it('loads documents from every content directory', () => {
@@ -26,6 +36,31 @@ describe('getKnowledgeDocs', () => {
 
     it('never returns a document with an empty body', () => {
         expect(getKnowledgeDocs().every((d) => d.body.trim().length > 0)).toBe(true);
+    });
+});
+
+describe('toKnowledgeDoc', () => {
+    it('keeps the body when both body and description are non-empty', () => {
+        const doc = toKnowledgeDoc(makeRaw('Real body text', 'A description'), 'project');
+        expect(doc).not.toBeNull();
+        expect(doc!.body).toBe('Real body text');
+    });
+
+    it('falls back to the description when the body is empty', () => {
+        const doc = toKnowledgeDoc(makeRaw('', 'A description'), 'project');
+        expect(doc).not.toBeNull();
+        expect(doc!.body).toBe('A description');
+    });
+
+    it('keeps the body when the description is empty', () => {
+        const doc = toKnowledgeDoc(makeRaw('Real body text', ''), 'project');
+        expect(doc).not.toBeNull();
+        expect(doc!.body).toBe('Real body text');
+    });
+
+    it('drops the document when both body and description are empty', () => {
+        const doc = toKnowledgeDoc(makeRaw('', ''), 'project');
+        expect(doc).toBeNull();
     });
 });
 
