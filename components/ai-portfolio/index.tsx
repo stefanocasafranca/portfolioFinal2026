@@ -6,6 +6,7 @@ import { FaArrowRight, FaRotateRight } from 'react-icons/fa6';
 import Image from 'next/image';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import type { Message } from 'ai';
 import CursorBackground from './cursor-background';
 import Header from '../ui/header';
 import { usePrefersReducedMotion } from '@/utils/hooks';
@@ -13,10 +14,10 @@ import { useChatbot } from '@/utils/hooks/use-chatbot';
 import PrivacyBanner from './privacy-banner';
 
 const QUICK_ACTIONS = [
-  "Tell me about your projects",
-  "What's your background?",
-  "How do you approach UX research?",
-  "Are you looking for work?"
+  "What AI systems have you built?",
+  "Tell me about your UX research",
+  "What are you looking for?",
+  "How do you evaluate agents?"
 ];
 
 export default function AIPortfolio() {
@@ -172,7 +173,7 @@ export default function AIPortfolio() {
           </div>
         ) : (
           <div className="w-full max-w-3xl mx-auto px-4 py-6 space-y-6">
-            {messages.map((msg: any, index: number) => (
+            {messages.map((msg: Message, index: number) => (
               <motion.div
                 key={`${msg.role}-${index}-${msg.content.substring(0, 20)}`}
                 initial={{ opacity: 0, y: 10 }}

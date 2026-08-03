@@ -14,16 +14,64 @@ const STOPWORDS = new Set([
 export const MIN_SCORE = 2;
 export const DEFAULT_K = 3;
 
-export function tokenize(input: string): string[] {
+// Score contributed by a full category-slug match. Set equal to a title-token
+// hit (3) so that naming an area ("AI Engineering") is at least as strong a
+// signal as the words happening to appear in a project's title.
+const CATEGORY_MATCH_SCORE = 3;
+
+function normalize(input: string): string[] {
     return input
         .toLowerCase()
         .replace(/[^a-z0-9\s-]/g, ' ')
         .split(/\s+/)
-        .filter((token) => token.length > 2 && !STOPWORDS.has(token));
+        .filter((token) => token.length > 0);
 }
 
-export function scoreDoc(queryTokens: string[], doc: KnowledgeDoc): number {
-    if (queryTokens.length === 0) return 0;
+export function tokenize(input: string): string[] {
+    return normalize(input).filter((token) => token.length > 2 && !STOPWORDS.has(token));
+}
+
+/**
+ * Same normalization as tokenize(), but WITHOUT the minimum-length filter.
+ * The length filter exists to keep short noise words out of title/description/
+ * body matching, but it also discards real, short category vocabulary like
+ * "ai" (from the "ai-engineering" slug). Category matching therefore uses this
+ * lenient pass instead of lowering the global minimum length, which would let
+ * noise words back in everywhere else. Stopwords ("me", "my", ...) are still
+ * removed so they can never masquerade as category tokens.
+ */
+export function tokenizeForCategories(input: string): string[] {
+    return normalize(input).filter((token) => !STOPWORDS.has(token));
+}
+
+/**
+ * A doc matches a category only when EVERY token of that category's slug is
+ * present in the query (e.g. both "ai" and "engineering" for "ai-engineering").
+ * Requiring the full slug, rather than any single overlapping token, matters
+ * because category slugs share words ("product-design" and "industrial-design"
+ * both contain "design") — a single-token match would let a query for one area
+ * pull in a project that only belongs to the other.
+ */
+function categoryMatchScore(categoryQueryTokens: string[], doc: KnowledgeDoc): number {
+    if (categoryQueryTokens.length === 0 || doc.categories.length === 0) return 0;
+
+    const queryTokenSet = new Set(categoryQueryTokens);
+    let score = 0;
+    for (const category of doc.categories) {
+        const slugTokens = category.toLowerCase().split('-').filter((token) => token.length > 0);
+        if (slugTokens.length > 0 && slugTokens.every((token) => queryTokenSet.has(token))) {
+            score += CATEGORY_MATCH_SCORE;
+        }
+    }
+    return score;
+}
+
+export function scoreDoc(
+    queryTokens: string[],
+    doc: KnowledgeDoc,
+    categoryQueryTokens: string[] = queryTokens
+): number {
+    if (queryTokens.length === 0 && categoryQueryTokens.length === 0) return 0;
 
     const titleTokens = new Set([
         ...tokenize(doc.title),
@@ -38,6 +86,9 @@ export function scoreDoc(queryTokens: string[], doc: KnowledgeDoc): number {
         else if (descriptionTokens.has(token)) score += 2;
         else if (bodyTokens.has(token)) score += 1;
     }
+
+    score += categoryMatchScore(categoryQueryTokens, doc);
+
     return score;
 }
 
@@ -52,9 +103,10 @@ export function selectDocs(
     k: number = DEFAULT_K
 ): KnowledgeDoc[] {
     const queryTokens = tokenize(question);
+    const categoryQueryTokens = tokenizeForCategories(question);
 
     const ranked = docs
-        .map((doc) => ({ doc, score: scoreDoc(queryTokens, doc) }))
+        .map((doc) => ({ doc, score: scoreDoc(queryTokens, doc, categoryQueryTokens) }))
         .filter((entry) => entry.score >= MIN_SCORE)
         .sort((a, b) => b.score - a.score);
 

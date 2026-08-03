@@ -4,7 +4,10 @@ import {
     getAlwaysOnDocs,
     getRetrievableDocs,
     toKnowledgeDoc,
+    isChatEligible,
+    collect,
     type RawDoc,
+    type KnowledgeKind,
 } from '@/utils/chat/knowledge';
 
 function makeRaw(
@@ -108,5 +111,61 @@ describe('categories', () => {
         const doc = toKnowledgeDoc(makeRaw('Real body text', 'A description'), 'project');
         expect(doc).not.toBeNull();
         expect(doc!.categories).toEqual([]);
+    });
+});
+
+// This filter is what keeps placeholder/unreviewed content away from
+// prospective employers, so it is tested directly against constructed
+// fixtures rather than only indirectly via real content slugs.
+describe('isChatEligible', () => {
+    it('drops a project with no chat key', () => {
+        expect(isChatEligible(makeRaw('body', 'desc'), 'project')).toBe(false);
+    });
+
+    it('drops a project with chat: "false"', () => {
+        expect(isChatEligible(makeRaw('body', 'desc', { chat: 'false' }), 'project')).toBe(false);
+    });
+
+    it('keeps a project with chat: "true"', () => {
+        expect(isChatEligible(makeRaw('body', 'desc', { chat: 'true' }), 'project')).toBe(true);
+    });
+
+    it('keeps an about-kind doc with no chat key at all', () => {
+        expect(isChatEligible(makeRaw('body', 'desc'), 'about')).toBe(true);
+    });
+
+    it('applies the same rule to posts as to projects', () => {
+        expect(isChatEligible(makeRaw('body', 'desc'), 'post')).toBe(false);
+        expect(isChatEligible(makeRaw('body', 'desc', { chat: 'false' }), 'post')).toBe(false);
+        expect(isChatEligible(makeRaw('body', 'desc', { chat: 'true' }), 'post')).toBe(true);
+    });
+
+    it('applies the same rule to methods as to projects', () => {
+        expect(isChatEligible(makeRaw('body', 'desc'), 'method')).toBe(false);
+        expect(isChatEligible(makeRaw('body', 'desc', { chat: 'false' }), 'method')).toBe(false);
+        expect(isChatEligible(makeRaw('body', 'desc', { chat: 'true' }), 'method')).toBe(true);
+    });
+});
+
+describe('collect', () => {
+    const rawFor = (slug: string, kind: KnowledgeKind, chat?: string): RawDoc => ({
+        slug,
+        content: `${slug} body`,
+        metadata: { title: slug, description: `${slug} description`, chat },
+    });
+
+    it('drops ineligible docs and keeps eligible ones, per kind', () => {
+        const kinds: KnowledgeKind[] = ['project', 'post', 'method'];
+        for (const kind of kinds) {
+            const raws = [rawFor('no-flag', kind), rawFor('flagged-false', kind, 'false'), rawFor('flagged-true', kind, 'true')];
+            const slugs = collect(raws, kind).map((d) => d.slug);
+            expect(slugs).toEqual(['flagged-true']);
+        }
+    });
+
+    it('keeps every about doc regardless of the chat flag', () => {
+        const raws = [rawFor('bio', 'about'), rawFor('other-about', 'about', 'false')];
+        const slugs = collect(raws, 'about').map((d) => d.slug);
+        expect(slugs).toEqual(['bio', 'other-about']);
     });
 });

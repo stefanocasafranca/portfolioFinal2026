@@ -1,12 +1,12 @@
 import { ChatOpenAI } from '@langchain/openai';
 import { ChatPromptTemplate, MessagesPlaceholder } from '@langchain/core/prompts';
-import { AIMessage, HumanMessage } from '@langchain/core/messages';
 import { LangChainAdapter } from 'ai';
 import { NextResponse } from 'next/server';
 import { PostgresCallbackHandler } from '@/utils/chat/postgres-callback';
 import { PortfolioRetriever } from '@/utils/chat/retriever';
-import { getKnowledgeDocs } from '@/utils/chat/knowledge';
+import { getKnowledgeDocs, type KnowledgeDoc } from '@/utils/chat/knowledge';
 import { formatContext } from '@/utils/chat/context';
+import { validateChatRequest, toLangChainHistory } from '@/utils/chat/messages';
 
 // System message - Stefano speaking in first person
 const SYSTEM_MESSAGE = `You are Stefano Casafranca Laos, answering questions about yourself on your portfolio website. Respond in first person, as if you are casually explaining your work to someone over coffee. Be humble, precise, and authentic. Do not exaggerate, invent experience, or change role titles.
@@ -29,7 +29,9 @@ GROUNDING RULES
 DISAMBIGUATION RULE
 - If the visitor asks broadly about my projects or portfolio without naming a specific project or area, do NOT list every project.
 - Instead, ask which area they'd like to hear about, and offer exactly these four options, in this order: AI Engineering, UX Research, Product and Design, Industrial Design.
-- Once they name an area or a specific project (on this turn or a later one), answer using only the projects from the context that belong to that area, or that specific project.
+- These four labels correspond exactly to the "categories" slugs shown on each project in the CONTEXT: AI Engineering = ai-engineering, UX Research = ux-research, Product and Design = product-design, Industrial Design = industrial-design. A project belongs to an area only if its categories list contains that exact slug.
+- Once they name an area or a specific project (on this turn or a later one), answer using only the projects from the context whose categories include that area's slug, or that specific project.
+- If no project in the CONTEXT belongs to the area the visitor chose, say so plainly (you don't have a project from that area to show right now) rather than substituting or describing a project from a different area.
 - If the visitor already names a specific project or area up front, skip the question and answer directly.
 
 PROJECT ANSWERS
@@ -42,31 +44,18 @@ PROJECT ANSWERS
 CONTEXT
 {context}`;
 
-type ChatMessage = { role: string; content: string };
-
 export async function POST(request: Request) {
   try {
     // The `ai/react` useChat hook posts the full message list as `messages`.
     const { messages = [], sessionId } = await request.json();
 
-    if (!Array.isArray(messages) || messages.length === 0) {
-      return NextResponse.json(
-        { error: 'messages is required and must be a non-empty array' },
-        { status: 400 }
-      );
+    const validation = validateChatRequest(messages);
+
+    if (!validation.ok) {
+      return NextResponse.json({ error: validation.error }, { status: validation.status });
     }
 
-    // The latest user turn is the input; everything before it is history.
-    const latest = messages[messages.length - 1] as ChatMessage;
-
-    if (latest?.role !== 'user' || typeof latest.content !== 'string' || !latest.content.trim()) {
-      return NextResponse.json(
-        { error: 'The last message must be a non-empty user message' },
-        { status: 400 }
-      );
-    }
-
-    const message = latest.content;
+    const message = validation.message;
 
     // Read the knowledge base from disk exactly once per request, then
     // partition in memory. Both getAlwaysOnDocs/getRetrievableDocs and a
@@ -77,8 +66,17 @@ export async function POST(request: Request) {
 
     const retriever = new PortfolioRetriever({ docs: retrievableDocs });
     const retrieved = await retriever.invoke(message);
-    const retrievedSlugs = new Set(retrieved.map((doc) => doc.metadata.slug as string));
-    const retrievedDocs = retrievableDocs.filter((doc) => retrievedSlugs.has(doc.slug));
+
+    // Slugs are only unique within a kind (e.g. a post and a project could
+    // both be "ux-research"), so the re-lookup keys on kind+slug. Mapping
+    // over `retrieved` (rather than filtering `retrievableDocs`) preserves
+    // the retriever's ranking instead of falling back to corpus order.
+    const docByKey = new Map<string, KnowledgeDoc>(
+      retrievableDocs.map((doc) => [`${doc.kind}:${doc.slug}`, doc])
+    );
+    const retrievedDocs = retrieved
+      .map((doc) => docByKey.get(`${doc.metadata.kind}:${doc.metadata.slug}`))
+      .filter((doc): doc is KnowledgeDoc => doc !== undefined);
     const context = formatContext([...alwaysOnDocs, ...retrievedDocs]);
 
     // Extract request metadata
@@ -113,11 +111,7 @@ export async function POST(request: Request) {
     ]);
 
     // Prior turns become LangChain messages for the history placeholder.
-    const history = (messages.slice(0, -1) as ChatMessage[])
-      .filter((msg) => typeof msg?.content === 'string' && msg.content.length > 0)
-      .map((msg) =>
-        msg.role === 'user' ? new HumanMessage(msg.content) : new AIMessage(msg.content)
-      );
+    const history = toLangChainHistory(validation.history);
 
     // Create the chain
     const chain = prompt.pipe(model);

@@ -67,12 +67,12 @@ export function toKnowledgeDoc(raw: RawDoc, kind: KnowledgeKind): KnowledgeDoc |
  * template/placeholder content (e.g. the starter portfolio-website page)
  * never reaches the model.
  */
-function isChatEligible(raw: RawDoc, kind: KnowledgeKind): boolean {
+export function isChatEligible(raw: RawDoc, kind: KnowledgeKind): boolean {
     if (kind === 'about') return true;
     return raw.metadata.chat === 'true';
 }
 
-function collect(raws: RawDoc[], kind: KnowledgeKind): KnowledgeDoc[] {
+export function collect(raws: RawDoc[], kind: KnowledgeKind): KnowledgeDoc[] {
     return raws
         .filter((raw) => isChatEligible(raw, kind))
         .map((raw) => toKnowledgeDoc(raw, kind))
@@ -81,10 +81,10 @@ function collect(raws: RawDoc[], kind: KnowledgeKind): KnowledgeDoc[] {
 
 export function getKnowledgeDocs(): KnowledgeDoc[] {
     return [
-        ...collect(getAllAbout() as RawDoc[], 'about'),
-        ...collect(getAllProjects() as unknown as RawDoc[], 'project'),
-        ...collect(getAllPosts() as unknown as RawDoc[], 'post'),
-        ...collect(getAllMethods() as unknown as RawDoc[], 'method'),
+        ...collect(getAllAbout(), 'about'),
+        ...collect(getAllProjects(), 'project'),
+        ...collect(getAllPosts(), 'post'),
+        ...collect(getAllMethods(), 'method'),
     ];
 }
 

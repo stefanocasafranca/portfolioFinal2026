@@ -14,6 +14,8 @@ interface ProjectMetadata extends BaseMetadata {
     links: string;
     images?: string;
     layout?: string; // Optional layout preset: 'default', 'bento-horizontal', 'bento-vertical'
+    chat?: string; // "true" opts this project into the AI chat's knowledge base
+    categories?: string; // comma-separated category slugs, e.g. "ai-engineering, ux-research"
 }
 
 interface MethodMetadata extends BaseMetadata {
