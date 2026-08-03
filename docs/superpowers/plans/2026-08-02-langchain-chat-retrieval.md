@@ -18,6 +18,10 @@
 - Existing route validation behaviour must not regress: non-array/empty `messages`, trailing non-user message, and blank content each return HTTP 400.
 - Model stays `gpt-4o-mini`, `temperature: 0.7`, `streaming: true`.
 - Dev server runs on port **3000**.
+- **Dependency changes use npm**, not yarn. `package-lock.json` is the tracked lockfile; there is
+  no `yarn.lock`, despite the `packageManager` field in `package.json` naming yarn. Running
+  `yarn add` here resolves the whole tree from scratch and hangs. Test commands run as
+  `npm test`.
 
 ---
 
@@ -38,8 +42,11 @@
 
 - [ ] **Step 1: Install Vitest**
 
+The repo is npm-managed: `package-lock.json` is the tracked lockfile and no
+`yarn.lock` exists. Use npm, not yarn, for dependency changes.
+
 ```bash
-yarn add -D vitest@^3.2.4
+npm install -D vitest@^3.2.4
 ```
 
 - [ ] **Step 2: Create `vitest.config.ts`**
