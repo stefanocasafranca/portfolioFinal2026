@@ -80,3 +80,6 @@ export const getAllProjects = (): MDXData<ProjectMetadata>[] =>
 
 export const getAllMethods = (): MDXData<MethodMetadata>[] =>
     getMDXData<MethodMetadata>(path.join(process.cwd(), 'content/methods'));
+
+export const getAllAbout = (): MDXData<BaseMetadata>[] =>
+    getMDXData<BaseMetadata>(path.join(process.cwd(), 'content/about'));
