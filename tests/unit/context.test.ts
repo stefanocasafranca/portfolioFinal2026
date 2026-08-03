@@ -3,8 +3,8 @@ import { formatContext } from '@/utils/chat/context';
 import type { KnowledgeDoc } from '@/utils/chat/knowledge';
 
 const DOCS: KnowledgeDoc[] = [
-    { slug: 'bio', title: 'About Stefano', description: 'Who I am.', body: 'I am Stefano.', kind: 'about' },
-    { slug: 'build-script', title: 'BUILD_SCRIPT.md', description: 'Google Doc as source of truth.', body: 'The Problem: tickets.', kind: 'project' },
+    { slug: 'bio', title: 'About Stefano', description: 'Who I am.', body: 'I am Stefano.', kind: 'about', categories: [] },
+    { slug: 'build-script', title: 'BUILD_SCRIPT.md', description: 'Google Doc as source of truth.', body: 'The Problem: tickets.', kind: 'project', categories: ['ai-engineering', 'ux-research'] },
 ];
 
 describe('formatContext', () => {
@@ -22,5 +22,20 @@ describe('formatContext', () => {
 
     it('returns a non-empty string for an empty document list', () => {
         expect(typeof formatContext([])).toBe('string');
+    });
+
+    it('surfaces categories for project documents that have them', () => {
+        const out = formatContext(DOCS);
+        expect(out).toContain('ai-engineering');
+        expect(out).toContain('ux-research');
+    });
+
+    it('omits the categories suffix for project documents without categories', () => {
+        const docs: KnowledgeDoc[] = [
+            { slug: 'no-cat', title: 'No Category Project', description: 'desc', body: 'body', kind: 'project', categories: [] },
+        ];
+        const out = formatContext(docs);
+        expect(out).toContain('(slug: no-cat)');
+        expect(out).not.toContain('categories:');
     });
 });

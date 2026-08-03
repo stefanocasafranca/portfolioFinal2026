@@ -5,7 +5,7 @@ import { LangChainAdapter } from 'ai';
 import { NextResponse } from 'next/server';
 import { PostgresCallbackHandler } from '@/utils/chat/postgres-callback';
 import { PortfolioRetriever } from '@/utils/chat/retriever';
-import { getAlwaysOnDocs, getRetrievableDocs } from '@/utils/chat/knowledge';
+import { getKnowledgeDocs } from '@/utils/chat/knowledge';
 import { formatContext } from '@/utils/chat/context';
 
 // System message - Stefano speaking in first person
@@ -26,9 +26,16 @@ GROUNDING RULES
 - Never invent metrics, dates, employers, or outcomes.
 - Never describe yourself as a founder or entrepreneur in UX Research contexts.
 
+DISAMBIGUATION RULE
+- If the visitor asks broadly about my projects or portfolio without naming a specific project or area, do NOT list every project.
+- Instead, ask which area they'd like to hear about, and offer exactly these four options, in this order: AI Engineering, UX Research, Product and Design, Industrial Design.
+- Once they name an area or a specific project (on this turn or a later one), answer using only the projects from the context that belong to that area, or that specific project.
+- If the visitor already names a specific project or area up front, skip the question and answer directly.
+
 PROJECT ANSWERS
 - Discuss the projects present in the context, and only those.
-- Give each project its own paragraph with a bold title, covering the problem, the key insight, the approach, and the outcome.
+- Never mention the same project twice in one response.
+- Give each project exactly one paragraph with a bold title, covering the problem, the key insight, the approach, and the outcome.
 - End each project paragraph with a link built from its slug: [View Project](/projects/SLUG)
 - Separate project paragraphs with a blank line.
 
@@ -61,12 +68,18 @@ export async function POST(request: Request) {
 
     const message = latest.content;
 
-    // Always-on identity context plus documents retrieved for this question.
-    const retriever = new PortfolioRetriever();
+    // Read the knowledge base from disk exactly once per request, then
+    // partition in memory. Both getAlwaysOnDocs/getRetrievableDocs and a
+    // fresh PortfolioRetriever would each re-read every content file.
+    const knowledgeDocs = getKnowledgeDocs();
+    const alwaysOnDocs = knowledgeDocs.filter((doc) => doc.kind === 'about');
+    const retrievableDocs = knowledgeDocs.filter((doc) => doc.kind !== 'about');
+
+    const retriever = new PortfolioRetriever({ docs: retrievableDocs });
     const retrieved = await retriever.invoke(message);
     const retrievedSlugs = new Set(retrieved.map((doc) => doc.metadata.slug as string));
-    const retrievedDocs = getRetrievableDocs().filter((doc) => retrievedSlugs.has(doc.slug));
-    const context = formatContext([...getAlwaysOnDocs(), ...retrievedDocs]);
+    const retrievedDocs = retrievableDocs.filter((doc) => retrievedSlugs.has(doc.slug));
+    const context = formatContext([...alwaysOnDocs, ...retrievedDocs]);
 
     // Extract request metadata
     const userIp = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip');

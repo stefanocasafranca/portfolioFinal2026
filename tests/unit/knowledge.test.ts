@@ -7,11 +7,15 @@ import {
     type RawDoc,
 } from '@/utils/chat/knowledge';
 
-function makeRaw(content: string, description: string): RawDoc {
+function makeRaw(
+    content: string,
+    description: string,
+    extra: { chat?: string; categories?: string } = {}
+): RawDoc {
     return {
         slug: 'fixture-slug',
         content,
-        metadata: { title: 'Fixture Title', description },
+        metadata: { title: 'Fixture Title', description, ...extra },
     };
 }
 
@@ -72,5 +76,37 @@ describe('document partitioning', () => {
 
     it('retrievable documents exclude about documents', () => {
         expect(getRetrievableDocs().every((d) => d.kind !== 'about')).toBe(true);
+    });
+});
+
+describe('chat flag filtering', () => {
+    it('includes a flagged project (build-script has chat: true)', () => {
+        const slugs = getKnowledgeDocs().map((d) => d.slug);
+        expect(slugs).toContain('build-script');
+    });
+
+    it('excludes an unflagged project (portfolio-website and next-blog-starter have no chat flag)', () => {
+        const slugs = getKnowledgeDocs().map((d) => d.slug);
+        expect(slugs).not.toContain('portfolio-website');
+        expect(slugs).not.toContain('next-blog-starter');
+    });
+
+    it('always includes about documents even though they carry no chat flag', () => {
+        expect(getAlwaysOnDocs().length).toBeGreaterThan(0);
+        expect(getAlwaysOnDocs().every((d) => d.kind === 'about')).toBe(true);
+    });
+});
+
+describe('categories', () => {
+    it('parses a comma-separated categories string into an array', () => {
+        const buildScript = getKnowledgeDocs().find((d) => d.slug === 'build-script');
+        expect(buildScript).toBeDefined();
+        expect(buildScript!.categories).toEqual(['ai-engineering', 'ux-research']);
+    });
+
+    it('yields an empty array when categories are missing', () => {
+        const doc = toKnowledgeDoc(makeRaw('Real body text', 'A description'), 'project');
+        expect(doc).not.toBeNull();
+        expect(doc!.categories).toEqual([]);
     });
 });

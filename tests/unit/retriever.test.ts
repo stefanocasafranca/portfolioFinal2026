@@ -7,7 +7,7 @@ const doc = (
     title: string,
     description: string,
     body: string
-): KnowledgeDoc => ({ slug, title, description, body, kind: 'project' });
+): KnowledgeDoc => ({ slug, title, description, body, kind: 'project', categories: [] });
 
 const FIXTURES: KnowledgeDoc[] = [
     doc('redivo-sleep-app', 'Redivo Sleep App', 'Improving sleep quality with red light therapy.', 'A mobile app for sleep habit formation.'),

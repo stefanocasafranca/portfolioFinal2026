@@ -12,9 +12,19 @@ export function formatContext(docs: KnowledgeDoc[]): string {
         .map((doc) => {
             const header =
                 doc.kind === 'project'
-                    ? `### ${doc.title} (slug: ${doc.slug})`
+                    ? `### ${doc.title} (slug: ${doc.slug}${formatCategories(doc.categories)})`
                     : `### ${doc.title}`;
             return `${header}\n${doc.description}\n\n${doc.body}`;
         })
         .join('\n\n---\n\n');
+}
+
+/**
+ * Rendered inline in the project header so the model can group projects by
+ * area (AI Engineering, UX Research, Product and Design, Industrial Design)
+ * without needing a separate lookup structure.
+ */
+function formatCategories(categories: string[]): string {
+    if (categories.length === 0) return '';
+    return `, categories: ${categories.join(', ')}`;
 }
