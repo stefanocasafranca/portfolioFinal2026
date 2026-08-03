@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { FaArrowRight, FaRotateRight } from 'react-icons/fa6';
 import Image from 'next/image';
@@ -32,6 +32,38 @@ export default function AIPortfolio() {
     clearMessages 
   } = useChatbot();
 
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const hasPositioned = useRef(false);
+  const lastMessage = messages[messages.length - 1];
+  const latestContent = lastMessage?.content ?? '';
+
+  // The reply is pending from the moment the user's turn is appended until the
+  // assistant's first token lands. Keying only on an empty assistant message
+  // misses that window, because the last message is still the user's.
+  const isAwaitingReply =
+    isLoading && (!lastMessage || lastMessage.role === 'user' || !lastMessage.content);
+
+  // Keep the newest message in view. Two cases matter:
+  //  - first paint (including returning from a project page, where the chat is
+  //    rehydrated from localStorage): jump straight to the bottom, no animation
+  //  - a new or streaming message: follow it, but only if the reader is already
+  //    near the bottom, so scrolling up to re-read history isn't yanked away
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el || messages.length === 0) return;
+
+    const distanceFromBottom = el.scrollHeight - el.scrollTop - el.clientHeight;
+    const isFirstPositioning = !hasPositioned.current;
+
+    if (!isFirstPositioning && distanceFromBottom > 120) return;
+
+    el.scrollTo({
+      top: el.scrollHeight,
+      behavior: isFirstPositioning || isLoading ? 'auto' : 'smooth',
+    });
+    hasPositioned.current = true;
+  }, [messages.length, latestContent, isLoading]);
+
   const handleQuickAction = (action: string) => {
     if (!isLoading) {
       sendMessage(action);
@@ -62,15 +94,21 @@ export default function AIPortfolio() {
                 className="p-2 text-slate-500 hover:text-black dark:hover:text-white transition-colors"
                 title="Clear Chat"
               >
-                <FaRotateRight className={`text-sm ${isLoading ? 'animate-spin' : ''}`} />
+                {/* Never animate this — it resets the conversation and must not
+                    read as a loading indicator. Pending replies show the dots. */}
+                <FaRotateRight className="text-sm" />
               </button>
             )}
           </div>
         </div>
       </div>
 
-      {/* Main Content - Constrained width for content, but not input */}
-      <div className="relative z-10 flex-1 flex flex-col items-center justify-start space-y-4 sm:space-y-6 overflow-y-auto pt-8">
+      {/* Scrolling conversation area. min-h-0 is required for a flex child to
+          actually scroll instead of growing past the viewport. */}
+      <div
+        ref={scrollRef}
+        className="relative z-10 flex-1 min-h-0 flex flex-col items-center justify-start space-y-4 sm:space-y-6 overflow-y-auto pt-8"
+      >
         {messages.length === 0 ? (
           <div className="max-w-[1200px] max-lg:max-w-[800px] max-md:max-w-[375px] max-sm:max-w-[320px] mx-auto px-4 flex flex-col items-center space-y-4 sm:space-y-6">
             {/* Logo - Centered below toggle */}
@@ -149,7 +187,14 @@ export default function AIPortfolio() {
                       : 'bg-white/10 backdrop-blur-sm text-black dark:text-white border border-white/20'
                   }`}
                 >
-                  <div className="text-sm sm:text-base prose dark:prose-invert prose-p:leading-relaxed prose-headings:mb-2 prose-headings:mt-4 first:prose-headings:mt-0 max-w-none">
+                  {/* User bubbles sit on a purple gradient, so their markdown always
+                      needs the inverted (light) prose palette. Plain `prose` would
+                      force dark body text in light mode and kill the contrast. */}
+                  <div
+                    className={`text-sm sm:text-base prose ${
+                      msg.role === 'user' ? 'prose-invert' : 'dark:prose-invert'
+                    } prose-p:leading-relaxed prose-headings:mb-2 prose-headings:mt-4 first:prose-headings:mt-0 max-w-none`}
+                  >
                     <ReactMarkdown remarkPlugins={[remarkGfm]}>
                       {msg.content}
                     </ReactMarkdown>
@@ -157,7 +202,7 @@ export default function AIPortfolio() {
                 </div>
               </motion.div>
             ))}
-            {isLoading && messages.length > 0 && !messages[messages.length - 1]?.content && (
+            {isAwaitingReply && (
               <motion.div
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -187,12 +232,15 @@ export default function AIPortfolio() {
             )}
           </div>
         )}
+      </div>
 
-        {/* Quick Actions & Input Area */}
-        <div className="w-full max-w-5xl mt-auto pb-8">
-            {/* Quick Actions */}
-            <motion.div 
-                className="flex flex-wrap justify-center gap-2 mb-4 px-6"
+      {/* Composer — pinned below the scrolling conversation so it stays reachable
+          no matter how far the transcript has scrolled. */}
+      <div className="relative z-10 w-full max-w-5xl mx-auto shrink-0 pb-6 pt-2 backdrop-blur-sm">
+            {/* Quick Actions — scroll horizontally rather than wrapping, so they
+                cost one row instead of two on narrow screens. */}
+            <motion.div
+                className="flex justify-start sm:justify-center gap-2 mb-4 px-6 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.7 }}
@@ -202,7 +250,7 @@ export default function AIPortfolio() {
                         key={action}
                         onClick={() => handleQuickAction(action)}
                         disabled={isLoading}
-                        className="px-4 py-2 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-sm text-slate-600 dark:text-slate-400 hover:text-black dark:hover:text-white transition-all disabled:opacity-50 whitespace-nowrap"
+                        className="shrink-0 px-4 py-2 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-sm text-slate-600 dark:text-slate-400 hover:text-black dark:hover:text-white transition-all disabled:opacity-50 whitespace-nowrap"
                     >
                         {action}
                     </button>
@@ -246,7 +294,6 @@ export default function AIPortfolio() {
                     </button>
                 </div>
             </motion.form>
-        </div>
       </div>
 
       {/* Privacy/Analytics Consent Banner */}
