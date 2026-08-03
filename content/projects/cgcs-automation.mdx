@@ -26,7 +26,7 @@ That reframing set the system's hard rule: **never send an unauthorized email.**
 
 ## The Solution
 
-A single LangGraph state machine with a router that dispatches ten capability subgraphs — intake, email triage, reply handling, calendar checks and holds, tracker updates, lead assignment, reminders, and a daily digest. One `AgentState` carries everything through the graph.
+A single LangGraph state machine with a router that dispatches ten capability subgraphs: event intake, email triage, Smartsheet intake, email replies, calendar availability checks, calendar holds, tracker updates, event lead assignment, reminder checks, and a daily digest. One `AgentState` carries everything through the graph.
 
 Claude drafts; deterministic code decides. Failed runs land in a dead letter queue rather than disappearing. Threads cap at ten back-and-forth replies before handing off to a human. Frustration language and explicit requests for a person trigger escalation. Every run is traced in LangSmith.
 
@@ -48,4 +48,4 @@ The broader suite runs 604 tests with none failing.
 
 ## Status
 
-Live in production. Fourteen AI-powered capabilities, 46 API endpoints, 12 Postgres tables, 223 commits. Currently moving from deterministic templates toward LLM drafting trained on the administrator's own voice, and activating a self-improvement loop that feeds his edits back into future prompts.
+Live in production. As of July 2026 the system spans 46 API endpoints and 12 Postgres tables across 223 commits. Current work moves from deterministic templates toward LLM drafting trained on the administrator's own voice, and activates a self-improvement loop that feeds his edits back into future prompts.
