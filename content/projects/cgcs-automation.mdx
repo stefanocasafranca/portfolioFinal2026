@@ -1,0 +1,51 @@
+---
+title: CGCS Unified Agent
+description: A production LangGraph agent that automates event-space intake for a civic center at Austin Community College - drafting, never sending, with every decision traced and reviewable.
+chat: true
+categories: ai-engineering
+links: [{"name": "Case Study","url": "#"}]
+layout: default
+images: []
+---
+
+## The Problem
+
+The Center for Government and Civic Service runs an event venue at Austin Community College's Rio Grande Campus. One administrator was the entire workflow.
+
+For every single request he read the Smartsheet form, checked the calendar, evaluated eligibility, calculated pricing, drafted a reply, attached the correct user agreement, created a calendar hold, logged a row in the operational tracker, scheduled reminders, followed up, and generated the reports. Eleven steps, every time, held together by one person's attention.
+
+It didn't scale, and it was error-prone in the way that any process is when a single human is the integration layer between six systems.
+
+## The Insight
+
+The obvious build is a dashboard that replaces the inbox. That's also the build that fails, because it asks the person to abandon the tool they actually live in.
+
+So the agent drafts into Gmail. Replies arrive pre-written, threaded, with the right PDF already attached — and the administrator approves them in the inbox he was already going to open. The review surface is the one he never left.
+
+That reframing set the system's hard rule: **never send an unauthorized email.** Everything is a draft except a narrow allowlist. The agent's job is to remove the typing, not the judgment.
+
+## The Solution
+
+A single LangGraph state machine with a router that dispatches ten capability subgraphs: event intake, email triage, Smartsheet intake, email replies, calendar availability checks, calendar holds, tracker updates, event lead assignment, reminder checks, and a daily digest. One `AgentState` carries everything through the graph.
+
+Claude drafts; deterministic code decides. Failed runs land in a dead letter queue rather than disappearing. Threads cap at ten back-and-forth replies before handing off to a human. Frustration language and explicit requests for a person trigger escalation. Every run is traced in LangSmith.
+
+Built on FastAPI and PostgreSQL, orchestrated with n8n, deployed via Docker Compose behind Caddy on a self-hosted VPS.
+
+## Validation
+
+The part I'd want to be asked about in an interview is the evaluation, not the architecture.
+
+I froze an eval set for the email classifier and scored it. The first run came back 21 of 24, and every miss was the same confusion between two follow-up categories. The obvious move is to tune the prompt until the number goes up.
+
+Instead I reviewed the labels against the system's own written rules — and found the model had been reading them correctly the whole time. **My gold labels were wrong, not the classifier.** I relabeled the disputed examples, added genuine anchors for the category I'd been conflating, and the corrected set scored 26 of 26.
+
+That's the label-review control working exactly as designed: it caught that my labels were the weak link *before* I spent a cycle tuning a model that was already right.
+
+The honest caveat, which I wrote into the baseline doc: 100% on 26 hand-written examples means the classifier handles 26 hand-written examples. It is not a production accuracy claim. The real next signal is a dataset rebuilt from real traces, reweighted to the true frequency distribution.
+
+The broader suite runs 604 tests with none failing.
+
+## Status
+
+Live in production. As of July 2026 the system spans 46 API endpoints and 12 Postgres tables across 223 commits. Current work moves from deterministic templates toward LLM drafting trained on the administrator's own voice, and activates a self-improvement loop that feeds his edits back into future prompts.

@@ -37,3 +37,15 @@ next-env.d.ts
 
 # image originals (backup)
 /public/images/originals/
+
+# playwright artifacts
+/playwright-report/
+/test-results/
+
+# HTTrack reference files
+websites/
+*.warc
+httrack.log
+httrack.err
+httrack.tmp/
+.env*

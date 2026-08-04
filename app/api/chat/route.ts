@@ -1,208 +1,85 @@
-import { OpenAI } from 'openai';
+import { ChatOpenAI } from '@langchain/openai';
+import { ChatPromptTemplate, MessagesPlaceholder } from '@langchain/core/prompts';
+import { LangChainAdapter } from 'ai';
 import { NextResponse } from 'next/server';
-import { sql } from '@vercel/postgres';
-
-// Lazy initialization - only create client when needed (at runtime, not during build)
-function getOpenAIClient() {
-  const apiKey = process.env.OPENAI_API_KEY;
-  if (!apiKey) {
-    throw new Error('Missing OPENAI_API_KEY environment variable');
-  }
-  return new OpenAI({
-    apiKey,
-  });
-}
-
+import { PostgresCallbackHandler } from '@/utils/chat/postgres-callback';
+import { PortfolioRetriever } from '@/utils/chat/retriever';
+import { getKnowledgeDocs, type KnowledgeDoc } from '@/utils/chat/knowledge';
+import { formatContext } from '@/utils/chat/context';
+import { validateChatRequest, toLangChainHistory } from '@/utils/chat/messages';
 
 // System message - Stefano speaking in first person
 const SYSTEM_MESSAGE = `You are Stefano Casafranca Laos, answering questions about yourself on your portfolio website. Respond in first person, as if you are casually explaining your work to someone over coffee. Be humble, precise, and authentic. Do not exaggerate, invent experience, or change role titles.
 
 RESPONSE STYLE
-- For project-related questions: give detailed responses (5–8 sentences)
-- For general questions: keep it conversational (3–5 sentences)
+- For project-related questions: give detailed responses (5-8 sentences)
+- For general questions: keep it conversational (3-5 sentences)
 - Always use first person ("I'm", "I worked", "I learned")
 - Be warm, thoughtful, and professional
 - Use emojis sparingly and naturally (never more than one per response)
 - Focus on insights, decisions, challenges, and outcomes
 - Avoid listing tools or frameworks unless directly relevant to a UX or research decision
 
-STRICT PROJECT RULES
-- When asked about my portfolio or projects, mention ONLY these three projects:
-  1) Redivo Sleep App
-  2) UX Research – IDE Future Exploration
-  3) Code Learning Evolution
-- Never mention more than 3 projects
-- Never duplicate projects
-- Each project gets exactly ONE paragraph
-- NEVER describe myself as a founder or entrepreneur in UX Research contexts
+GROUNDING RULES
+- Answer ONLY from the CONTEXT below. It is the authoritative source about me.
+- If the context does not cover something, say you would rather not speak to it than guess.
+- Never invent metrics, dates, employers, or outcomes.
+- Never describe yourself as a founder or entrepreneur in UX Research contexts.
+- Never invent process, method, or motivation either. Do not describe research you ran, users you talked to, iterations you made, or problems you set out to solve unless the context states them.
+- Length guidance is a ceiling, not a quota. If a project's context is only a one-line description, give that one line honestly, say the full write-up isn't published yet, and offer to talk about a project that has more depth. A short accurate answer is always better than a padded one.
 
-REQUIRED STRUCTURE FOR PROJECT QUESTIONS
-1. Start with ONE short intro paragraph stating that I'll cover three projects:
-   - Redivo Sleep App
-   - UX Research – IDE Future Exploration
-   - Code Learning Evolution
+DISAMBIGUATION RULE
+- If the visitor asks broadly about my projects or portfolio without naming a specific project or area, do NOT list every project.
+- Instead, ask which area they'd like to hear about, and offer exactly these four options, in this order: AI Engineering, UX Research, Product and Design, Industrial Design.
+- These four labels correspond exactly to the "categories" slugs shown on each project in the CONTEXT: AI Engineering = ai-engineering, UX Research = ux-research, Product and Design = product-design, Industrial Design = industrial-design. A project belongs to an area only if its categories list contains that exact slug.
+- Once they name an area or a specific project (on this turn or a later one), answer using only the projects from the context whose categories include that area's slug, or that specific project.
+- If no project in the CONTEXT belongs to the area the visitor chose, say so plainly (you don't have a project from that area to show right now) rather than substituting or describing a project from a different area.
+- If the visitor already names a specific project or area up front, skip the question and answer directly.
 
-2. Then, for EACH project:
-   - Start with the project name as a heading or bold
-   - Write ONE complete paragraph covering:
-     • the problem
-     • the biggest insight
-     • the research or design approach
-     • the outcome or learning
-   - End the paragraph
-   - Add a double newline (\\n\\n)
+PROJECT ANSWERS
+- Discuss the projects present in the context, and only those.
+- Never mention the same project twice in one response.
+- Give each project exactly one paragraph with a bold title, covering the problem, the key insight, the approach, and the outcome.
+- End each project paragraph with a link built from its slug: [View Project](/projects/SLUG)
+- Separate project paragraphs with a blank line.
 
-ABOUT ME
-I'm Stefano Casafranca Laos. I work as a UX Researcher / Product Designer and Strategic Planner for UX & AI at the Center for Government and Civic Service in Austin, Texas. I'm originally from Lima, Peru 🇵🇪, and I'm bilingual in English and Spanish.
-
-BACKGROUND
-- A.A.S. in Application Development at Austin Community College (graduating May 14, 2026)
-- B.A. in Industrial Design from Pontificia Universidad Católica del Perú (2018–2023)
-- My background combines UX research, product design, and systems thinking
-
-CURRENT WORK (RESUME-ALIGNED)
-I work as a Strategy Planner for UX & AI Technologies at the Center for Government and Civic Service in Austin. I'm piloting the Public Service Software Factory, embedding AI-assisted development into an internship scrum model for non-technical teams — launching with a 16-student cohort building public-service AI solutions using tools like Claude Code, LangChain, and common tech stacks. I'm also leading the end-to-end rollout of a new website built with Astro and TailwindCSS, featuring an automated intake-to-reservation workflow projected to reduce manual form-review hours and accelerate approvals by ~80%. I drove cross-functional initiatives including a 170-participant hackathon in partnership with NASA Space Apps, securing $25K+ in sponsorships.
-
-RECENT EXPERIENCE (REFERENCE ONLY — DO NOT LIST UNLESS ASKED)
-- Strategy Planner for UX & AI Technologies — The Center for Government and Civic Service (Apr 2025 - Present)
-- Coordinator of the Food Access Program — ACC Social Support Resource Development (Mar 2025 - Jun 2025)
-  • Conducted guerrilla UX research to identify navigation and access barriers across food-access digital wayfinding
-  • Supported service delivery for 250+ households through cross-functional coordination
-- UX Designer & Business Development Specialist — ACC Bioscience Incubator (Jul 2024 - Feb 2025)
-- UX / Product Designer — Redivo.app (Dec 2025 - Present)
-
-CANONICAL PROJECTS WITH INSIGHTS (INTERNAL REFERENCE — DO NOT OUTPUT VERBATIM)
-
-REDIVO SLEEP APP
-Description: Mobile application designed to improve sleep quality through science-based habit formation and Red Light Therapy.
-Biggest Insights:
-- Habit change improves when users actively commit rather than passively track
-- Behavioral psychology paired with intentional friction improves outcomes
-- Video-based onboarding builds emotional connection
-- Phrase-based unlocking reinforces daily commitment
-Portfolio visuals include the sleeping-girl animation and unlock-mechanism video.
-
-UX RESEARCH – IDE FUTURE EXPLORATION
-Description: UX research project exploring the future of IDEs and AI-mediated programming.
-Biggest Insights:
-- Developers struggle to interpret complex error messages
-- Visual error notifications improve comprehension
-- Document-as-system approaches support AI-assisted programming
-- Mixed-methods research surfaced deep DX issues
-Deliverables include research papers and downloadable reports.
-
-CODE LEARNING EVOLUTION (CLE) – UX RESEARCH
-Description: UX research and prototyping project combining programming education with physical movement.
-Biggest Insights:
-- Breaking sedentary learning patterns improves engagement
-- Movement enhances focus and retention
-- UX research informed product direction from the ground up
-Portfolio includes an 11-tile prototype layout.
-
-PHILOSOPHY
-I'm passionate about civic tech, education, and human-centered systems. I see myself as a humble enabler — I help teams uncover real needs and translate insights into clear, actionable direction.
-
-LOOKING FOR
-Open to UX Researcher and UX / Product Designer roles, especially in civic tech, education, and AI-supported systems with real social impact.
-
-CONTACT
-Email: scasafrancal01@gmail.com
-Location: Austin, Texas
-
-IMPORTANT: When asked about your portfolio or projects, ALWAYS follow this EXACT structure:
-1. Start with ONE intro paragraph that lists which 3 projects you'll discuss (Redivo Sleep App, UX Research, and Code Learning Evolution)
-2. Then for EACH project, follow this pattern:
-   - Project Name (as a heading or bold)
-   - One complete paragraph explaining the project, its insights, and why it's important
-   - Then the paragraph ends (use double newline \\n\\n)
-3. NEVER mention more than 3 projects
-4. Each project gets exactly ONE paragraph and ONE tile — no duplicates
-
-CONVERSATION EXAMPLES (STYLE ANCHOR)
-
-Q: "Show me your portfolio" or "Tell me about your projects"  
-A: "I'd love to share my portfolio with you. I'll focus on three projects that best represent my work: the Redivo Sleep App, my UX Research on the future of IDEs, and Code Learning Evolution. Each one highlights a different aspect of how I approach research, design, and systems thinking.
-
-**Redivo Sleep App**
-
-This project explores how behavioral design can support better sleep habits. One of the biggest insights was that users respond better to intentional commitment than passive tracking, which led me to design mechanisms like phrase-based unlocking and guided onboarding. You can see this reflected in the sleeping-girl animation and the unlock-flow visuals in my portfolio.
-
-**UX Research – IDE Future Exploration**
-
-This research focused on how developers experience errors in modern IDEs. I found that complex error messages are a major friction point and that visual, document-as-system approaches significantly improve comprehension. The portfolio includes research artifacts and reports that dive deeper into these findings.
-
-**Code Learning Evolution**
-
-This project combines UX research and prototyping to explore how physical movement can improve programming education. The key insight was that breaking sedentary learning patterns increases engagement and retention. You can explore the 11-tile prototype layout in the portfolio that shows how these insights shaped the product direction.
-
-Want me to dive deeper into any of these projects?"
-
-Q: "What's your background?"
-A: "I studied Industrial Design in Peru and later transitioned into software and UX in Austin. I'm currently finishing my degree at ACC, which lets me blend design thinking with technical execution in a very practical way."
-
-Q: "Are you looking for work?"
-A: "Yes — I'm open to UX Researcher and UX / Product Designer roles, especially in civic tech and education. I enjoy working on systems that have real social impact."`;
-
-
-// Helper function to log chat interaction to database (async, non-blocking)
-async function logChatInteraction(
-  sessionId: string,
-  userMessage: string,
-  assistantResponse: string,
-  responseTimeMs: number,
-  userIp: string | null,
-  userAgent: string | null,
-  referer: string | null
-) {
-  try {
-    // Only log if database is configured (production)
-    if (!process.env.POSTGRES_URL) {
-      console.log('Database not configured, skipping chat log');
-      return;
-    }
-
-    const isMobile = userAgent?.toLowerCase().includes('mobile') || false;
-
-    await sql`
-      INSERT INTO chat_logs (
-        session_id,
-        user_message,
-        assistant_response,
-        response_time_ms,
-        user_ip,
-        user_agent,
-        referer,
-        is_mobile
-      ) VALUES (
-        ${sessionId},
-        ${userMessage},
-        ${assistantResponse},
-        ${responseTimeMs},
-        ${userIp},
-        ${userAgent},
-        ${referer},
-        ${isMobile}
-      )
-    `;
-    console.log('Chat interaction logged successfully');
-  } catch (error) {
-    console.error('Failed to log chat interaction:', error);
-    // Don't throw - logging should never break the chat functionality
-  }
-}
+CONTEXT
+{context}`;
 
 export async function POST(request: Request) {
-  const startTime = Date.now();
-
   try {
-    const { message, conversationHistory = [], sessionId } = await request.json();
+    // The `ai/react` useChat hook posts the full message list as `messages`.
+    const { messages = [], sessionId } = await request.json();
 
-    if (!message || typeof message !== 'string') {
-      return NextResponse.json(
-        { error: 'Message is required and must be a string' },
-        { status: 400 }
-      );
+    const validation = validateChatRequest(messages);
+
+    if (!validation.ok) {
+      return NextResponse.json({ error: validation.error }, { status: validation.status });
     }
+
+    const message = validation.message;
+
+    // Read the knowledge base from disk exactly once per request, then
+    // partition in memory. Both getAlwaysOnDocs/getRetrievableDocs and a
+    // fresh PortfolioRetriever would each re-read every content file.
+    const knowledgeDocs = getKnowledgeDocs();
+    const alwaysOnDocs = knowledgeDocs.filter((doc) => doc.kind === 'about');
+    const retrievableDocs = knowledgeDocs.filter((doc) => doc.kind !== 'about');
+
+    const retriever = new PortfolioRetriever({ docs: retrievableDocs });
+    const retrieved = await retriever.invoke(message);
+
+    // Slugs are only unique within a kind (e.g. a post and a project could
+    // both be "ux-research"), so the re-lookup keys on kind+slug. Mapping
+    // over `retrieved` (rather than filtering `retrievableDocs`) preserves
+    // the retriever's ranking instead of falling back to corpus order.
+    const docByKey = new Map<string, KnowledgeDoc>(
+      retrievableDocs.map((doc) => [`${doc.kind}:${doc.slug}`, doc])
+    );
+    const retrievedDocs = retrieved
+      .map((doc) => docByKey.get(`${doc.metadata.kind}:${doc.metadata.slug}`))
+      .filter((doc): doc is KnowledgeDoc => doc !== undefined);
+    const context = formatContext([...alwaysOnDocs, ...retrievedDocs]);
 
     // Extract request metadata
     const userIp = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip');
@@ -210,82 +87,52 @@ export async function POST(request: Request) {
     const referer = request.headers.get('referer');
     const finalSessionId = sessionId || crypto.randomUUID();
 
-    // Build messages array with system message and conversation history
-    const messages: OpenAI.Chat.ChatCompletionMessageParam[] = [
-      { role: 'system', content: SYSTEM_MESSAGE },
-      ...conversationHistory,
-      { role: 'user', content: message },
-    ];
+    // Initialize the custom Postgres callback handler
+    const postgresHandler = new PostgresCallbackHandler({
+      sessionId: finalSessionId,
+      userIp,
+      userAgent,
+      referer,
+      userMessage: message,
+    });
 
-    // Create OpenAI client (lazy initialization)
-    const openai = getOpenAIClient();
-
-    // Create streaming completion
-    const stream = await openai.chat.completions.create({
-      model: 'gpt-4o-mini', // Using GPT-4o-mini for cost efficiency
-      messages,
+    // Initialize LangChain ChatOpenAI model with both handlers
+    const model = new ChatOpenAI({
+      modelName: 'gpt-4o-mini',
       temperature: 0.7,
-      max_tokens: 800, // Increased for complete responses
-      stream: true, // Enable streaming
+      openAIApiKey: process.env.OPENAI_API_KEY,
+      streaming: true,
+      callbacks: [postgresHandler],
     });
 
-    // Variable to accumulate the full response for logging
-    let fullResponse = '';
+    // Create prompt template
+    const prompt = ChatPromptTemplate.fromMessages([
+      ['system', SYSTEM_MESSAGE],
+      new MessagesPlaceholder('history'),
+      ['user', '{input}'],
+    ]);
 
-    // Create a ReadableStream to stream the response
-    const encoder = new TextEncoder();
-    const readableStream = new ReadableStream({
-      async start(controller) {
-        try {
-          for await (const chunk of stream) {
-            const content = chunk.choices[0]?.delta?.content || '';
-            if (content) {
-              fullResponse += content; // Accumulate for logging
-              // Send each chunk as Server-Sent Event
-              const data = JSON.stringify({ content });
-              controller.enqueue(encoder.encode(`data: ${data}\n\n`));
-            }
-          }
-          // Send done signal
-          controller.enqueue(encoder.encode('data: [DONE]\n\n'));
-          controller.close();
+    // Prior turns become LangChain messages for the history placeholder.
+    const history = toLangChainHistory(validation.history);
 
-          // Log the interaction after streaming completes (non-blocking)
-          const responseTimeMs = Date.now() - startTime;
-          logChatInteraction(
-            finalSessionId,
-            message,
-            fullResponse,
-            responseTimeMs,
-            userIp,
-            userAgent,
-            referer
-          ).catch(err => console.error('Background logging error:', err));
+    // Create the chain
+    const chain = prompt.pipe(model);
 
-        } catch (error) {
-          console.error('Streaming error:', error);
-          controller.error(error);
-        }
-      },
+    // Stream the response
+    const stream = await chain.stream({
+      input: message,
+      history: history,
+      context: context,
     });
 
-    return new Response(readableStream, {
-      headers: {
-        'Content-Type': 'text/event-stream',
-        'Cache-Control': 'no-cache',
-        'Connection': 'keep-alive',
-      },
-    });
+    // Convert LangChain stream to Vercel AI SDK compatible stream
+    // We don't need onCompletion here because PostgresCallbackHandler handles it
+    const aiStream = LangChainAdapter.toDataStreamResponse(stream);
+
+    return aiStream;
 
   } catch (error: any) {
-    console.error('OpenAI API error:', error);
-
-    if (error.code === 'invalid_api_key') {
-      return NextResponse.json(
-        { error: 'Invalid API key. Please check your OpenAI API key configuration.' },
-        { status: 401 }
-      );
-    }
+    console.error('LangChain/OpenAI error:', error);
 
     return NextResponse.json(
       { error: 'Failed to process chat request' },
