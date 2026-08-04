@@ -48,3 +48,4 @@ websites/
 httrack.log
 httrack.err
 httrack.tmp/
+.env*
